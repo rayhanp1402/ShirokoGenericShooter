@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnitySampleAssets.CrossPlatformInput;
 
 namespace Nightmare
@@ -11,6 +12,7 @@ namespace Nightmare
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
         Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
+
 #if !MOBILE_INPUT
         int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
         float camRayLength = 100f;          // The length of the ray from the camera into the scene.
@@ -26,7 +28,6 @@ namespace Nightmare
             // Set up references.
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
-
             StartPausible();
         }
 
@@ -87,10 +88,14 @@ namespace Nightmare
                 playerToMouse.y = 0f;
 
                 // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
-                Quaternion newRotatation = Quaternion.LookRotation (playerToMouse);
+                Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
 
-                // Set the player's rotation to this new rotation.
-                playerRigidbody.MoveRotation (newRotatation);
+                // Apply the new rotation to your player
+                transform.rotation = newRotation;
+
+                // Vector3 newPos = floorHit.point;
+                // newPos.y = target.transform.position.y;
+                // target.transform.position = newPos;
             }
 #else
 
@@ -118,6 +123,41 @@ namespace Nightmare
         {
             // Create a boolean that is true if either of the input axes is non-zero.
             bool walking = h != 0f || v != 0f;
+            if (walking) {
+                float rotationY = transform.rotation.eulerAngles.y;
+                Vector3 walkDirection = new Vector3(h, 0, v);
+                Quaternion targetRotation = Quaternion.LookRotation(walkDirection);
+                float targetRotationY = targetRotation.eulerAngles.y;
+
+                float direction = targetRotationY - rotationY;
+                if (direction < 0) {
+                    direction = 360 + direction;
+                }
+
+                float yRotationAngleRadians = direction * Mathf.Deg2Rad;
+
+                // Calculate the direction vector
+                Vector3 direction3 = new Vector3(Mathf.Sin(yRotationAngleRadians), 0f, Mathf.Cos(yRotationAngleRadians));
+
+                // Normalize the direction vector if needed
+                direction3.Normalize();
+
+                // Now 'direction' contains the direction vector based on the y rotation angle
+                // Debug.Log("Direction Vector: " + direction3);
+
+                
+
+                // float blendx = Mathf.Acos(diff*Mathf.Deg2Rad);
+                // float blendy = Mathf.Sin(diff*Mathf.Deg2Rad);
+
+                
+
+                anim.SetFloat("Blendx", direction3.x);
+                anim.SetFloat("Blendy", direction3.z);
+            } else {
+                anim.SetFloat("Blendx", 0);
+                anim.SetFloat("Blendy", 0);
+            }
 
             // Tell the animator whether or not the player is walking.
             anim.SetBool ("IsWalking", walking);

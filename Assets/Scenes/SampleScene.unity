@@ -635,11 +635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5826274872822610587, guid: b93728c70c66b9945b3e57e2b287f8ab, type: 3}
       propertyPath: m_Name
-      value: Shiroko_Original_Mesh
-      objectReference: {fileID: 0}
-    - target: {fileID: 6409295850051150565, guid: b93728c70c66b9945b3e57e2b287f8ab, type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      value: Shiroko
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
