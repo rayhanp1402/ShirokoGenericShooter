@@ -1,38 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class MainMenu : MonoBehaviour
 {
+    public GameObject settingsMenu;
+    public GameObject backButton;
 
     void Start()
     {
-        // Find the SettingsMenu GameObject
-        GameObject settingsMenu = GameObject.Find("SettingsMenu");
-
-        // Check if the SettingsMenu is found
+        // Ensure the settings menu and back button are initially hidden
         if (settingsMenu != null)
         {
-            // Find the button inside the SettingsMenu
-            Button buttonToHide = settingsMenu.GetComponentInChildren<Button>();
-
-            // Check if the button is found
-            if (buttonToHide != null)
-            {
-                // Hide the button
-                buttonToHide.gameObject.SetActive(false);
-            }
-            else
-            {
-                Debug.LogWarning("Button not found in SettingsMenu!");
-            }
+            settingsMenu.SetActive(false);
         }
-        else
+        if (backButton != null)
         {
-            Debug.LogWarning("SettingsMenu not found!");
+            backButton.SetActive(false);
         }
     }
 
@@ -47,4 +31,19 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void ToggleSettingsMenu()
+    {
+        if (settingsMenu != null)
+        {
+            bool isSettingsMenuActive = !settingsMenu.activeSelf;
+            settingsMenu.SetActive(isSettingsMenuActive);
+            // Toggle visibility of the back button based on the settings menu's visibility
+            if (backButton != null)
+            {
+                backButton.SetActive(isSettingsMenuActive);
+            }
+        }
+    }
+
+    // Additional methods for setting player name, volume, and difficulty can be added here
 }
