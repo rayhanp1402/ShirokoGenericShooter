@@ -91,6 +91,14 @@ namespace Nightmare
             }
         }
 
+        public void Heal(int amount)
+        {
+            currentHealth += amount;
+            if (currentHealth > startingHealth)
+                currentHealth = startingHealth;
+            healthSlider.value = currentHealth;
+        }
+
         void Death()
         {
             // Set the death flag so this function won't be called again.
