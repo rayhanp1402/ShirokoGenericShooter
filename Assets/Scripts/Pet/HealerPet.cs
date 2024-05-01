@@ -47,7 +47,8 @@ namespace Nightmare
             {
                 SetDestination(player.position);
                 if (nav.remainingDistance <= nav.stoppingDistance){
-                    transform.LookAt(player.position);
+                    Vector3 lookPos = new Vector3(player.position.x, transform.position.y, player.position.z);
+                    transform.LookAt(lookPos);
                 }
                 timer += Time.deltaTime;
                 healEffect.transform.position = player.position;
