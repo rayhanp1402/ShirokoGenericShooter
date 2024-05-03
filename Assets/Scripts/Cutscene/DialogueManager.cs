@@ -18,14 +18,24 @@ public class DialogueManager : MonoBehaviour
     private GameObject currentPrefab;
     private GameObject otherPrefab;
 
-    public Sprite leftImage; // Reference to the image for left prefab
-    public Sprite rightImage; // Reference to the image for right prefab
+    public Sprite shirokoSprite;
+    public Sprite hoshinoSprite;
+    public Sprite serikaSprite;
+
+    // Dictionary to map character names to their respective images
+    public Dictionary<string, Sprite> characterImages;
 
     private int currentDialogueIndex = 0;
 
     void Start()
     {
         sentences = new Queue<string>();
+
+        characterImages = new Dictionary<string, Sprite>();
+        characterImages["Shiroko"] = shirokoSprite;
+        characterImages["Hoshino"] = hoshinoSprite;
+        characterImages["Serika"] = serikaSprite;
+
         LoadDialogues();
         StartNextDialogue();
     }
@@ -77,7 +87,6 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                // Otherwise, set the prefab based on the dialogue's prefab attribute
                 currentPrefab = currentDialogue.prefab;
             }
 
@@ -92,13 +101,13 @@ public class DialogueManager : MonoBehaviour
             // Start the dialogue
             StartDialogue(currentDialogue);
 
-            // Set the image source based on the current prefab, if applicable
-            if (currentPrefab == dialogueLeftPrefab || currentPrefab == dialogueRightPrefab)
+            // Set the character image based on the character's name
+            if (characterImages.ContainsKey(currentDialogue.name))
             {
                 Image image = currentPrefab.GetComponentInChildren<Image>();
                 if (image != null)
                 {
-                    image.sprite = currentPrefab == dialogueLeftPrefab ? leftImage : rightImage;
+                    image.sprite = characterImages[currentDialogue.name];
                 }
             }
         }
@@ -107,7 +116,6 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("No more dialogues to start.");
         }
     }
-
 
 
     public void StartDialogue(Dialogue dialogue)
@@ -133,7 +141,6 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
     }
 
-
     public void DisplayNextSentence()
     {
         if (sentences.Count == 0)
@@ -142,7 +149,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // Get the next sentence from the queue
         string sentence = sentences.Dequeue();
 
         // Display the sentence gradually
@@ -164,13 +170,8 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        // Activate the other (inactive) prefab
-        // otherPrefab.SetActive(true);
-
-        // Move to the next dialogue index
         currentDialogueIndex++;
 
-        // Start the next dialogue
         StartNextDialogue();
     }
 }
