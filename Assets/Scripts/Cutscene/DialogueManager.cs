@@ -14,9 +14,15 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI dialogueText;
     private Queue<string> sentences;
 
+    // Store a reference to the current prefab type
+    private string currentPrefabName;
+
     void Start()
     {
         sentences = new Queue<string>();
+
+        // Set the initial prefab type
+        currentPrefabName = "DialogueLeft";
 
         // Create a new dialogue instance with specific data
         Dialogue dialogue = new Dialogue();
@@ -68,6 +74,9 @@ public class DialogueManager : MonoBehaviour
                         // Display the next sentence
                         DisplayNextSentence();
 
+                        // Store the current prefab name
+                        currentPrefabName = prefabName;
+
                         // Break out of the loop once found
                         break;
                     }
@@ -109,29 +118,36 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("End of conversation");
 
-        // Find DialogueLeft GameObject
-        GameObject dialogueLeft = GameObject.Find("DialogueLeft");
-        if (dialogueLeft != null)
+        // Load the next prefab based on the current prefab type
+        string nextPrefabName = currentPrefabName == "DialogueLeft" ? "DialogueRight" : "DialogueLeft";
+        string nextPrefabPath = nextPrefabName == "DialogueLeft" ? dialogueLeftPrefabPath : dialogueRightPrefabPath;
+
+        // Find the current GameObject
+        GameObject currentPrefab = GameObject.Find(currentPrefabName);
+        if (currentPrefab != null)
         {
-            Debug.Log("PPPPPp");
-            // Get the position and parent of DialogueLeft
-            Transform parent = dialogueLeft.transform.parent;
-            Vector3 position = dialogueLeft.transform.position;
+            // Get the position and parent of the current prefab
+            Transform parent = currentPrefab.transform.parent;
+            Vector3 position = currentPrefab.transform.position;
 
-            // Load DialogueRight prefab dynamically
-            GameObject dialogueRightPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(dialogueRightPrefabPath);
-            if (dialogueRightPrefab != null)
+            // Load the next prefab dynamically
+            GameObject nextPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(nextPrefabPath);
+            if (nextPrefab != null)
             {
-                // Instantiate DialogueRight prefab at the same position and with the same parent
-                GameObject dialogueRight = Instantiate(dialogueRightPrefab, position, Quaternion.identity, parent);
+                // Instantiate the next prefab at the same position and with the same parent
+                GameObject nextGameObject = Instantiate(nextPrefab, position, Quaternion.identity, parent);
 
-                // Destroy DialogueLeft GameObject
-                Destroy(dialogueLeft);
+                // Destroy the current GameObject
+                Destroy(currentPrefab);
             }
             else
             {
-                Debug.LogError("Failed to load DialogueRight prefab from path: " + dialogueRightPrefabPath);
+                Debug.LogError("Failed to load the next prefab from path: " + nextPrefabPath);
             }
+        }
+        else
+        {
+            Debug.LogError("Failed to find the current prefab: " + currentPrefabName);
         }
     }
 }
