@@ -8,16 +8,15 @@ public class DialogueManager : MonoBehaviour
 {
     public GameObject dialogueLeftPrefab;
     public GameObject dialogueRightPrefab;
-    public string dialogueLeftPrefabPath;
-    public string dialogueRightPrefabPath;
+    public GameObject dialogueNarrationPrefab;
 
     private TextMeshProUGUI nameText;
     private TextMeshProUGUI dialogueText;
     private Queue<string> sentences;
     public List<Dialogue> dialogues;
 
-    private GameObject currentPrefab; // Reference to the current prefab
-    private GameObject otherPrefab;   // Reference to the other (inactive) prefab
+    private GameObject currentPrefab;
+    private GameObject otherPrefab;
 
     public Sprite leftImage; // Reference to the image for left prefab
     public Sprite rightImage; // Reference to the image for right prefab
@@ -36,27 +35,30 @@ public class DialogueManager : MonoBehaviour
         // Initialize the dialogues list
         dialogues = new List<Dialogue>();
 
-        // Dialogue 1
-        Dialogue dialogue1 = new Dialogue();
-        dialogue1.name = "Shiroko";
-        dialogue1.sentences = new string[]
+        // Load dialogues for left and right prefab
+        Dialogue dialogue1 = new Dialogue("Shiroko", dialogueLeftPrefab, new string[]
         {
             "What's up fellow kids? It's a great day isn' it?",
             "Today we're about to do what's called a pro gamer move",
             "Let's cut to the chase so we can immediately own these kids"
-        };
+        });
         dialogues.Add(dialogue1);
 
-        // Dialogue 2
-        Dialogue dialogue2 = new Dialogue();
-        dialogue2.name = "Hoshino";
-        dialogue2.sentences = new string[]
+        Dialogue dialogue2 = new Dialogue("Hoshino", dialogueRightPrefab, new string[]
         {
             "This is another character speaking.",
             "We can have different dialogues for different characters.",
             "Feel free to add more dialogues as needed."
-        };
+        });
         dialogues.Add(dialogue2);
+
+        // Add dialogues with "" name as DialogueNarration type
+        Dialogue narrationDialogue = new Dialogue("", dialogueNarrationPrefab, new string[]
+        {
+            "This is a narration dialogue.",
+            "It doesn't have a character name associated with it."
+        });
+        dialogues.Add(narrationDialogue);
 
         // Add more dialogues as needed
     }
@@ -65,18 +67,39 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogueIndex < dialogues.Count)
         {
-            currentPrefab = currentDialogueIndex % 2 == 0 ? dialogueLeftPrefab : dialogueRightPrefab;
-            otherPrefab = currentPrefab == dialogueLeftPrefab ? dialogueRightPrefab : dialogueLeftPrefab;
+            // Get the current dialogue
+            Dialogue currentDialogue = dialogues[currentDialogueIndex];
 
-            otherPrefab.SetActive(false);
-
-            StartDialogue(dialogues[currentDialogueIndex]);
-
-            // Set the image source based on the current prefab
-            Image image = currentPrefab.GetComponentInChildren<Image>();
-            if (image != null)
+            // If the name is empty, set the prefab to DialogueNarrationPrefab
+            if (currentDialogue.name == "")
             {
-                image.sprite = currentPrefab == dialogueLeftPrefab ? leftImage : rightImage;
+                currentPrefab = dialogueNarrationPrefab;
+            }
+            else
+            {
+                // Otherwise, set the prefab based on the dialogue's prefab attribute
+                currentPrefab = currentDialogue.prefab;
+            }
+
+            // Hide all other prefabs
+            dialogueLeftPrefab.SetActive(false);
+            dialogueRightPrefab.SetActive(false);
+            dialogueNarrationPrefab.SetActive(false);
+
+            // Activate the current prefab
+            currentPrefab.SetActive(true);
+
+            // Start the dialogue
+            StartDialogue(currentDialogue);
+
+            // Set the image source based on the current prefab, if applicable
+            if (currentPrefab == dialogueLeftPrefab || currentPrefab == dialogueRightPrefab)
+            {
+                Image image = currentPrefab.GetComponentInChildren<Image>();
+                if (image != null)
+                {
+                    image.sprite = currentPrefab == dialogueLeftPrefab ? leftImage : rightImage;
+                }
             }
         }
         else
@@ -85,20 +108,31 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+
+
     public void StartDialogue(Dialogue dialogue)
     {
-        nameText = currentPrefab.transform.Find("CharacterName").Find("CharacterText").GetComponent<TextMeshProUGUI>();
+        // Find the nameText and dialogueText in the current prefab hierarchy
+        nameText = currentPrefab.transform.Find("CharacterName")?.Find("CharacterText")?.GetComponent<TextMeshProUGUI>();
         dialogueText = currentPrefab.transform.Find("DialogueBox").Find("DialogueText").GetComponent<TextMeshProUGUI>();
 
-        nameText.text = dialogue.name;
+        // Set the character name text if it exists
+        if (nameText != null)
+        {
+            nameText.text = dialogue.name;
+        }
+
+        // Clear previous sentences and enqueue new sentences
         sentences.Clear();
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
         }
 
+        // Display the next sentence
         DisplayNextSentence();
     }
+
 
     public void DisplayNextSentence()
     {
@@ -108,14 +142,19 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        // Get the next sentence from the queue
         string sentence = sentences.Dequeue();
-        StopAllCoroutines();
+
+        // Display the sentence gradually
         StartCoroutine(TypeSentence(sentence));
     }
 
     IEnumerator TypeSentence(string sentence)
     {
+        // Clear the dialogue text
         dialogueText.text = "";
+
+        // Display each letter of the sentence gradually
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
@@ -126,17 +165,12 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         // Activate the other (inactive) prefab
-        otherPrefab.SetActive(true);
+        // otherPrefab.SetActive(true);
 
+        // Move to the next dialogue index
         currentDialogueIndex++;
-        if (currentDialogueIndex < dialogues.Count)
-        {
-            StartNextDialogue();
-        }
-        else
-        {
-            Debug.Log("No more dialogues to start.");
-        }
-    }
 
+        // Start the next dialogue
+        StartNextDialogue();
+    }
 }
