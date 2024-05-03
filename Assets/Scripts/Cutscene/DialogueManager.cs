@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class DialogueManager : MonoBehaviour
 
     private GameObject currentPrefab; // Reference to the current prefab
     private GameObject otherPrefab;   // Reference to the other (inactive) prefab
+
+    public Sprite leftImage; // Reference to the image for left prefab
+    public Sprite rightImage; // Reference to the image for right prefab
 
     private int currentDialogueIndex = 0;
 
@@ -61,14 +65,19 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogueIndex < dialogues.Count)
         {
-            // Determine which prefab to use based on the dialogue index
             currentPrefab = currentDialogueIndex % 2 == 0 ? dialogueLeftPrefab : dialogueRightPrefab;
             otherPrefab = currentPrefab == dialogueLeftPrefab ? dialogueRightPrefab : dialogueLeftPrefab;
 
-            // Hide the other (inactive) prefab
             otherPrefab.SetActive(false);
 
             StartDialogue(dialogues[currentDialogueIndex]);
+
+            // Set the image source based on the current prefab
+            Image image = currentPrefab.GetComponentInChildren<Image>();
+            if (image != null)
+            {
+                image.sprite = currentPrefab == dialogueLeftPrefab ? leftImage : rightImage;
+            }
         }
         else
         {
