@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 983840807}
   - component: {fileID: 983840806}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -745,7 +745,7 @@ MonoBehaviour:
   dialogueNarrationPrefab: {fileID: 2081377444}
   dialogues: []
   homeSprite: {fileID: 21300000, guid: 780f34f8699f7e44cb39cf989177c6f8, type: 3}
-  streetSprite: {fileID: 0}
+  streetSprite: {fileID: 21300000, guid: 791af88562b80584aa2decb4697aa329, type: 3}
   schoolSprite: {fileID: 21300000, guid: 0f897b9770389d1439c9bd40cef5b535, type: 3}
   shirokoSprite: {fileID: 21300000, guid: 03ce889b3530fe14996855b0b9c63970, type: 3}
   hoshinoSprite: {fileID: 21300000, guid: 52fc224a8d03ad145a06c4d1149625c4, type: 3}

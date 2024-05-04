@@ -61,20 +61,25 @@ public class DialogueManager : MonoBehaviour
         dialogues = new List<Dialogue>();
 
         // Define the dialogues
-        string[] speakers = { "", "Shiroko", "", "Shiroko", "Serika", "Shiroko", "Serika", "", "Shiroko", "Serika", "", "", "" };
-
-        /* "Shiroko", "Hoshino", "Serika", "Shiroko", "Hoshino", "Serika", "Shiroko", "", "Shiroko", "", "Serika", "Hoshino", "Shiroko", "Shiroko",
-            "Serika", "Hoshino", "Serika", "Hoshino", "", "", "Hoshino", "Serika" }; */
+        string[] speakers = { 
+            "", "Shiroko", "", "Shiroko", "Serika", "Shiroko", 
+            "Serika", "", "Shiroko", "Serika", "", "", "",
+            "Shiroko", "Hoshino", "Serika", "Shiroko", "Hoshino", "Serika", 
+            "Shiroko", "", "Shiroko", "", "Serika", "Hoshino", 
+            "", "Hoshino", "Shiroko", "", "Shiroko", "Serika",
+            "Hoshino", "Serika", "Hoshino", "", "Shiroko", "Hoshino", 
+            "Shiroko", "Serika", "Shiroko", ""
+        };
 
         GameObject[] prefabs = {
-            dialogueNarrationPrefab, dialogueRightPrefab, dialogueNarrationPrefab, dialogueRightPrefab, dialogueLeftPrefab,
-            dialogueRightPrefab, dialogueLeftPrefab, dialogueNarrationPrefab, dialogueRightPrefab, dialogueLeftPrefab, dialogueNarrationPrefab,
-            dialogueNarrationPrefab, dialogueNarrationPrefab}; 
+            dialogueNarrationPrefab, dialogueRightPrefab, dialogueNarrationPrefab, dialogueRightPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueLeftPrefab, 
+            dialogueNarrationPrefab, dialogueRightPrefab, dialogueLeftPrefab, dialogueNarrationPrefab, dialogueNarrationPrefab, dialogueNarrationPrefab,
+            dialogueRightPrefab, dialogueLeftPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueLeftPrefab, dialogueLeftPrefab,
+            dialogueRightPrefab, dialogueNarrationPrefab, dialogueRightPrefab, dialogueNarrationPrefab, dialogueLeftPrefab, dialogueLeftPrefab, 
+            dialogueNarrationPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueNarrationPrefab, dialogueRightPrefab, dialogueLeftPrefab, 
+            dialogueLeftPrefab, dialogueLeftPrefab, dialogueLeftPrefab, dialogueNarrationPrefab, dialogueRightPrefab, dialogueLeftPrefab, 
+            dialogueRightPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueNarrationPrefab}; 
             
-            /* dialogueRightPrefab, dialogueLeftPrefab, dialogueLeftPrefab, dialogueRightPrefab,
-            dialogueLeftPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueNarrationPrefab, dialogueRightPrefab, dialogueNarrationPrefab, dialogueLeftPrefab, dialogueLeftPrefab,
-            dialogueNarrationPrefab, dialogueRightPrefab, dialogueRightPrefab, dialogueRightPrefab, dialogueLeftPrefab, dialogueLeftPrefab, dialogueLeftPrefab, dialogueLeftPrefab, dialogueNarrationPrefab, 
-            dialogueRightPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueNarrationPrefab}; */
         string[][] sentencesArray = {
             new string[] { "The sound of the alarm echoes in the room, until it’s silenced by Shiroko’s hand chop" },
             new string[]
@@ -121,26 +126,53 @@ public class DialogueManager : MonoBehaviour
                 "Shiroko reaches the school gate and finds a few familiar faces not far from where she stops",
                 "It’s Serika and Hoshino, just about to enter the school hallway"
             },
-            /*
+            
             new string[] { "Morning girls, looks like I made it just in time huh?" },
             new string[] { "Morning Shiroko, it’s good to see you" },
             new string[] { "Morning, good thing I called you earlier, yes? What would you have done without me?" },
             new string[] { "Alright, guess I owe you one this time. Why aren't you two in class already?" },
-            new string[] { "I felt like eating fancy today so I cooked a variety of things”, “Took a while but it was well worth it" },
-
+            new string[] { "I felt like eating fancy today so I cooked a variety of things, took a while but it was well worth it" },
             new string[] { "As for me, no particular reason. Just wanna go a bit later than usual" },
+
             new string[] { "I see…" },
             new string[] { "Suddenly a strong urge comes up in her mind. There’s something she wants to, no, needs to ask. And she has to do it now" },
             new string[] { "Have you two felt like something’s off lately? I mean, what’s the deal with that thing?" },
-            new string[] { "She gulps and points to a rift on the school grounds" },
-
+            new string[] { "She gulps and points to a rift on the school grounds" },  
             new string[] { "Ah that? It’s been around forever though" },
             new string[] { "Yeah, it’s the one they use for the-" },
-            new string[] { "Her words stop abruptly for an unexplainable reason" },
-            new string[] { "Ah, it’s probably nothing important anyway. Why do you care?" },
-            new string[] { "She gulps and points to a rift on the school grounds" },
 
-            */
+            new string[] { "Her words stop abruptly for an unexplainable reason, she paused for a while before continuing" },
+            new string[] { "Ah, it’s probably nothing important anyway. Why do you care?" },
+            new string[] { "Right, why should I?" },
+            new string[] { "She says that to herself, but something still tugs at her mind. There’s something else she needs to ask" },
+            new string[] { "You know, it’s funny but I don’t remember what I was doing during the weekend. What about you? What were you up to?" },
+            new string[] { "Hmm, what was I doing again? Watching anime maybe? What about you Hoshino?" },
+
+            new string[] { "I think I was…. Uhh… I don’t really remember" },
+            new string[] { "Oh well, it will come back to us. Let’s just go inside, we will be late for class" },
+            new string[] { "Agreed, my perfect attendance is at stake here. Come on, Shiroko!" },
+            new string[] 
+            {
+                "Shiroko wishes to agree, but her legs won’t step forward",
+                "There’s this feeling again. A sense of urgency, telling her not to go",
+                "Her mind shifts to the rift on her left, there’s something beyond it that keeps on pulling her attention",
+                "Then, she decided. She has to look for answers now, or the opportunity will vanish forever"
+            },
+            new string[] { "I’m sorry girls, but I’m not coming with you" },
+            new string[] { "Eh, but why?" },
+
+            new string[] { "There’s something I need to find out, and my guts tell me I have to do it myself" },
+            new string[] { "You sure? We can tag along if you want" },
+            new string[] { "Don’t worry, I got this one. I’ll see you all again soon" },
+            new string[]
+            {
+                "Shiroko inhales and exhales her breath slowly",
+                "'here goes nothing' she mumbles. She grabs her trusted white fang and enters the rift",
+                "As she enters the dimension, no fear has her shackled because of a single conviction",
+                "A daring endeavor, but at that moment her conviction far outweighs the fear that's trying to shackle her",
+                "A conviction that comes what may on her journey, she and she alone shall prevail"
+            },
+
         };
 
         // Add each dialogue into the dialogues list
