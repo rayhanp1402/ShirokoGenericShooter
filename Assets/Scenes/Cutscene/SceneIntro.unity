@@ -744,6 +744,9 @@ MonoBehaviour:
   dialogueRightPrefab: {fileID: 338490937}
   dialogueNarrationPrefab: {fileID: 2081377444}
   dialogues: []
+  homeSprite: {fileID: 21300000, guid: 780f34f8699f7e44cb39cf989177c6f8, type: 3}
+  streetSprite: {fileID: 0}
+  schoolSprite: {fileID: 21300000, guid: 0f897b9770389d1439c9bd40cef5b535, type: 3}
   shirokoSprite: {fileID: 21300000, guid: 03ce889b3530fe14996855b0b9c63970, type: 3}
   hoshinoSprite: {fileID: 21300000, guid: 52fc224a8d03ad145a06c4d1149625c4, type: 3}
   serikaSprite: {fileID: 21300000, guid: 0a029341383f6674c8ec844cac0de6cd, type: 3}
