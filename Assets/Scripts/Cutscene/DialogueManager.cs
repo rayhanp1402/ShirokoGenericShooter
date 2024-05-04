@@ -26,10 +26,12 @@ public class DialogueManager : MonoBehaviour
     public Dictionary<string, Sprite> characterImages;
 
     private int currentDialogueIndex = 0;
+    private bool isDisplayingSentence;
 
     void Start()
     {
         sentences = new Queue<string>();
+        isDisplayingSentence = false;
 
         characterImages = new Dictionary<string, Sprite>();
         characterImages["Shiroko"] = shirokoSprite;
@@ -77,7 +79,6 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogueIndex < dialogues.Count)
         {
-            // Get the current dialogue
             Dialogue currentDialogue = dialogues[currentDialogueIndex];
 
             // If the name is empty, set the prefab to DialogueNarrationPrefab
@@ -108,6 +109,16 @@ public class DialogueManager : MonoBehaviour
                 if (image != null)
                 {
                     image.sprite = characterImages[currentDialogue.name];
+
+                    // Resize the image if the character is Serika
+                    if (currentDialogue.name == "Serika")
+                    {
+                        RectTransform rectTransform = image.GetComponent<RectTransform>();
+                        if (rectTransform != null)
+                        {
+                            rectTransform.sizeDelta = new Vector2(608, 580);
+                        }
+                    }
                 }
             }
         }
@@ -116,6 +127,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("No more dialogues to start.");
         }
     }
+
 
 
     public void StartDialogue(Dialogue dialogue)
@@ -151,13 +163,17 @@ public class DialogueManager : MonoBehaviour
 
         string sentence = sentences.Dequeue();
 
-        // Display the sentence gradually
-        StartCoroutine(TypeSentence(sentence));
+        // Check if the coroutine is already running
+        if (!isDisplayingSentence)
+        {
+            StartCoroutine(TypeSentence(sentence));
+        }
     }
 
     IEnumerator TypeSentence(string sentence)
     {
-        // Clear the dialogue text
+        isDisplayingSentence = true;
+
         dialogueText.text = "";
 
         // Display each letter of the sentence gradually
@@ -166,7 +182,10 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += letter;
             yield return null;
         }
+
+        isDisplayingSentence = false;
     }
+
 
     public void EndDialogue()
     {
