@@ -7,11 +7,14 @@ public class DialogueInputBoss : BaseDialogueInput<DialogueManagerIntro>
 
     protected override void HandleInput()
     {
-        // Check for mouse click or space bar press
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        // Check if the dialogue manager is displaying a sentence
+        bool isDisplaying = dialogueManager.getDisplayingFlag();
+        if (!isDisplaying)
         {
-            // Trigger the DisplayNextSentence method in the dialogue manager
-            dialogueManager.DisplayNextSentence();
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                dialogueManager.DisplayNextSentence();
+            }
         }
     }
 }

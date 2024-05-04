@@ -23,6 +23,7 @@ public abstract class BaseDialogueManager : MonoBehaviour
     protected abstract void LoadDialogues();
     protected abstract void StartNextDialogue();
     protected abstract void StartDialogue(Dialogue dialogue);
+    public abstract bool getDisplayingFlag();
     public abstract void DisplayNextSentence();
     protected abstract void EndDialogue();
 }

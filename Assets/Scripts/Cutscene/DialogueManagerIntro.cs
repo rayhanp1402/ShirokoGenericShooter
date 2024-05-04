@@ -260,6 +260,11 @@ public class DialogueManagerIntro : BaseDialogueManager
         DisplayNextSentence();
     }
 
+    public override bool getDisplayingFlag()
+    {
+        return isDisplayingSentence;
+    }
+
     public override void DisplayNextSentence()
     {
         if (sentences.Count == 0)
