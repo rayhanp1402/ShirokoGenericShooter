@@ -4,12 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManagerIntro : BaseDialogueManager
 {
-    public GameObject dialogueLeftPrefab;
-    public GameObject dialogueRightPrefab;
-    public GameObject dialogueNarrationPrefab;
-
     private TextMeshProUGUI nameText;
     private TextMeshProUGUI dialogueText;
     public List<Dialogue> dialogues;
@@ -28,21 +24,21 @@ public class DialogueManager : MonoBehaviour
     public Sprite hoshinoSprite;
     public Sprite serikaSprite;
 
-    // Dictionary to map character names to their respective images
-    public Dictionary<string, Sprite> characterImages;
-
     private int currentDialogueIndex = 0;
     private bool isDisplayingSentence;
 
-    void Start()
+    protected override void Start()
     {
-        sentences = new Queue<string>();
-        isDisplayingSentence = false;
+        base.Start();
 
-        characterImages = new Dictionary<string, Sprite>();
+        // Init sprite dictionary
         characterImages["Shiroko"] = shirokoSprite;
         characterImages["Hoshino"] = hoshinoSprite;
         characterImages["Serika"] = serikaSprite;
+
+        // Init sentences and dialogues
+        sentences = new Queue<string>();
+        isDisplayingSentence = false;
 
         LoadDialogues();
 
@@ -56,7 +52,7 @@ public class DialogueManager : MonoBehaviour
         StartNextDialogue();
     }
 
-    void LoadDialogues()
+    protected override void LoadDialogues()
     {
         dialogues = new List<Dialogue>();
 
@@ -184,7 +180,7 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    void StartNextDialogue()
+    protected override void StartNextDialogue()
     {
         if (currentDialogueIndex < dialogues.Count)
         {
@@ -241,7 +237,7 @@ public class DialogueManager : MonoBehaviour
 
 
 
-    public void StartDialogue(Dialogue dialogue)
+    protected override void StartDialogue(Dialogue dialogue)
     {
         // Find the nameText and dialogueText in the current prefab hierarchy
         nameText = currentPrefab.transform.Find("CharacterName")?.Find("CharacterText")?.GetComponent<TextMeshProUGUI>();
@@ -264,7 +260,7 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
     }
 
-    public void DisplayNextSentence()
+    public override void DisplayNextSentence()
     {
         if (sentences.Count == 0)
         {
@@ -298,7 +294,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void EndDialogue()
+    protected override void EndDialogue()
     {
         currentDialogueIndex++;
 

@@ -2,12 +2,10 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 
-public class DialogueInput : MonoBehaviour
+public class DialogueInputIntro : BaseDialogueInput<DialogueManagerIntro>
 {
-    // Reference to the dialogue manager
-    public DialogueManager dialogueManager;
 
-    void Update()
+    protected override void HandleInput()
     {
         // Check for mouse click or space bar press
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
