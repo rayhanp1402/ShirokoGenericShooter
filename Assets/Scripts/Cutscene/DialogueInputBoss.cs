@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 
-public class DialogueInputBoss : BaseDialogueInput<DialogueManagerIntro>
+public class DialogueInputBoss : BaseDialogueInput<DialogueManagerBoss>
 {
 
     protected override void HandleInput()

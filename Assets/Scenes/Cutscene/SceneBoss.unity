@@ -174,10 +174,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 283900662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a1975d9e42570f4db423cfe5622814d, type: 3}
+  m_Script: {fileID: 11500000, guid: 23400c486c0778e44bfbe657852f8571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 1101564324}
+  dialogueManager: {fileID: 1101564326}
 --- !u!1 &338490937 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3883095791203667565, guid: c0935b4988ee5dc47b025837919bb4b4, type: 3}
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 780f34f8699f7e44cb39cf989177c6f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 53f3313bb9d54dd49b9db90cadab2569, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -720,7 +720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1101564325}
-  - component: {fileID: 1101564324}
+  - component: {fileID: 1101564326}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -728,28 +728,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1101564324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1101564323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f102bf8644ba614d8499fc02714c0a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueLeftPrefab: {fileID: 113947583}
-  dialogueRightPrefab: {fileID: 338490937}
-  dialogueNarrationPrefab: {fileID: 2081377444}
-  dialogues: []
-  homeSprite: {fileID: 21300000, guid: 780f34f8699f7e44cb39cf989177c6f8, type: 3}
-  streetSprite: {fileID: 21300000, guid: 791af88562b80584aa2decb4697aa329, type: 3}
-  schoolSprite: {fileID: 21300000, guid: 0f897b9770389d1439c9bd40cef5b535, type: 3}
-  shirokoSprite: {fileID: 21300000, guid: 03ce889b3530fe14996855b0b9c63970, type: 3}
-  hoshinoSprite: {fileID: 21300000, guid: 52fc224a8d03ad145a06c4d1149625c4, type: 3}
-  serikaSprite: {fileID: 21300000, guid: 0a029341383f6674c8ec844cac0de6cd, type: 3}
 --- !u!4 &1101564325
 Transform:
   m_ObjectHideFlags: 0
@@ -765,6 +743,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1101564326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101564323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb437e376dd4a54986ce3f7382dc88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueLeftPrefab: {fileID: 113947583}
+  dialogueRightPrefab: {fileID: 338490937}
+  dialogueNarrationPrefab: {fileID: 2081377444}
+  dialogues: []
+  throneSprite: {fileID: 21300000, guid: 53f3313bb9d54dd49b9db90cadab2569, type: 3}
+  shirokoSprite: {fileID: 21300000, guid: 03ce889b3530fe14996855b0b9c63970, type: 3}
+  bossSprite: {fileID: 21300000, guid: 52fc224a8d03ad145a06c4d1149625c4, type: 3}
 --- !u!1 &1519132878
 GameObject:
   m_ObjectHideFlags: 0
