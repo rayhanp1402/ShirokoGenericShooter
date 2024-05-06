@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Nightmare
 {
-    public class HealerPet : PausibleObject
+    public class HealerPetBehaviour : PausibleObject
     {
 
         Transform player;

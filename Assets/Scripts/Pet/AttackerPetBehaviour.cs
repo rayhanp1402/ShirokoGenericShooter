@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Nightmare
 {
-    public class AttackerPet : PausibleObject
+    public class AttackerPetBehaviour : PausibleObject
     {
 
         Transform player;
@@ -126,7 +126,6 @@ namespace Nightmare
 
         private void goToClosestEnemy(List<GameObject> enemies)
         {
-            Debug.Log("Going to closest enemy");
             if (enemies.Count > 0)
             {
                 enemyTarget = enemies[0];
