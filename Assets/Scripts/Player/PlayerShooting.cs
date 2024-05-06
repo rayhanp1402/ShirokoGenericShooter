@@ -7,7 +7,9 @@ namespace Nightmare
 {
     public class PlayerShooting : PausibleObject
     {
-        public int damagePerShot = 20;
+        public float damagePerShot = 20f;
+        public float initialDamage = 20f;
+        public int maxOrb;
         public float timeBetweenBullets = 0.15f;
         public float range = 100f;
         public GameObject grenade;
@@ -155,6 +157,10 @@ namespace Nightmare
             }
         }
 
+        public void BoostShooting()
+        {
+            damagePerShot = damagePerShot + initialDamage * 0.1f;
+        }
         private void ChangeGunLine(float midPoint)
         {
             AnimationCurve curve = new AnimationCurve();

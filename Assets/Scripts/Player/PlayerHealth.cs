@@ -7,8 +7,8 @@ namespace Nightmare
 {
     public class PlayerHealth : MonoBehaviour
     {
-        public int startingHealth = 100;
-        public int currentHealth;
+        public float startingHealth = 100f;
+        public float currentHealth;
         public Slider healthSlider;
         public Image damageImage;
         public AudioClip deathClip;
@@ -63,6 +63,14 @@ namespace Nightmare
 
             // Reset the damaged flag.
             damaged = false;
+        }
+
+        public void HealOrb()
+        {
+            currentHealth += startingHealth * 0.2f;
+            if (currentHealth > startingHealth){
+                currentHealth = startingHealth;
+            }
         }
 
 
