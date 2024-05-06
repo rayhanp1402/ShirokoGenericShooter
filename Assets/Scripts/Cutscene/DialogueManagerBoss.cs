@@ -149,10 +149,6 @@ public class DialogueManagerBoss : BaseDialogueManager
 
         };
 
-        Debug.Log(speakers.Length);
-        Debug.Log(prefabs.Length);
-        Debug.Log(sentencesArray.Length);
-
         // Add each dialogue into the dialogues list
         for (int i = 0; i < speakers.Length; i++)
         {
