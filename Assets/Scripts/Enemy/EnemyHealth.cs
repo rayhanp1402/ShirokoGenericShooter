@@ -7,6 +7,7 @@ namespace Nightmare
         public int startingHealth = 100;
         public float sinkSpeed = 2.5f;
         public int scoreValue = 10;
+        public int coinValue = 40;
         public AudioClip deathClip;
 
         int currentHealth;
@@ -77,6 +78,7 @@ namespace Nightmare
 
         void Death ()
         {
+            CoinDropManager.DropMoney(transform.position, coinValue);
             EventManager.TriggerEvent("Sound", this.transform.position);
             anim.SetTrigger ("Dead");
 
@@ -90,6 +92,7 @@ namespace Nightmare
             SetKinematics(true);
 
             ScoreManager.score += scoreValue;
+            
         }
 
         public int CurrentHealth()

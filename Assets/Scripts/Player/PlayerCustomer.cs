@@ -9,10 +9,14 @@ namespace Nightmare
         bool isNearShop = false;
         ShopHandler shopHandler;
 
+        private void Awake()
+        {
+            shopHandler = FindObjectOfType<ShopHandler>();
+        }
 
         private void Update()
         {
-            if (isNearShop)
+            if (isNearShop && shopHandler)
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
@@ -20,25 +24,10 @@ namespace Nightmare
                 }
             }
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == "Shop")
-            {
-                Debug.Log("Near Shop");
-                isNearShop = true;
-                shopHandler = other.gameObject.GetComponent<ShopHandler>();
-            }
-        }
 
-        private void OnTriggerExit(Collider other)
+        public void setNearShop(bool value)
         {
-            if (other.gameObject.tag == "Shop")
-            {
-                Debug.Log("Exit Shop");
-                isNearShop = false;
-                shopHandler.HideShop();
-                shopHandler = null;
-            }
+            isNearShop = value;
         }
     }
 }

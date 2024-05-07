@@ -13,8 +13,8 @@ namespace Nightmare
         private Canvas shopCanvas;
         private float timer = 0.0f;
         private bool isShopOpen;
-
         private TextMeshPro ShopText;
+        private PlayerCustomer playerCustomer;
 
         // Start is called before the first frame update
         void Start()
@@ -23,6 +23,7 @@ namespace Nightmare
             shopCanvas.gameObject.SetActive(false);
             isShopOpen = true;
             ShopText = GetComponentInChildren<TextMeshPro>();
+            playerCustomer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCustomer>();
         }
 
         // Update is called once per frame
@@ -46,22 +47,24 @@ namespace Nightmare
 
         }
 
-        // void OnTriggerEnter(Collider other)
-        // {
-        //     if (other.gameObject.tag == "Player")
-        //     {
-        //         Debug.Log("Player near shop");
-        //     }
-        // }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                playerCustomer.setNearShop(true);
+            }
+        }
 
-        // void OnTriggerExit(Collider other)
-        // {
-        //     if (other.gameObject.tag == "Player")
-        //     {
-        //         Debug.Log("Player left shop");
-        //     }
-        // }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                playerCustomer.setNearShop(false);
+                HideShop();
+            }
+        }
 
+        
         public void ShowShop()
         {
             shopCanvas.gameObject.SetActive(true);
@@ -82,6 +85,7 @@ namespace Nightmare
             FadeOutDestroy shopKeeper = transform.Find("Shopkeeper").GetComponent<FadeOutDestroy>();
             shopKeeper.StartFadeOut();
             isShopOpen = false;
+            playerCustomer.setNearShop(false);
             ShopText.text = "Shop Closed";
         }
 
