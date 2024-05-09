@@ -8,6 +8,8 @@ namespace Nightmare
     {
         public float speed = 6f;            // The speed that the player will move at.
 
+        public float baseSpeed = 6f; 
+        public float baseAttack = 5f;
 
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
@@ -118,6 +120,24 @@ namespace Nightmare
 #endif
         }
 
+        public void SpeedBoost(float duration)
+        {
+            StartCoroutine(SpeedBoostCoroutine(duration));
+        }
+
+        private System.Collections.IEnumerator SpeedBoostCoroutine(float duration)
+        {
+            float maxSpeed = 1.2f * baseSpeed;
+            speed = maxSpeed;
+            yield return new WaitForSeconds(duration);
+            speed = baseSpeed;
+        }
+
+        public void Reduce(float speedAmount, float attackAmount)
+        {
+            this.speed = speedAmount;
+            this.baseAttack = attackAmount;
+        }
 
         void Animating (float h, float v)
         {
