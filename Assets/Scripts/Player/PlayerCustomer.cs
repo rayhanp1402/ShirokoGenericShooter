@@ -16,11 +16,14 @@ namespace Nightmare
 
         private void Update()
         {
-            if (isNearShop && shopHandler)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (isNearShop && shopHandler)
                 {
                     shopHandler.ShowShop();
+                } else {
+                    EventManager.TriggerEvent("ShopWarning");
+                
                 }
             }
         }
