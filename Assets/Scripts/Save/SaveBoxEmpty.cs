@@ -2,16 +2,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 using System;
+using System.Collections.Generic;
 
 public class SaveBoxEmpty : MonoBehaviour, IPointerClickHandler
 {
-    // Reference to the SaveLoadManager script
     public SaveLoadManager saveLoadManager;
-
-    // Reference to the SaveBoxFilled prefab
     public GameObject saveBoxFilledPrefab;
 
-    // Called when the save box is clicked
+    private static int currentIndex = 1; // Counter to track the current index
+
     public void OnPointerClick(PointerEventData eventData)
     {
         // Check if the SaveLoadManager script is assigned
@@ -22,7 +21,6 @@ public class SaveBoxEmpty : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    // Method to replace the empty save box with a filled one
     public void PlaceFilledSaveBox(Transform parent)
     {
         // Instantiate the SaveBoxFilled prefab as a child of the specified parent
@@ -48,11 +46,12 @@ public class SaveBoxEmpty : MonoBehaviour, IPointerClickHandler
             Debug.LogWarning("SaveLoadManager not found in the scene.");
         }
 
-        // Set the save name text to "Save"
+        // Set the save name text based on the current index
         TextMeshProUGUI saveNameText = filledSaveBox.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
         if (saveNameText != null)
         {
-            saveNameText.text = "Save";
+            saveNameText.text = "Save " + currentIndex; // Set the save name based on the current index
+            currentIndex++; // Increment the index for the next SaveBoxFilled
         }
         else
         {
@@ -73,6 +72,4 @@ public class SaveBoxEmpty : MonoBehaviour, IPointerClickHandler
         // Destroy the empty save box
         Destroy(gameObject);
     }
-
-
 }

@@ -4,10 +4,8 @@ using UnityEngine.UI;
 
 public class SaveBoxFilled : MonoBehaviour, IPointerClickHandler
 {
-    // Reference to the SaveLoadManager script
     public SaveLoadManager saveLoadManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Find the DeleteButton child of SaveBoxFilled
@@ -23,7 +21,6 @@ public class SaveBoxFilled : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    // Called when the save box is clicked
     public void OnPointerClick(PointerEventData eventData)
     {
         // Check if the SaveLoadManager script is assigned
