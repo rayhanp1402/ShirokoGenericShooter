@@ -20,6 +20,10 @@ public class DefaultGun : PausibleObject
     
     float timer;
 
+    public int shotsFired = 0;
+    public int shotsHit = 0;
+
+
 
     void Awake()
     {
@@ -67,6 +71,7 @@ public class DefaultGun : PausibleObject
     void Shoot()
     {
         timer = 0f;
+        shotsFired++;  
 
         fireAudio.Play();
         fireLight.enabled = true;
@@ -85,6 +90,7 @@ public class DefaultGun : PausibleObject
             if (enemyHealth != null )
             {
                 enemyHealth.TakeDamage(damage, fireHit.point);
+                shotsHit++;
             }
 
             if(enemyPetHealth != null)

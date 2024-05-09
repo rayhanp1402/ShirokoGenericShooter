@@ -7,7 +7,6 @@ namespace Nightmare
 {
     public class PlayerShooting : PausibleObject
     {
-        private Statistic statistic;
         public float damagePerShot = 20f;
         public float initialDamage = 20f;
         public int maxOrb;
@@ -33,8 +32,6 @@ namespace Nightmare
 
         void Awake ()
         {
-            statistic = FindObjectOfType<Statistic>();
-
             // Create a layer mask for the Shootable layer.
             shootableMask = LayerMask.GetMask ("Shootable", "Enemy");
 
@@ -147,7 +144,6 @@ namespace Nightmare
                 {
                     // ... the enemy should take damage.
                     bool hit = enemyHealth != null;
-                    statistic.UpdateAccuracy(hit);
 
                     enemyHealth.TakeDamage (damagePerShot, shootHit.point);
                 }
@@ -163,7 +159,6 @@ namespace Nightmare
             // If the raycast didn't hit anything on the shootable layer...
             else
             {
-                statistic.UpdateAccuracy(false);
                 // ... set the second position of the line renderer to the fullest extent of the gun's range.
                 gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
             }

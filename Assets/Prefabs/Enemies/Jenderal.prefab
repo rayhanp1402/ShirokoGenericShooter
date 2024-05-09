@@ -603,6 +603,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 02c0ccd78564e3748ab929c582c42444, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1042072312107367729, guid: 02c0ccd78564e3748ab929c582c42444, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -854,7 +858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b312e148e0b61284399f05efb90b607c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 0.1
 --- !u!114 &3811648889763430949
 MonoBehaviour:
   m_ObjectHideFlags: 0

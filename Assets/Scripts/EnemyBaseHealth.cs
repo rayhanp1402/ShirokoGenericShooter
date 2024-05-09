@@ -41,6 +41,12 @@ public abstract class EnemyBaseHealth : MonoBehaviour
         // TODO: Add any common death behavior here
 
         GetComponent<NavMeshAgent>().enabled = false;
+
+        Statistic statistic = FindObjectOfType<Statistic>();
+        if (statistic != null)
+        {
+            statistic.IncrementKill(); // Memanggil method IncrementKill() dari kelas Statistic
+        }
     }
 
     public int getCurrentHealth()

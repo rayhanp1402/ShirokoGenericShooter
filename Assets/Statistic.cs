@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class Statistic : MonoBehaviour
 {
+    public ShirokoMovement playerMovement;
+    public DefaultGun defaultGun;
     public TMP_Text PlayTime; 
     public TMP_Text Distance;
     public TMP_Text Score;
@@ -12,19 +14,11 @@ public class Statistic : MonoBehaviour
     public TMP_Text Death;
     private float playTime;
     public bool isPaused = false; 
-    private float totalDistance;
-    private Vector3 lastPosition;
-    private int shotsFired;
-    private int shotsHit;
-    private int deathCount; // Variabel untuk menghitung jumlah kematian
-
+    private int killCount;
 
      void Start()
     {
-        lastPosition = transform.position;
-        shotsFired = 0;
-        shotsHit = 0;
-        deathCount = 0; 
+        killCount = 0;
     }
 
     void Update()
@@ -32,51 +26,47 @@ public class Statistic : MonoBehaviour
         if (!isPaused)
         {
             playTime += Time.deltaTime;
-
-            int hours = Mathf.FloorToInt(playTime / 3600);
-            int minutes = Mathf.FloorToInt((playTime % 3600) / 60);
-            int seconds = Mathf.FloorToInt(playTime % 60);
-
-            PlayTime.text = "Play Time: " + hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
-
-            CalculateDistance();
+            UpdatePlayTime();
+            UpdateDistance();
+            UpdateAccuracy();
+            UpdateKill();
         }
     }
-
-    void CalculateDistance()
+    
+    void UpdatePlayTime()
     {
-        float distance = Vector3.Distance(transform.position, lastPosition);
-        totalDistance += distance;
-        lastPosition = transform.position;
-
-        float distanceInKm = totalDistance / 1000f; 
-
-        Distance.text = "Distance: " + distanceInKm.ToString("0.00") + " km";
+        int hours = Mathf.FloorToInt(playTime / 3600);
+        int minutes = Mathf.FloorToInt((playTime % 3600) / 60);
+        int seconds = Mathf.FloorToInt(playTime % 60);
+        PlayTime.text = "Play Time: " + hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 
-    public void UpdateAccuracy(bool hit)
+    void UpdateDistance()
     {
-        // Update jumlah tembakan dan jumlah tembakan yang mengenai target
-        shotsFired++;
-        if (hit)
+        // Format jarak menjadi dua desimal
+        float distanceInKilometers = playerMovement.totalDistanceTraveled / 1000f;
+
+        // Format jarak menjadi dua desimal
+        Distance.text = "Distance: " + distanceInKilometers.ToString("F2") + " km"; 
+    }
+
+    void UpdateAccuracy()
+    {
+        if (defaultGun.shotsFired > 0)
         {
-            shotsHit++;
+            float accuracy = (float)defaultGun.shotsHit / defaultGun.shotsFired * 100;
+            Accuracy.text = "Accuracy: " + accuracy.ToString("F2") + "%" + " (" + defaultGun.shotsHit + "/" + defaultGun.shotsFired + ")";
         }
-
-        // Hitung persentase akurasi
-        float accuracy = 0f;
-        if (shotsFired > 0)
-        {
-            accuracy = (float) shotsHit / shotsFired * 100f;
-        }
-
-        Accuracy.text = "Accuracy: " + accuracy.ToString("0.00") + "%";
     }
 
-    public void UpdateDeathCount()
+    void UpdateKill()
     {
-        deathCount++;
-        Death.text = "Death: " + deathCount.ToString();
+        Kill.text = "Kill: " + killCount.ToString(); // Memperbarui teks pada UI dengan jumlah kill saat ini
+    }
+
+    public void IncrementKill()
+    {
+        killCount++; // Menambah jumlah kill saat musuh mati
     }
     
 }
