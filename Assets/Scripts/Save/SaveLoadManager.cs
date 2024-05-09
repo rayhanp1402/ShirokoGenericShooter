@@ -20,11 +20,18 @@ public class SaveLoadManager : MonoBehaviour
         Debug.Log("Save box clicked!");
     }
 
-    public void OnDeleteButtonClicked(SaveBoxFilled saveBoxFilled)
+    public void OnDeleteButtonClicked(SaveBoxFilled saveBoxFilled, SaveLoadManager saveLoadManager)
     {
         // Instantiate an empty save box in the same position as the filled save box
         GameObject emptySaveBox = Instantiate(saveBoxEmptyPrefab, saveBoxFilled.transform.position, saveBoxFilled.transform.rotation, saveMenuCanvas);
 
+        SaveBoxEmpty emptyBoxScript = emptySaveBox.AddComponent<SaveBoxEmpty>();
+
+        if (emptyBoxScript != null)
+        {
+            emptyBoxScript.saveLoadManager = saveLoadManager;
+            emptyBoxScript.saveBoxFilledPrefab = saveBoxFilledPrefab;
+        }
         // Destroy the filled save box
         Destroy(saveBoxFilled.gameObject);
     }
