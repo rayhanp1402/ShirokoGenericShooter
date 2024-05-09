@@ -8,9 +8,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8123269600222056361, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7788148413844016152, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7432409066958402367, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -6689036041284674117, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
       propertyPath: m_Name
       value: sci-_fi__future_building_2_simple_dome
+      objectReference: {fileID: 0}
+    - target: {fileID: -6689036041284674117, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4493724706777328333, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -2319500299826451883, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2484665033948473043, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565493445412736820, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
       propertyPath: m_LocalScale.x
@@ -67,6 +99,14 @@ PrefabInstance:
     - target: {fileID: 2774220344278030320, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861189906652251266, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978103523514716507, guid: cd7bc206a061a7249b2f657b8509b077, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

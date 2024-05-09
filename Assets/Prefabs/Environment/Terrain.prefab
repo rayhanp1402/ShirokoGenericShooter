@@ -90,11 +90,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 02a301091cbec8f47b3e98152d168ffe, type: 2}
     - target: {fileID: 919132149155446097, guid: d784c15c866383649b2c4289b31c9139, type: 3}
       propertyPath: m_Name
-      value: Aram_Chaos_LP_plus
+      value: Terrain
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d784c15c866383649b2c4289b31c9139, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d784c15c866383649b2c4289b31c9139, type: 3}
       propertyPath: m_IsActive
@@ -102,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3124521936383007385, guid: d784c15c866383649b2c4289b31c9139, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
