@@ -16,4 +16,14 @@ public class SaveBoxFilled : MonoBehaviour, IPointerClickHandler
             saveLoadManager.OnSaveBoxClicked();
         }
     }
+
+    public void OnDeleteButtonClicked()
+    {
+        // Check if the SaveLoadManager script is assigned
+        if (saveLoadManager != null)
+        {
+            // Call a method in the SaveLoadManager to handle the delete button click event
+            saveLoadManager.OnDeleteButtonClicked(this);
+        }
+    }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SaveLoadManager : MonoBehaviour
 {
+    public GameObject saveBoxEmptyPrefab;
     public GameObject saveBoxFilledPrefab;
     public Transform saveMenuCanvas;
 
@@ -17,5 +18,14 @@ public class SaveLoadManager : MonoBehaviour
     {
         // Perform the desired action, such as logging a message
         Debug.Log("Save box clicked!");
+    }
+
+    public void OnDeleteButtonClicked(SaveBoxFilled saveBoxFilled)
+    {
+        // Instantiate an empty save box in the same position as the filled save box
+        GameObject emptySaveBox = Instantiate(saveBoxEmptyPrefab, saveBoxFilled.transform.position, saveBoxFilled.transform.rotation, saveMenuCanvas);
+
+        // Destroy the filled save box
+        Destroy(saveBoxFilled.gameObject);
     }
 }
