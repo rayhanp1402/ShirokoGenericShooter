@@ -23,21 +23,11 @@ public class SaveBoxFilled : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Check if the SaveLoadManager script is assigned
-        if (saveLoadManager != null)
-        {
-            // Call a method in the SaveLoadManager to handle the click event
-            saveLoadManager.OnSaveBoxClicked();
-        }
+        saveLoadManager?.OnSaveBoxFilledClicked();
     }
 
     public void OnDeleteButtonClicked()
     {
-        // Check if the SaveLoadManager script is assigned
-        if (saveLoadManager != null)
-        {
-            // Call a method in the SaveLoadManager to handle the delete button click event
-            saveLoadManager.OnDeleteButtonClicked(this, saveLoadManager);
-        }
+        saveLoadManager?.PlaceEmptySaveBox(this, saveLoadManager);
     }
 }
