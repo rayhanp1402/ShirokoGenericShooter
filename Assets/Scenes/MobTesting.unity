@@ -843,7 +843,7 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &1676521959 stripped
+--- !u!4 &1676521967 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6848734309654916244, guid: b93728c70c66b9945b3e57e2b287f8ab, type: 3}
   m_PrefabInstance: {fileID: 2023251697}
@@ -1800,7 +1800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75a8b03b3ecd064a8bf09c98b46b249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1676521959}
+  target: {fileID: 1676521967}
   smoothing: 5
 --- !u!1001 &366652251543696956
 PrefabInstance:
