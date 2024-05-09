@@ -8,9 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8836970790411083054, guid: d49487d01397c3040a3a435b2106e6f5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -6689036041284674117, guid: d49487d01397c3040a3a435b2106e6f5, type: 3}
       propertyPath: m_Name
       value: low_poly_space_ship
+      objectReference: {fileID: 0}
+    - target: {fileID: -6689036041284674117, guid: d49487d01397c3040a3a435b2106e6f5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -475206040887968943, guid: d49487d01397c3040a3a435b2106e6f5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903486728043639652, guid: d49487d01397c3040a3a435b2106e6f5, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: d49487d01397c3040a3a435b2106e6f5, type: 3}
       propertyPath: m_LocalPosition.x
