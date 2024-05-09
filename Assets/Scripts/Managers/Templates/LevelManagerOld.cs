@@ -1,19 +1,18 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Nightmare
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManagerOld : MonoBehaviour
     {
-        public levelInfo[] levels;
-        private int currentLevel;
+        public string[] levels;
+
+        private int currentLevel = 0;
         private Scene currentScene;
         private PlayerMovement playerMove;
         private Vector3 playerRespawn;
-
-        private Canvas playerHUD;
+        private CinematicController cinema;
 
         void OnEnable()
         {
@@ -23,10 +22,10 @@ namespace Nightmare
 
         void Start()
         {
+            cinema = FindObjectOfType<CinematicController>();
+            SceneManager.LoadSceneAsync(levels[0], LoadSceneMode.Additive);
             playerMove = FindObjectOfType<PlayerMovement>();
             playerRespawn = playerMove.transform.position;
-            playerHUD = GameObject.Find("HUDCanvas").GetComponent<Canvas>();
-            LoadInitialLevel();
         }
 
         public void AdvanceLevel()
@@ -36,7 +35,7 @@ namespace Nightmare
 
         public void LoadInitialLevel()
         {
-            LoadLevel(InitialLevel.getLevel() == -1 ? 0 : InitialLevel.getLevel());
+            LoadLevel(0);
         }
 
         private void LoadLevel(int level)
@@ -44,59 +43,35 @@ namespace Nightmare
             currentLevel = level;
 
             //Load next level in background
-            string loadingScene = levels[level % levels.Length].name;
-
-            if (levels[level % levels.Length].isCutscene){
-                SceneManager.sceneLoaded -= OnCutsceneLoaded;
-                SceneManager.sceneLoaded -= OnSceneLoaded;
-                SceneManager.sceneLoaded += OnCutsceneLoaded;
-            }
-            else{
-                SceneManager.sceneLoaded -= OnCutsceneLoaded;
-                SceneManager.sceneLoaded -= OnSceneLoaded;
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                
-            }
-
-
+            string loadingScene = levels[level % levels.Length];
             SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Additive);
-        }
-
-        void OnCutsceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            Debug.Log("Cutscene loaded: " + scene.name);
-            if (mode != LoadSceneMode.Additive)
-                return;
-
-            playerHUD.enabled = false;
-
-            SceneManager.SetActiveScene(scene);
-
-            DisableOldScene();
-
-            currentScene = scene;
         }
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Debug.Log("Scene loaded: " + scene.name);
             if (mode != LoadSceneMode.Additive)
                 return;
 
             playerMove.transform.position = playerRespawn;
-            Debug.Log(playerHUD.GameObject().name);
-            playerHUD.enabled = true;
+            Debug.Log(scene.name + " loaded.");
             SceneManager.SetActiveScene(scene);
 
             DisableOldScene();
 
             currentScene = scene;
+
+            // Play realtime cinematic?
+            if (currentLevel > 1)
+                cinema.StartCinematic(CinematicController.CinematicType.Realtime);
+            else
+                cinema.StartCinematic(CinematicController.CinematicType.PreRendered);
         }
 
         private void DisableOldScene()
         {
             if (currentScene.IsValid())
             {
+                // Disable old scene.
                 GameObject[] oldSceneObjects = currentScene.GetRootGameObjects();
                 for (int i = 0; i < oldSceneObjects.Length; i++)
                 {
@@ -118,23 +93,5 @@ namespace Nightmare
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
         }
-    }
-}
-
-[System.Serializable]
-public class levelInfo {
-    public string name;
-    public bool isCutscene;
-}
-
-public static class InitialLevel {
-    private static int level = -1;
-
-    public static int getLevel(){
-        return level;
-    }
-
-    public static void setLevel(int newLevel){
-        level = newLevel;
     }
 }

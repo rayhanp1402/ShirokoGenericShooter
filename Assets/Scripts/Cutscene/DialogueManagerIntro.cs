@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Nightmare;
 
 public class DialogueManagerIntro : BaseDialogueManager
 {
@@ -77,7 +78,7 @@ public class DialogueManagerIntro : BaseDialogueManager
             dialogueRightPrefab, dialogueLeftPrefab, dialogueRightPrefab, dialogueNarrationPrefab}; 
             
         string[][] sentencesArray = {
-            new string[] { "The sound of the alarm echoes in the room, until it’s silenced by Shiroko’s hand chop" },
+            new string[] { "The sound of the alarm echoes in the room, until itï¿½s silenced by Shirokoï¿½s hand chop" },
             new string[]
             {
                 "Oh beautiful saturday, a day meant to be spent sleeping until noon",
@@ -87,79 +88,79 @@ public class DialogueManagerIntro : BaseDialogueManager
             new string[]
             {
                 "Her sentence remains incomplete, interrupted by the ring of a phone call",
-                "The caller’s name displayed vividly on the screen, it’s her friend Serika on the other end",
+                "The callerï¿½s name displayed vividly on the screen, itï¿½s her friend Serika on the other end",
                 "'This better be important, or there will be hell to pay' she says to herself",
             },
             new string[] { "Hello, sorry but you got the wrong number" },
             new string[]
             {
-                "Oh thank God you’re picking up, get out of bed and get dressed already",
-                "Unless of course, you’re planning on being late"
+                "Oh thank God youï¿½re picking up, get out of bed and get dressed already",
+                "Unless of course, youï¿½re planning on being late"
             },
             new string[] { "Late? Late for what? We have no events for Saturday" },
             new string[]
             {
                 "Oh my dear Shiroko, would you do me a favor?",
-                "Please look at your phone’s calendar and read it aloud for me"
+                "Please look at your phoneï¿½s calendar and read it aloud for me"
             },
             new string[] 
             { 
                 "Shiroko proceeds to do just that, and the upcoming horror has never appeared even in her wildest dreams", 
                 "She jumped out of bed with horror as she shouts" 
             },
-            new string[] { "It’s ... Monday? But… but… I thought…" },
-            new string[] { "Right, I’ll see you at school then" },
+            new string[] { "Itï¿½s ... Monday? Butï¿½ butï¿½ I thoughtï¿½" },
+            new string[] { "Right, Iï¿½ll see you at school then" },
             new string[] { "With the blessing of Hermes, Shiroko gets dressed and proceeds to run to school with the pace and speed of a track star" },
             new string[]
             {
                 "The school bell is ringing, the sun is rising, and beneath its warm light Shiroko is running with all her might",
                 "As she goes, something tugs at her mind, the scenery feels different. Is it the trees? The clouds floating above her head?",
-                "Or perhaps … the dimensional rifts staring into her along the way?",
+                "Or perhaps ï¿½ the dimensional rifts staring into her along the way?",
                 "She has a lot of questions and someone better have the answers"
             },
             new string[]
             {
                 "Shiroko reaches the school gate and finds a few familiar faces not far from where she stops",
-                "It’s Serika and Hoshino, just about to enter the school hallway"
+                "Itï¿½s Serika and Hoshino, just about to enter the school hallway"
             },
             
             new string[] { "Morning girls, looks like I made it just in time huh?" },
-            new string[] { "Morning Shiroko, it’s good to see you" },
+            new string[] { "Morning Shiroko, itï¿½s good to see you" },
             new string[] { "Morning, good thing I called you earlier, yes? What would you have done without me?" },
             new string[] { "Alright, guess I owe you one this time. Why aren't you two in class already?" },
             new string[] { "I felt like eating fancy today so I cooked a variety of things, took a while but it was well worth it" },
             new string[] { "As for me, no particular reason. Just wanna go a bit later than usual" },
 
-            new string[] { "I see…" },
-            new string[] { "Suddenly a strong urge comes up in her mind. There’s something she wants to, no, needs to ask. And she has to do it now" },
-            new string[] { "Have you two felt like something’s off lately? I mean, what’s the deal with that thing?" },
+            new string[] { "I seeï¿½" },
+            new string[] { "Suddenly a strong urge comes up in her mind. Thereï¿½s something she wants to, no, needs to ask. And she has to do it now" },
+            new string[] { "Have you two felt like somethingï¿½s off lately? I mean, whatï¿½s the deal with that thing?" },
             new string[] { "She gulps and points to a rift on the school grounds" },  
-            new string[] { "Ah that? It’s been around forever though" },
-            new string[] { "Yeah, it’s the one they use for the-" },
+            new string[] { "Ah that? Itï¿½s been around forever though" },
+            new string[] { "Yeah, itï¿½s the one they use for the-" },
 
             new string[] { "Her words stop abruptly for an unexplainable reason, she paused for a while before continuing" },
-            new string[] { "Ah, it’s probably nothing important anyway. Why do you care?" },
+            new string[] { "Ah, itï¿½s probably nothing important anyway. Why do you care?" },
             new string[] { "Right, why should I?" },
-            new string[] { "She says that to herself, but something still tugs at her mind. There’s something else she needs to ask" },
-            new string[] { "You know, it’s funny but I don’t remember what I was doing during the weekend. What about you? What were you up to?" },
+            new string[] { "She says that to herself, but something still tugs at her mind. Thereï¿½s something else she needs to ask" },
+            new string[] { "You know, itï¿½s funny but I donï¿½t remember what I was doing during the weekend. What about you? What were you up to?" },
             new string[] { "Hmm, what was I doing again? Watching anime maybe? What about you Hoshino?" },
 
-            new string[] { "I think I was…. Uhh… I don’t really remember" },
-            new string[] { "Oh well, it will come back to us. Let’s just go inside, we will be late for class" },
+            new string[] { "I think I wasï¿½. Uhhï¿½ I donï¿½t really remember" },
+            new string[] { "Oh well, it will come back to us. Letï¿½s just go inside, we will be late for class" },
             new string[] { "Agreed, my perfect attendance is at stake here. Come on, Shiroko!" },
             new string[] 
             {
-                "Shiroko wishes to agree, but her legs won’t step forward",
-                "There’s this feeling again. A sense of urgency, telling her not to go",
-                "Her mind shifts to the rift on her left, there’s something beyond it that keeps on pulling her attention",
+                "Shiroko wishes to agree, but her legs wonï¿½t step forward",
+                "Thereï¿½s this feeling again. A sense of urgency, telling her not to go",
+                "Her mind shifts to the rift on her left, thereï¿½s something beyond it that keeps on pulling her attention",
                 "Then, she decided. She has to look for answers now, or the opportunity will vanish forever"
             },
-            new string[] { "I’m sorry girls, but I’m not coming with you" },
+            new string[] { "Iï¿½m sorry girls, but Iï¿½m not coming with you" },
             new string[] { "Eh, but why?" },
 
-            new string[] { "There’s something I need to find out, and my guts tell me I have to do it myself" },
+            new string[] { "Thereï¿½s something I need to find out, and my guts tell me I have to do it myself" },
             new string[] { "You sure? We can tag along if you want" },
-            new string[] { "Don’t worry, I got this one. I’ll see you all again soon" },
+            new string[] { "Donï¿½t worry, I got this one. Iï¿½ll see you all again soon" },
             new string[]
             {
                 "Shiroko inhales and exhales her breath slowly",
@@ -231,7 +232,7 @@ public class DialogueManagerIntro : BaseDialogueManager
         }
         else
         {
-            Debug.Log("No more dialogues to start.");
+            levelManager.AdvanceLevel();
         }
     }
 
