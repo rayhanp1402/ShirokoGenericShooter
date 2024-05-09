@@ -335,6 +335,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 75, y: 60}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &603791852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2200094925392778747, guid: 6336bc6db33b04f428de850bc4c61fcf, type: 3}
+  m_PrefabInstance: {fileID: 6652846653635489021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f743caaed4857094e8f59faa4b49ecba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &909128894
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,7 +1656,7 @@ PrefabInstance:
       objectReference: {fileID: 340682701}
     - target: {fileID: 2797785334381964498, guid: 6336bc6db33b04f428de850bc4c61fcf, type: 3}
       propertyPath: m_Color.a
-      value: 0.8509804
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4091520740303057352, guid: 6336bc6db33b04f428de850bc4c61fcf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1658,7 +1669,7 @@ PrefabInstance:
     - target: {fileID: 4091520740303057352, guid: 6336bc6db33b04f428de850bc4c61fcf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 603791852}
     - target: {fileID: 4091520740303057352, guid: 6336bc6db33b04f428de850bc4c61fcf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1686,7 +1697,7 @@ PrefabInstance:
     - target: {fileID: 6190953113414185367, guid: 6336bc6db33b04f428de850bc4c61fcf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 603791852}
     - target: {fileID: 6190953113414185367, guid: 6336bc6db33b04f428de850bc4c61fcf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
