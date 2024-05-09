@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class KerocoAttack : MonoBehaviour
 {
@@ -10,39 +11,22 @@ public class KerocoAttack : MonoBehaviour
     public float range = 2f;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
     Transform sword;
     Transform swordEnd;
     EnemySword swordScript;
 
-    bool playerInRange;
     public float distanceToPlayer;
     float timer;
 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
         sword = transform.GetChild(2);
         swordEnd = sword.transform.GetChild(0);
         swordScript = swordEnd.GetComponent<EnemySword>();
         timer = timeBetweenAttacks;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            playerInRange = true;
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            playerInRange = false;
-        }
     }
 
     void Update()

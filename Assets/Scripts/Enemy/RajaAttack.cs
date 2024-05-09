@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class RajaAttack : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class RajaAttack : MonoBehaviour
     public float range = 100f;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
     ShirokoMovement shirokoMovement;
     Transform shotgun;
     Transform shotgunRender;
@@ -27,7 +28,7 @@ public class RajaAttack : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
         shirokoMovement = player.GetComponent<ShirokoMovement>();
         shotgun = transform.GetChild(3);
         shotgunRender = shotgun.transform.GetChild(0);

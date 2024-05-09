@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class JenderalAttack : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class JenderalAttack : MonoBehaviour
     public float timeBetweenAreaDamage = 2f;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
     Transform sword;
     Transform swordEnd;
     EnemySword swordScript;
@@ -24,7 +25,7 @@ public class JenderalAttack : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
         sword = transform.GetChild(5);
         swordEnd = sword.transform.GetChild(0);
         swordScript = swordEnd.GetComponent<EnemySword>();

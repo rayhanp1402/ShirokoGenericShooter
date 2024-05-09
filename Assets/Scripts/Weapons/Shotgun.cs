@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class Shotgun : MonoBehaviour
 {
@@ -36,12 +37,19 @@ public class Shotgun : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-
+#if !MOBILE_INPUT
         if (Input.GetButton("Fire1") && timer >= timeBetweenFiring)
         {
             Shoot();
         }
-
+#else
+        // If there is input on the shoot direction stick and it's time to fire...
+        if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
+        {
+            // ... shoot the gun
+            Shoot();
+        }
+#endif
         if (timer >= timeBetweenFiring * effectsDisplayTime)
         {
             DisableEffects();
@@ -93,6 +101,8 @@ public class Shotgun : MonoBehaviour
             if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
             {
                 EnemyBaseHealth enemyHealth = fireHit.collider.GetComponent<EnemyBaseHealth>();
+                EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
+
                 if (enemyHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
@@ -102,6 +112,17 @@ public class Shotgun : MonoBehaviour
 
                     enemyHealth.TakeDamage(adjustedDamage, fireHit.point);
                 }
+
+                if(enemyPetHealth != null)
+                {
+                    float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
+                    int adjustedDamage = Mathf.RoundToInt(damage * (1 - distanceToEnemy / range));
+
+                    adjustedDamage = Mathf.Max(0, adjustedDamage);
+
+                    enemyPetHealth.TakeDamage(adjustedDamage, fireHit.point);
+                }
+
                 if (i == 0)
                     fireLine1.SetPosition(1, fireHit.point);
                 else if (i == 1)

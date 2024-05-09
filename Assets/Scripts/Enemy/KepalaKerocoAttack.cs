@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Nightmare;
 public class KepalaKerocoAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.8f;
@@ -10,7 +10,7 @@ public class KepalaKerocoAttack : MonoBehaviour
     public float range = 100f;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
     Transform shotgun;
     Transform shotgunRender;
     Transform barrelEnd;
@@ -22,7 +22,7 @@ public class KepalaKerocoAttack : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
         shotgun = transform.GetChild(1);
         shotgunRender = shotgun.transform.GetChild(0);
         barrelEnd = shotgunRender.transform.GetChild(0);

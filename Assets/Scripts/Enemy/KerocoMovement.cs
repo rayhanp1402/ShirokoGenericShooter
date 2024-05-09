@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using Nightmare;
 
 public class KerocoMovement : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class KerocoMovement : MonoBehaviour
     NavMeshAgent nav;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
 
     public float rotationSpeed = 0.1f;
 
@@ -20,7 +21,7 @@ public class KerocoMovement : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
     }
 
     void Update()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Nightmare;
 
 public class JenderalMovement : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class JenderalMovement : MonoBehaviour
     NavMeshAgent nav;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
 
     void Awake()
     {
@@ -17,7 +18,7 @@ public class JenderalMovement : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
     }
 
     void Update()

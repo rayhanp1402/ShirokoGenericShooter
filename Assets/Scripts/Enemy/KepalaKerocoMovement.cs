@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class KepalaKerocoMovement : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class KepalaKerocoMovement : MonoBehaviour
     Animator anim;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
 
     public float rotationSpeed = 0.1f;
     public float spawnDistance = 2f;
@@ -33,7 +34,7 @@ public class KepalaKerocoMovement : MonoBehaviour
         anim = GetComponent<Animator>();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
 
         isWalking = false;
     }
