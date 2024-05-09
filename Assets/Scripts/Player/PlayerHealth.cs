@@ -19,7 +19,7 @@ namespace Nightmare
         Animator anim;
         AudioSource playerAudio;
         PlayerMovement playerMovement;
-        PlayerShooting playerShooting;
+        GameObject weaponHolder;
         bool isDead;
         bool damaged;
 
@@ -29,7 +29,7 @@ namespace Nightmare
             anim = GetComponent<Animator>();
             playerAudio = GetComponent<AudioSource>();
             playerMovement = GetComponent<PlayerMovement>();
-            playerShooting = GetComponentInChildren<PlayerShooting>();
+            weaponHolder = GameObject.Find("WeaponHolder");
 
             ResetPlayer();
         }
@@ -40,7 +40,7 @@ namespace Nightmare
             currentHealth = startingHealth;
 
             playerMovement.enabled = true;
-            playerShooting.enabled = true;
+            weaponHolder.SetActive(true);
 
             anim.SetBool("IsDead", false);
         }
@@ -99,6 +99,17 @@ namespace Nightmare
             }
         }
 
+        public void TakeDamageFromShot(int amount, Vector3 hitPoint)
+        {
+            currentHealth -= amount;
+            healthSlider.value = currentHealth;
+
+            if (currentHealth <= 0 && !isDead)
+            {
+                Death();
+            }
+        }
+
         public void Heal(int amount)
         {
             currentHealth += amount;
@@ -113,7 +124,7 @@ namespace Nightmare
             isDead = true;
 
             // Turn off any remaining shooting effects.
-            playerShooting.DisableEffects();
+            // weaponHolder.DisableEffects();
 
             // Tell the animator that the player is dead.
             anim.SetBool("IsDead", true);
@@ -124,7 +135,7 @@ namespace Nightmare
 
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
-            playerShooting.enabled = false;
+            weaponHolder.SetActive(false);
         }
 
         public void RestartLevel()

@@ -53,7 +53,6 @@ namespace Nightmare
 
         void OnDestroy()
         {
-            EventManager.StopListening("GrenadePickup", CollectGrenade);
             StopPausible();
         }
 

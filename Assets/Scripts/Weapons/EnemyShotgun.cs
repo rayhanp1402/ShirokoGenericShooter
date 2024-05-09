@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class EnemyShotgun : MonoBehaviour
 {
@@ -66,7 +67,7 @@ public class EnemyShotgun : MonoBehaviour
 
             if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
             {
-                ShirokoHealth shirokoHealth = fireHit.collider.GetComponent<ShirokoHealth>();
+                PlayerHealth shirokoHealth = fireHit.collider.GetComponent<PlayerHealth>();
                 if (shirokoHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
