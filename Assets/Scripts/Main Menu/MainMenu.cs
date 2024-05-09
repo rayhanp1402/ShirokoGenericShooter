@@ -1,3 +1,4 @@
+using Nightmare;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,7 +24,17 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         // Load the next scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        InitialLevel.setLevel(0);
+        SceneManager.LoadScene("Main");
+        Debug.Log("Loading next scene...");
+    }
+
+    public void LoadGame()
+    {
+        // TODO: Implement loading saved game functionality
+        // Load a specific level
+        InitialLevel.setLevel(3);
+        SceneManager.LoadScene("Main");
     }
 
     public void QuitGame()
