@@ -11,6 +11,8 @@ public class Item : MonoBehaviour
 
         Transform player;
         bool isSucked = false;
+        float suckTime = 0.5f;
+        float suckTimer = 0.0f;
     
         // Start is called before the first frame update
         void Start()
@@ -27,8 +29,11 @@ public class Item : MonoBehaviour
             }
             if (isSucked)
             {
-                transform.position = Vector3.Lerp(transform.position, player.position, 0.1f);
-                if (Vector3.Distance(transform.position, player.position) < 0.5f)
+                suckTimer += Time.deltaTime;
+                Vector3 point = player.position;
+                point.y += 1;
+                transform.position = Vector3.Lerp(transform.position, point, suckTimer / suckTime);
+                if (Vector3.Distance(transform.position, point) < 0.5f)
                 {
                     gameObject.SetActive(false);
                     CoinManager.coins += value;
