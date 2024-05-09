@@ -14,10 +14,17 @@ public class Statistic : MonoBehaviour
     public bool isPaused = false; 
     private float totalDistance;
     private Vector3 lastPosition;
+    private int shotsFired;
+    private int shotsHit;
+    private int deathCount; // Variabel untuk menghitung jumlah kematian
+
 
      void Start()
     {
         lastPosition = transform.position;
+        shotsFired = 0;
+        shotsHit = 0;
+        deathCount = 0; 
     }
 
     void Update()
@@ -46,4 +53,30 @@ public class Statistic : MonoBehaviour
 
         Distance.text = "Distance: " + distanceInKm.ToString("0.00") + " km";
     }
+
+    public void UpdateAccuracy(bool hit)
+    {
+        // Update jumlah tembakan dan jumlah tembakan yang mengenai target
+        shotsFired++;
+        if (hit)
+        {
+            shotsHit++;
+        }
+
+        // Hitung persentase akurasi
+        float accuracy = 0f;
+        if (shotsFired > 0)
+        {
+            accuracy = (float) shotsHit / shotsFired * 100f;
+        }
+
+        Accuracy.text = "Accuracy: " + accuracy.ToString("0.00") + "%";
+    }
+
+    public void UpdateDeathCount()
+    {
+        deathCount++;
+        Death.text = "Death: " + deathCount.ToString();
+    }
+    
 }
