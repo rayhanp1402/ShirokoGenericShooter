@@ -917,7 +917,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 321693854}
-  m_Father: {fileID: 572721229}
+  m_Father: {fileID: 1269604642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -970,7 +970,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1269604641}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -978,8 +978,8 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 587187190}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1002,7 +1002,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1509381741}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -1014,7 +1014,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &204049245
 MonoBehaviour:
@@ -1245,7 +1245,7 @@ MonoBehaviour:
         m_CallState: 1
       - m_Target: {fileID: 1269604641}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2110,7 +2110,6 @@ RectTransform:
   - {fileID: 587187191}
   - {fileID: 1707813052}
   - {fileID: 1269604642}
-  - {fileID: 204049243}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2174,6 +2173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 1707813051}
   backButton: {fileID: 1417929247}
+  statsMenu: {fileID: 1269604641}
 --- !u!1 &599606456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3800,6 +3800,7 @@ GameObject:
   - component: {fileID: 1269604644}
   - component: {fileID: 1269604643}
   - component: {fileID: 1269604646}
+  - component: {fileID: 1269604647}
   m_Layer: 5
   m_Name: StatsMenu
   m_TagString: Untagged
@@ -3819,6 +3820,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 204049243}
   - {fileID: 831917025}
   - {fileID: 1964779002}
   - {fileID: 870403611}
@@ -3915,6 +3917,21 @@ MonoBehaviour:
   Kill: {fileID: 54535842}
   Death: {fileID: 850051692}
   isPaused: 0
+--- !u!114 &1269604647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269604641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d126c532f123c484e873cdfd9ebcdba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settingsMenu: {fileID: 0}
+  backButton: {fileID: 0}
+  statsMenu: {fileID: 0}
 --- !u!1 &1271445265
 GameObject:
   m_ObjectHideFlags: 0
@@ -5248,6 +5265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 0}
   backButton: {fileID: 0}
+  statsMenu: {fileID: 0}
 --- !u!1 &1812975675
 GameObject:
   m_ObjectHideFlags: 0
