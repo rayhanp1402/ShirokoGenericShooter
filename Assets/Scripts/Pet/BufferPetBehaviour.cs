@@ -10,7 +10,7 @@ namespace Nightmare
 
         public Transform owner;
         public float alertDistance = 5f;
-        public float defStopDistance = 3f;
+        public float defaultStopDistance = 3f;
         public float atkBuffValue = 0.2f;
 
         Transform player;
@@ -25,8 +25,6 @@ namespace Nightmare
         bool IsOwnerAlive = true;
 
         public float deathTimer = 0f;
-        public int healingRate = 10;
-        public float healingInterval = 2f;
 
         
 
