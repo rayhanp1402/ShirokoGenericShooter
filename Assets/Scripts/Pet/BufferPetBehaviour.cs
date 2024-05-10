@@ -70,7 +70,7 @@ namespace Nightmare
                     nav.stoppingDistance = 0f;
                 } else {
                     IsFleeing = false;
-                    nav.stoppingDistance = defStopDistance;
+                    nav.stoppingDistance = defaultStopDistance;
                 }
 
                 if (IsOwnerAlive){
