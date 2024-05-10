@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using TMPro;
 using UnityEngine.UI;
+using Nightmare;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class SaveLoadManager : MonoBehaviour
     public Transform saveMenuCanvas;
     public Transform loadMenuCanvas;
     public Transform hudCanvas;
+
+    private LevelManager levelManager;
 
     private static int currentIndex = 1;
 
@@ -21,6 +24,25 @@ public class SaveLoadManager : MonoBehaviour
         // PlayerPrefs.SetInt("PlayerLevel", 1);
         // PlayerPrefs.SetString("PlayerPosition", "x:0, y:0, z:0");
         FindScoreAndCoinText();
+
+        GameObject managersObject = GameObject.Find("Managers");
+
+        if (managersObject != null)
+        {
+            // Get the LevelManager component attached to the Managers GameObject
+            levelManager = managersObject.GetComponent<LevelManager>();
+
+            if (levelManager != null)
+            {
+                // Access methods or variables from the LevelManager component
+                int currlevel = levelManager.GetCurrentLevel();
+                Debug.Log("Current Level: " + currlevel);
+            }
+            else
+            {
+                Debug.LogWarning("LevelManager script component not found on Managers GameObject.");
+            }
+        }
 
         Debug.Log("Player data saved.");
     }
