@@ -62,9 +62,9 @@ public class CoinDropManager : MonoBehaviour
     {
         pos.y += 1;
         GameObject c = PoolManager.Pull(objname, pos, Quaternion.identity);
-        Vector3 force = new Vector3(Random.Range(-1.0f, 1.0f), 1, Random.Range(-1.0f, 1.0f));
+        Vector3 force = new Vector3(Random.Range(-0.5f, 0.5f), 1, Random.Range(-1.0f, 1.0f));
         force.Normalize();
-        force *= 3;
+        force *= 3.0f;
         c.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
     }
 }

@@ -17,6 +17,7 @@ public abstract class ObjectiveManager : MonoBehaviour
     public List<Objective> objectives = new List<Objective>();
     private TextMeshProUGUI[] objectivesText;
     private float countdownTimer;
+    private bool isComplete;
     void Start()
     {
         RectTransform Panel = GameObject.Find("Panel").GetComponent<RectTransform>();
@@ -41,10 +42,12 @@ public abstract class ObjectiveManager : MonoBehaviour
 
     void Update()
     {
+        if (isComplete) return;
         countdownTimer += Time.deltaTime;
         UpdateObjective();
         if (CheckObjectives())
         {
+            isComplete = true;
             OnSuccess();
         }
     }
