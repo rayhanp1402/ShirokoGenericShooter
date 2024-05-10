@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Nightmare;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -18,7 +19,8 @@ public abstract class ObjectiveManager : MonoBehaviour
     private TextMeshProUGUI[] objectivesText;
     private float countdownTimer;
     private bool isComplete;
-    void Start()
+    protected LevelManager levelManager;
+    protected virtual void Start()
     {
         RectTransform Panel = GameObject.Find("Panel").GetComponent<RectTransform>();
         TextMeshProUGUI text = Panel.Find("Label").GetComponent<TextMeshProUGUI>();
@@ -37,6 +39,7 @@ public abstract class ObjectiveManager : MonoBehaviour
                 objectivesText[i].text = "Bertahan selama " + objectives[i].objectiveValue + " detik";
             }
         }
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
         countdownTimer = 0;
     }
 
