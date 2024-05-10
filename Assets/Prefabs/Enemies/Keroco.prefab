@@ -10203,7 +10203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.9773312
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10211,7 +10211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.79443884
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10406,9 +10406,6 @@ PrefabInstance:
       addedObject: {fileID: 8648963495672342565}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5566986097745446289}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1959374108361446621}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       insertIndex: -1
@@ -10424,7 +10421,10 @@ PrefabInstance:
       addedObject: {fileID: 6499133567160717056}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8806471140568630533}
+      addedObject: {fileID: 6881566442302649009}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6616802769152209777}
   m_SourcePrefab: {fileID: 100100000, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
 --- !u!1 &6921705652197032964 stripped
 GameObject:
@@ -10481,27 +10481,6 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.2, z: 0}
---- !u!135 &5566986097745446289
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6921705652197032964}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.1
-  m_Center: {x: 0, y: 1.4, z: 0}
 --- !u!195 &1959374108361446621
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10536,6 +10515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2163f6ebc78bd148b4995241ee3c2fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closestPet: {fileID: 0}
   rotationSpeed: 0.1
 --- !u!114 &8698306589473335734
 MonoBehaviour:
@@ -10552,6 +10532,7 @@ MonoBehaviour:
   startingHealth: 90
   sinkSpeed: 2.5
   scoreValue: 10
+  coinValue: 40
   deathClip: {fileID: 8300000, guid: 37ea431cbf84001458ee303c70098bb9, type: 3}
 --- !u!114 &3614431763455589288
 MonoBehaviour:
@@ -10665,7 +10646,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &8806471140568630533
+--- !u!65 &6881566442302649009
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6921705652197032964}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 2, z: 5}
+  m_Center: {x: 0, y: 1.3, z: 0}
+--- !u!114 &6616802769152209777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10678,7 +10680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonusAttackPercent: 0
-  baseAttack: 10
+  baseAttack: 0
   currentAttack: 0
 --- !u!4 &7729591150317985470 stripped
 Transform:
