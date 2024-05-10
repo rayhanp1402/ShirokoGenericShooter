@@ -5,11 +5,11 @@ namespace Nightmare
 {
     public class StrengthOrb : MonoBehaviour
     {
-        PlayerShooting playerShooting;
-        
+        PlayerMovement playerMovement;
+
         void Awake()
         {
-            playerShooting = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerShooting>();
+            playerMovement = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerMovement>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -23,10 +23,10 @@ namespace Nightmare
 
         void Pickup(Collider player)
         {
-            if(playerShooting.maxOrb < 15)
+            if(playerMovement.orbCount < 15)
             {
-                playerShooting.maxOrb++;
-                playerShooting.BoostShooting();
+                playerMovement.orbCount++;
+                playerMovement.BoostShooting();
                 Debug.Log("Picked up strength orb");
                 Destroy(gameObject);
             }
