@@ -23,7 +23,7 @@ public class SaveBoxFilled : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        saveLoadManager?.OnSaveBoxFilledClicked();
+        saveLoadManager?.OnSaveBoxFilledClicked(this);
     }
 
     public void OnDeleteButtonClicked()

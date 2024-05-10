@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using TMPro;
-using System;
-using System.Collections.Generic;
 
 public class SaveBoxEmpty : MonoBehaviour, IPointerClickHandler
 {

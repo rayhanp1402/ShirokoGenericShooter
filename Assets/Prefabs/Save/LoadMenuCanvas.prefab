@@ -292,7 +292,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveBoxEmptyPrefab: {fileID: 5327514547274355141, guid: be6d78bd75997d84f9a01f82a5b8910d, type: 3}
   saveBoxFilledPrefab: {fileID: 1948711897768646113, guid: 2cca34d9259fcb1448d7e320f16748b7, type: 3}
-  saveMenuCanvas: {fileID: 4666332718458963452}
+  saveMenuCanvas: {fileID: 4599808127400421665, guid: 093487fd4c36fb04e96a230ccf89a9a0, type: 3}
+  loadMenuCanvas: {fileID: 4666332718458963452}
 --- !u!1 &4910003553488922523
 GameObject:
   m_ObjectHideFlags: 0

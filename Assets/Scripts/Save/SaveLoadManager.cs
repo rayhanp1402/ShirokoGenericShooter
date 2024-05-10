@@ -7,6 +7,7 @@ public class SaveLoadManager : MonoBehaviour
     public GameObject saveBoxEmptyPrefab;
     public GameObject saveBoxFilledPrefab;
     public Transform saveMenuCanvas;
+    public Transform loadMenuCanvas;
 
     private static int currentIndex = 1;
 
@@ -22,16 +23,54 @@ public class SaveLoadManager : MonoBehaviour
         Debug.Log("Loading player data...");
     }
 
-    public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
+    // Overwrite the current save data with the new save data
+    public void OverwriteSaveData(SaveBoxFilled saveBoxFilled)
     {
-        PlaceFilledSaveBox(saveBoxEmpty);
-        SavePlayerData();
+        // Update the save time text to the current time
+        TextMeshProUGUI saveTimeText = saveBoxFilled.transform.Find("SaveTime").GetComponent<TextMeshProUGUI>();
+        if (saveTimeText != null)
+        {
+            saveTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Debug.Log("Save data overwritten.");
+        }
+        else
+        {
+            Debug.LogWarning("SaveTime TextMeshProUGUI component not found in SaveBoxFilled prefab.");
+        }
     }
 
-    public void OnSaveBoxFilledClicked()
+    // Delete the current save data
+    public void DeleteSaveData()
     {
-        Debug.Log("Save box filled clicked!");
-        LoadPlayerData();
+        Debug.Log("Deleting save data...");
+    }
+
+    public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
+    {
+        // Check if it's the save menu canvas
+        if (saveBoxEmpty.transform.parent == saveMenuCanvas)
+        {
+            PlaceFilledSaveBox(saveBoxEmpty);
+            SavePlayerData();
+        }
+        // If it's the load menu canvas, do nothing
+        else if (saveBoxEmpty.transform.parent == loadMenuCanvas)
+        {
+            Debug.Log("This is the load menu canvas. No action needed.");
+        }
+    }
+
+
+    public void OnSaveBoxFilledClicked(SaveBoxFilled saveBoxFilled)
+    {
+        if (saveBoxFilled.transform.parent == saveMenuCanvas) // Check if it's the save menu
+        {
+            OverwriteSaveData(saveBoxFilled);
+        }
+        else if (saveBoxFilled.transform.parent == loadMenuCanvas) // Check if it's the load menu
+        {
+            LoadPlayerData();
+        }
     }
 
     private void PlaceFilledSaveBox(SaveBoxEmpty saveBoxEmpty)
