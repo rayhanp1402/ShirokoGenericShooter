@@ -14,6 +14,8 @@ public class DefaultGun : PausibleObject
     AudioSource fireAudio;
     Light fireLight;
     LineRenderer fireLine;
+    GameObject player;
+    PlayerMovement playerMovement;
 
     Ray fireRay;
     RaycastHit fireHit;
@@ -37,6 +39,10 @@ public class DefaultGun : PausibleObject
 
         weaponHolder = transform.parent.gameObject;
         defaultGun = weaponHolder.transform.parent.gameObject;
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
+        Debug.Log(playerMovement);
+        Debug.Log(transform.root.name);
 
         anim = defaultGun.GetComponent<Animator>();
     }
@@ -101,12 +107,12 @@ public class DefaultGun : PausibleObject
             
             if (enemyHealth != null )
             {
-                enemyHealth.TakeDamage(damage, fireHit.point);
+                enemyHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
 
             if(enemyPetHealth != null)
             {
-                enemyPetHealth.TakeDamage(damage, fireHit.point);
+                enemyPetHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
 
             fireLine.SetPosition(1, fireHit.point);
@@ -115,5 +121,10 @@ public class DefaultGun : PausibleObject
         {
             fireLine.SetPosition(1, fireRay.origin +  fireRay.direction * range);
         }
+    }
+
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
     }
 }
