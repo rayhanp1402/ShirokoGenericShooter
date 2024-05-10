@@ -12,6 +12,10 @@ public class JenderalMovement : MonoBehaviour
     GameObject player;
     PlayerHealth shirokoHealth;
 
+    Transform petDetector;
+    PetDetector petDetectorScript;
+    GameObject closestPet;
+
     void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -19,6 +23,9 @@ public class JenderalMovement : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         shirokoHealth = player.GetComponent<PlayerHealth>();
+
+        petDetector = transform.GetChild(0);
+        petDetectorScript = petDetector.GetComponent<PetDetector>();
     }
 
     void Update()
@@ -30,8 +37,19 @@ public class JenderalMovement : MonoBehaviour
         }
         else
         {
-            nav.isStopped = false;
-            nav.SetDestination(playerTransform.position);
+            if (petDetectorScript.petsInRange.Count > 0)
+            {
+                closestPet = petDetectorScript.GetClosestPet();
+                if (closestPet != null)
+                {
+                    nav.SetDestination(closestPet.transform.position);
+                }
+            }
+            else
+            {
+                nav.isStopped = false;
+                nav.SetDestination(playerTransform.position);
+            }
         }
     }
 }

@@ -110,7 +110,7 @@ public class Shotgun : MonoBehaviour
             fireRay.origin = transform.position;
             fireRay.direction = directions[i];
 
-            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
             {
                 EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
                 EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
