@@ -19,6 +19,7 @@ namespace Nightmare
         private float timer = 0.0f;
         private bool isShopOpen;
         private TextMeshPro ShopText;
+        private TextMeshProUGUI UIShopTimerText;
         private PlayerCustomer playerCustomer;
         private Transform content;
 
@@ -30,6 +31,7 @@ namespace Nightmare
             shopCanvas.gameObject.SetActive(false);
             isShopOpen = true;
             ShopText = GetComponentInChildren<TextMeshPro>();
+            UIShopTimerText = shopCanvas.transform.Find("ShopMenuContainer/PaddedContainer/Timer").GetComponent<TextMeshProUGUI>();
             playerCustomer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCustomer>();
             content = shopCanvas.transform.GetComponentInChildren<ScrollRect>().content;
             foreach (ShopItem item in shopItems)
@@ -54,6 +56,7 @@ namespace Nightmare
                 {
                     timer += Time.deltaTime;
                     ShopText.text = "Open time: " + (openTime - timer).ToString("F0") + "s";
+                    UIShopTimerText.text = "Open time: " + (openTime - timer).ToString("F0") + "s";
                     if (timer >= openTime)
                     {
                         CloseShop();
