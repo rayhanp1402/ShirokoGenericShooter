@@ -10,6 +10,7 @@ namespace Nightmare
 
         public float baseSpeed = 6f; 
         public float baseAttack = 5f;
+        public float totalDistanceTraveled = 0f;
         public float initAttack = 5f;
         public int orbCount = 0;
 
@@ -71,6 +72,8 @@ namespace Nightmare
             
             // Normalise the movement vector and make it proportional to the speed per second.
             movement = movement.normalized * speed * Time.deltaTime;
+
+            totalDistanceTraveled += movement.magnitude;
 
             // Move the player to it's current position plus the movement.
             playerRigidbody.MovePosition (transform.position + movement);

@@ -1,10 +1,11 @@
+using Nightmare;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Statistic : MonoBehaviour
 {
-    public ShirokoMovement playerMovement;
+    public PlayerMovement playerMovement;
     public DefaultGun defaultGun;
     public TMP_Text PlayTime; 
     public TMP_Text Distance;
