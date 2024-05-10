@@ -74,7 +74,7 @@ namespace Nightmare
         }
 
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(float amount)
         {
             if (godMode)
                 return;
@@ -99,7 +99,7 @@ namespace Nightmare
             }
         }
 
-        public void TakeDamageFromShot(int amount, Vector3 hitPoint)
+        public void TakeDamageFromShot(float amount, Vector3 hitPoint)
         {
             currentHealth -= amount;
             healthSlider.value = currentHealth;

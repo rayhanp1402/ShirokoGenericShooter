@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Target
+  - Shop
+  - Pet
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - Water
   - UI
   - Shootable
-  - 
-  - 
+  - ItemDrop
+  - Player
   - 
   - 
   - 

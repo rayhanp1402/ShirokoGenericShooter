@@ -9794,11 +9794,10 @@ GameObject:
   - component: {fileID: 326725671978466189}
   - component: {fileID: 6469892672850374040}
   - component: {fileID: 2807520184231419259}
-  - component: {fileID: 319644586512231670}
   - component: {fileID: 5014703119433757095}
   - component: {fileID: 9199496960852932897}
-  - component: {fileID: 6120323322038381521}
   - component: {fileID: 6251839222134436078}
+  - component: {fileID: 2515678954136955858}
   m_Layer: 6
   m_Name: YongYong
   m_TagString: Untagged
@@ -9895,22 +9894,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &319644586512231670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8355318885646478123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18a1ff5c210bbc44afa1c7ea5eca052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  sinkSpeed: 2.5
-  scoreValue: 10
-  deathClip: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
 --- !u!195 &5014703119433757095
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9943,7 +9926,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 8434b04884c414ac6b468e10945685e6, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 02e6208ec76314158a9f548f51fe9f11, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6e2c78ad14c91ef42b79e56e54892bce, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -10029,22 +10012,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &6120323322038381521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8355318885646478123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18a1ff5c210bbc44afa1c7ea5eca052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  sinkSpeed: 2.5
-  scoreValue: 10
-  deathClip: {fileID: 0}
 --- !u!114 &6251839222134436078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10060,9 +10027,24 @@ MonoBehaviour:
   owner: {fileID: 0}
   alertDistance: 5
   defStopDistance: 3
+  atkBuffValue: 0.2
   deathTimer: 0
-  healingRate: 10
-  healingInterval: 2
+--- !u!114 &2515678954136955858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355318885646478123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba06fc643526cb4fafddcae049cd233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  sinkSpeed: 2.5
+  scoreValue: 10
+  deathClip: {fileID: 8300000, guid: 37ea431cbf84001458ee303c70098bb9, type: 3}
 --- !u!1001 &7028157724000254239
 PrefabInstance:
   m_ObjectHideFlags: 0

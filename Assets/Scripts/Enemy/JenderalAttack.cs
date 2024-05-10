@@ -7,7 +7,6 @@ public class JenderalAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.8f;
     public float effectsDisplayTime = .2f;
-    public int damage = 50;
     public float range = 2f;
 
     public float timeBetweenAreaDamage = 2f;
@@ -17,6 +16,7 @@ public class JenderalAttack : MonoBehaviour
     Transform sword;
     Transform swordEnd;
     EnemySword swordScript;
+    EnemyStat enemyStat;
 
     Transform petDetector;
     PetDetector petDetectorScript;
@@ -38,6 +38,7 @@ public class JenderalAttack : MonoBehaviour
         petDetector = transform.GetChild(0);
         petDetectorScript = petDetector.GetComponent<PetDetector>();
         timer = timeBetweenAttacks;
+        enemyStat = GetComponent<EnemyStat>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -93,7 +94,7 @@ public class JenderalAttack : MonoBehaviour
         if (shirokoHealth.currentHealth > 0)
         {
             swordScript.Shoot(range);
-            shirokoHealth.TakeDamage(damage);
+            shirokoHealth.TakeDamage(enemyStat.currentAttack);
         }
     }
 

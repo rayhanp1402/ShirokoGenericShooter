@@ -63,6 +63,10 @@ public class PoolManager : MonoBehaviour
         return (cache[key].Pull());
     }
 
+    public static GameObject GetRef(string key){
+        return (cache[key].GetRef());
+    }
+
     public static GameObject Pull(string key, Vector3 position, Quaternion rotation)
     {
         GameObject clone = cache[key].Pull();
@@ -120,6 +124,11 @@ public class Pool
             Debug.LogWarning("No available item from pool with key: " + key);
             return null;
         }
+    }
+
+    public GameObject GetRef(){
+        if (pool.Count < 1) return null;
+        return pool[0];
     }
 
     private GameObject AddItem(bool keepActive = false)
