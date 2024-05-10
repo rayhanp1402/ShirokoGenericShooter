@@ -4141,6 +4141,8 @@ MonoBehaviour:
   speed: 6
   baseSpeed: 6
   baseAttack: 5
+  initAttack: 5
+  orbCount: 0
 --- !u!114 &7421344990659908530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4345,7 +4347,7 @@ MonoBehaviour:
   currentHealth: 0
   healthSlider: {fileID: 0}
   damageImage: {fileID: 0}
-  deathClip: {fileID: 0}
+  deathClip: {fileID: 8300000, guid: 4483b74ab6f68c14b8c6b1be89f25d46, type: 3}
   flashSpeed: 5
   flashColour: {r: 1, g: 0, b: 0, a: 0.1}
   godMode: 1
@@ -4359,7 +4361,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300000, guid: 8434b04884c414ac6b468e10945685e6, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 9922a12f34d0a084aab32de985459723, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 04c45ca9523bb5f43b80649ca4d60b07, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
