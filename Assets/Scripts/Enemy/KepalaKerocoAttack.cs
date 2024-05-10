@@ -6,7 +6,6 @@ public class KepalaKerocoAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.8f;
     public float effectsDisplayTime = .2f;
-    public int damage = 100;
     public float range = 100f;
 
     GameObject player;
@@ -15,6 +14,7 @@ public class KepalaKerocoAttack : MonoBehaviour
     Transform shotgunRender;
     Transform barrelEnd;
     EnemyShotgun shotgunScript;
+    EnemyStat enemyStat;
 
     public float distanceToPlayer;
     float timer;
@@ -53,7 +53,7 @@ public class KepalaKerocoAttack : MonoBehaviour
 
         if (shirokoHealth.currentHealth > 0)
         {
-            shotgunScript.Shoot(range, damage);
+            shotgunScript.Shoot(range, enemyStat.currentAttack);
         }
     }
 }

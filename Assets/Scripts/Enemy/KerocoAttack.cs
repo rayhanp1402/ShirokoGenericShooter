@@ -7,7 +7,6 @@ public class KerocoAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.8f;
     public float effectsDisplayTime = .2f;
-    public int damage = 50;
     public float range = 2f;
 
     GameObject player;
@@ -15,6 +14,7 @@ public class KerocoAttack : MonoBehaviour
     Transform sword;
     Transform swordEnd;
     EnemySword swordScript;
+    EnemyStat enemyStat;
 
     public float distanceToPlayer;
     float timer;
@@ -26,6 +26,7 @@ public class KerocoAttack : MonoBehaviour
         sword = transform.GetChild(2);
         swordEnd = sword.transform.GetChild(0);
         swordScript = swordEnd.GetComponent<EnemySword>();
+        enemyStat = GetComponent<EnemyStat>();
         timer = timeBetweenAttacks;
     }
 
@@ -53,7 +54,7 @@ public class KerocoAttack : MonoBehaviour
         if (shirokoHealth.currentHealth > 0)
         {
             swordScript.Shoot(range);
-            shirokoHealth.TakeDamage(damage);
+            shirokoHealth.TakeDamage(enemyStat.currentAttack);
         }
     }
 }
