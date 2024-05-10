@@ -14,13 +14,26 @@ public class SaveLoadManager : MonoBehaviour
     // Save player data to PlayerPrefs
     public void SavePlayerData()
     {
-        Debug.Log("Saving player data...");
+        // Sample player data
+        PlayerPrefs.SetFloat("PlayerHealth", 100f);
+        PlayerPrefs.SetInt("PlayerLevel", 1);
+        PlayerPrefs.SetString("PlayerPosition", "x:0, y:0, z:0");
+
+        Debug.Log("Player data saved.");
     }
 
     // Load player data from PlayerPrefs
     public void LoadPlayerData()
     {
-        Debug.Log("Loading player data...");
+        // Retrieve player data from PlayerPrefs
+        float health = PlayerPrefs.GetFloat("PlayerHealth");
+        int level = PlayerPrefs.GetInt("PlayerLevel");
+        string position = PlayerPrefs.GetString("PlayerPosition");
+
+        Debug.Log("Player data loaded:");
+        Debug.Log("Health: " + health);
+        Debug.Log("Level: " + level);
+        Debug.Log("Position: " + position);
     }
 
     // Overwrite the current save data with the new save data
@@ -31,6 +44,9 @@ public class SaveLoadManager : MonoBehaviour
         if (saveTimeText != null)
         {
             saveTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            // Sample overwrite data
+            PlayerPrefs.SetFloat("PlayerHealth", 80f);
+
             Debug.Log("Save data overwritten.");
         }
         else
@@ -42,7 +58,9 @@ public class SaveLoadManager : MonoBehaviour
     // Delete the current save data
     public void DeleteSaveData()
     {
-        Debug.Log("Deleting save data...");
+        PlayerPrefs.DeleteAll();
+
+        Debug.Log("Save data deleted.");
     }
 
     public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
