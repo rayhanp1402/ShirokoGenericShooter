@@ -128,7 +128,8 @@ namespace Nightmare
             if (CoinManager.coins >= price)
             {
                 CoinManager.coins -= price;
-                Instantiate(obj, new Vector3(2, 4, 0), Quaternion.identity);
+                Vector3 pos = transform.forward * 2 + transform.position;
+                Instantiate(obj, pos, Quaternion.identity);
                 UpdateButton();
             }
         }
