@@ -10,23 +10,23 @@ public class CoinDropManager : MonoBehaviour
 
     // Start is called before the first frame update
 
-    private static CoinDropManager poolManager;
+    private static CoinDropManager coinDropManager;
 
     public static CoinDropManager instance
     {
         get
         {
-            if (!poolManager)
+            if (!coinDropManager)
             {
-                poolManager = FindObjectOfType(typeof(CoinDropManager)) as CoinDropManager;
+                coinDropManager = FindObjectOfType(typeof(CoinDropManager)) as CoinDropManager;
 
-                if (!poolManager)
+                if (!coinDropManager)
                 {
                     Debug.LogError("There needs to be one active CoinDropManager script on a GameObject in your scene.");
                 }
             }
 
-            return poolManager;
+            return coinDropManager;
         }
     }
 
