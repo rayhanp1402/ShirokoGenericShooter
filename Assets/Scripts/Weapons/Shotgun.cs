@@ -22,6 +22,11 @@ public class Shotgun : MonoBehaviour
     RaycastHit fireHit;
     int shootableMask;
 
+    GameObject shotgunRenderer;
+    GameObject shotgun;
+
+    Animator anim;
+
     float timer;
 
 
@@ -32,6 +37,11 @@ public class Shotgun : MonoBehaviour
         shootableMask = LayerMask.GetMask("Shootable");
 
         timer = timeBetweenFiring;
+
+        shotgunRenderer = transform.parent.gameObject;
+        shotgun = shotgunRenderer.transform.parent.gameObject;
+
+        anim = shotgun.GetComponent<Animator>();
     }
 
     void Update()
@@ -67,6 +77,8 @@ public class Shotgun : MonoBehaviour
     void Shoot()
     {
         timer = 0f;
+
+        anim.SetTrigger("Fire");
 
         fireAudio.Play();
         fireLight.enabled = true;

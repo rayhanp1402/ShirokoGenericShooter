@@ -17,6 +17,10 @@ public class Sword : MonoBehaviour
     RaycastHit fireHit;
     int shootableMask;
 
+    GameObject excalibur;
+
+    Animator anim;
+
     float timer;
 
 
@@ -27,6 +31,9 @@ public class Sword : MonoBehaviour
         fireLine = GetComponent<LineRenderer>();
 
         shootableMask = LayerMask.GetMask("Shootable");
+
+        excalibur = transform.parent.gameObject;
+        anim = excalibur.GetComponent<Animator>();
 
         timer = timeBetweenFiring;
     }
@@ -62,6 +69,8 @@ public class Sword : MonoBehaviour
     public void Shoot()
     {
         timer = 0f;
+
+        anim.SetTrigger("Fire");
 
         fireAudio.Play();
         fireLight.enabled = true;

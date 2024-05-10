@@ -9910,7 +9910,7 @@ MonoBehaviour:
   startingHealth: 100
   sinkSpeed: 2.5
   scoreValue: 10
-  deathClip: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
+  deathClip: {fileID: 8300000, guid: 35370983b2713ab478eacf2a0e36a332, type: 3}
 --- !u!195 &5014703119433757095
 NavMeshAgent:
   m_ObjectHideFlags: 0

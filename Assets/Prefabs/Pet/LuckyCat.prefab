@@ -4946,7 +4946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   sinkSpeed: 2.5
-  deathClip: {fileID: 0}
+  deathClip: {fileID: 8300000, guid: 35370983b2713ab478eacf2a0e36a332, type: 3}
   godMode: 0
 --- !u!1 &7200658779575517060
 GameObject:

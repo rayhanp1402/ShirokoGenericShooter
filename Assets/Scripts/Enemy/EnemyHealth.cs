@@ -15,6 +15,22 @@ namespace Nightmare
         protected ParticleSystem hitParticles;
         protected CapsuleCollider capsuleCollider;
         protected EnemyMovement enemyMovement;
+        private ObjectiveManager objectiveManager;
+
+        protected void Start()
+        {
+            // Find the ObjectiveManagerScript in the scene
+            objectiveManager = FindObjectOfType<ObjectiveManager>();
+        }
+
+        protected void DefeatEnemy()
+        {
+            // Call the EnemyDefeated method of the ObjectiveManagerScript
+            if (objectiveManager != null)
+            {
+                objectiveManager.EnemyDefeated();
+            }
+        }
 
         protected virtual void Awake ()
         {
@@ -79,6 +95,7 @@ namespace Nightmare
             enemyAudio.clip = deathClip;
             enemyAudio.Play ();
             StartSinking();
+            DefeatEnemy();
         }
 
         public void StartSinking ()

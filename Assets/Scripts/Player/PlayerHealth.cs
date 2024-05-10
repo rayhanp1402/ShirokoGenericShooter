@@ -89,7 +89,7 @@ namespace Nightmare
             healthSlider.value = currentHealth;
 
             // Play the hurt sound effect.
-            playerAudio.Play();
+            //playerAudio.Play();
 
             // If the player has lost all it's health and the death flag hasn't been set yet...
             if (currentHealth <= 0 && !isDead)
@@ -130,8 +130,8 @@ namespace Nightmare
             anim.SetBool("IsDead", true);
 
             // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
-            playerAudio.clip = deathClip;
-            playerAudio.Play();
+            //playerAudio.clip = deathClip;
+            //playerAudio.Play();
 
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
