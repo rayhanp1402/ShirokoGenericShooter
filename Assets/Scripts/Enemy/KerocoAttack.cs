@@ -76,20 +76,7 @@ public class KerocoAttack : MonoBehaviour
         if (petHealth.CurrentHealth() > 0)
         {
             swordScript.Shoot(range);
-            petHealth.TakeDamage(damage);
-        }
-    }
-
-    void AttackPet()
-    {
-        timer = 0f;
-
-        petHealth = kerocoMovement.closestPet.GetComponent<PetHealth>();
-
-        if (petHealth.CurrentHealth() > 0)
-        {
-            swordScript.Shoot(range);
-            petHealth.TakeDamage(damage);
+            petHealth.TakeDamage(enemyStat.currentAttack);
         }
     }
 }

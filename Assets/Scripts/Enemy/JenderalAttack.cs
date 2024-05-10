@@ -117,7 +117,7 @@ public class JenderalAttack : MonoBehaviour
         if (petHealth.CurrentHealth() > 0)
         {
             swordScript.Shoot(range);
-            petHealth.TakeDamage(damage);
+            petHealth.TakeDamage(enemyStat.currentAttack);
         }
     }
 }

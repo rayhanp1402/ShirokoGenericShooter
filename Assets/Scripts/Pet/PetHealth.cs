@@ -85,22 +85,6 @@ namespace Nightmare
             }
         }
 
-        public void TakeDamage(float amount)
-        {
-            if (godMode)
-                return;
-            if (!IsDead())
-            {
-                //enemyAudio.Play();
-                currentHealth -= amount;
-
-                if (IsDead())
-                {
-                    Death();
-                }
-            }
-        }
-
         virtual public void Death ()
         {
             EventManager.TriggerEvent("Sound", this.transform.position);
