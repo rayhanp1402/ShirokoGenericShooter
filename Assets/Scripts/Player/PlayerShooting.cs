@@ -7,7 +7,9 @@ namespace Nightmare
 {
     public class PlayerShooting : PausibleObject
     {
-        public int damagePerShot = 20;
+        public float damagePerShot = 20f;
+        public float initialDamage = 20f;
+        public int maxOrb;
         public float timeBetweenBullets = 0.15f;
         public float range = 100f;
         public GameObject grenade;
@@ -51,7 +53,6 @@ namespace Nightmare
 
         void OnDestroy()
         {
-            EventManager.StopListening("GrenadePickup", CollectGrenade);
             StopPausible();
         }
 
@@ -109,6 +110,7 @@ namespace Nightmare
 
         void Shoot ()
         {
+            Debug.Log("Shoot");
             // Reset the timer.
             timer = 0f;
 
@@ -136,14 +138,18 @@ namespace Nightmare
             {
                 // Try and find an EnemyHealth script on the gameobject hit.
                 EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
+                EnemyPetHealth enemyPetHealth = shootHit.collider.GetComponent <EnemyPetHealth> ();
 
                 // If the EnemyHealth component exist...
                 if(enemyHealth != null)
                 {
-                    // ... the enemy should take damage.
                     enemyHealth.TakeDamage (damagePerShot, shootHit.point);
                 }
 
+                if(enemyPetHealth != null)
+                {
+                    enemyPetHealth.TakeDamage(damagePerShot, shootHit.point);
+                }
                 // Set the second position of the line renderer to the point the raycast hit.
                 gunLine.SetPosition (1, shootHit.point);
             }
@@ -155,6 +161,10 @@ namespace Nightmare
             }
         }
 
+        public void BoostShooting()
+        {
+            damagePerShot = damagePerShot + initialDamage * 0.1f;
+        }
         private void ChangeGunLine(float midPoint)
         {
             AnimationCurve curve = new AnimationCurve();
