@@ -9,14 +9,14 @@ namespace Nightmare
         public int scoreValue = 10;
         public AudioClip deathClip;
 
-        float currentHealth;
-        Animator anim;
-        AudioSource enemyAudio;
-        ParticleSystem hitParticles;
-        CapsuleCollider capsuleCollider;
+        protected float currentHealth;
+        protected Animator anim;
+        protected AudioSource enemyAudio;
+        protected ParticleSystem hitParticles;
+        protected CapsuleCollider capsuleCollider;
         // EnemyMovement enemyMovement;
 
-        void Awake ()
+        virtual protected void Awake ()
         {
             anim = GetComponent <Animator> ();
             enemyAudio = GetComponent <AudioSource> ();
@@ -65,17 +65,13 @@ namespace Nightmare
                 {
                     Death();
                 }
-                else
-                {
-                    // enemyMovement.GoToPlayer();
-                }
             }
                 
             hitParticles.transform.position = hitPoint;
             hitParticles.Play();
         }
 
-        public void Death ()
+        public virtual void Death ()
         {
             EventManager.TriggerEvent("Sound", this.transform.position);
             anim.SetTrigger ("Dead");

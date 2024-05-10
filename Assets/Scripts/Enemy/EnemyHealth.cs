@@ -9,35 +9,50 @@ namespace Nightmare
         public int scoreValue = 10;
         public AudioClip deathClip;
 
-        float currentHealth;
-        Animator anim;
-        AudioSource enemyAudio;
-        ParticleSystem hitParticles;
-        CapsuleCollider capsuleCollider;
-        EnemyMovement enemyMovement;
+        protected float currentHealth;
+        protected Animator anim;
+        protected AudioSource enemyAudio;
+        protected ParticleSystem hitParticles;
+        protected CapsuleCollider capsuleCollider;
+        protected EnemyMovement enemyMovement;
+        private ObjectiveManager objectiveManager;
 
-        void Awake ()
+        protected void Start()
+        {
+            // Find the ObjectiveManagerScript in the scene
+            objectiveManager = FindObjectOfType<ObjectiveManager>();
+        }
+
+        protected void DefeatEnemy()
+        {
+            // Call the EnemyDefeated method of the ObjectiveManagerScript
+            if (objectiveManager != null)
+            {
+                objectiveManager.EnemyDefeated();
+            }
+        }
+
+        protected virtual void Awake ()
         {
             anim = GetComponent <Animator> ();
             enemyAudio = GetComponent <AudioSource> ();
             hitParticles = GetComponentInChildren <ParticleSystem> ();
             capsuleCollider = GetComponent <CapsuleCollider> ();
-            enemyMovement = this.GetComponent<EnemyMovement>();
         }
 
-        void OnEnable()
+        protected void OnEnable()
         {
             currentHealth = startingHealth;
             SetKinematics(false);
         }
 
-        private void SetKinematics(bool isKinematic)
+        protected void SetKinematics(bool isKinematic)
         {
             capsuleCollider.isTrigger = isKinematic;
             capsuleCollider.attachedRigidbody.isKinematic = isKinematic;
         }
 
-        void Update ()
+       protected  void Update ()
         {
             if (IsDead())
             {
@@ -65,23 +80,22 @@ namespace Nightmare
                 {
                     Death();
                 }
-                else
-                {
-                    enemyMovement.GoToPlayer();
-                }
             }
                 
             hitParticles.transform.position = hitPoint;
             hitParticles.Play();
         }
 
-        void Death ()
+        protected virtual void Death ()
         {
             EventManager.TriggerEvent("Sound", this.transform.position);
-            anim.SetTrigger ("Dead");
+            if (anim)
+                anim.SetTrigger ("Dead");
 
             enemyAudio.clip = deathClip;
             enemyAudio.Play ();
+            StartSinking();
+            DefeatEnemy();
         }
 
         public void StartSinking ()

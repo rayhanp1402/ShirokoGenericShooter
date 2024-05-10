@@ -22,6 +22,11 @@ public class Shotgun : MonoBehaviour
     RaycastHit fireHit;
     int shootableMask;
 
+    GameObject shotgunRenderer;
+    GameObject shotgun;
+
+    Animator anim;
+
     float timer;
 
 
@@ -32,6 +37,11 @@ public class Shotgun : MonoBehaviour
         shootableMask = LayerMask.GetMask("Shootable");
 
         timer = timeBetweenFiring;
+
+        shotgunRenderer = transform.parent.gameObject;
+        shotgun = shotgunRenderer.transform.parent.gameObject;
+
+        anim = shotgun.GetComponent<Animator>();
     }
 
     void Update()
@@ -68,6 +78,8 @@ public class Shotgun : MonoBehaviour
     {
         timer = 0f;
 
+        anim.SetTrigger("Fire");
+
         fireAudio.Play();
         fireLight.enabled = true;
 
@@ -100,7 +112,7 @@ public class Shotgun : MonoBehaviour
 
             if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
             {
-                EnemyBaseHealth enemyHealth = fireHit.collider.GetComponent<EnemyBaseHealth>();
+                EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
                 EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
 
                 if (enemyHealth != null)

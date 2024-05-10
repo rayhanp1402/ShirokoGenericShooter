@@ -33,7 +33,7 @@ public class EnemyShotgun : MonoBehaviour
         fireLight.enabled = false;
     }
 
-    public void Shoot(float range, int damage)
+    public void Shoot(float range, float damage)
     {
         fireAudio.Play();
         fireLight.enabled = true;
