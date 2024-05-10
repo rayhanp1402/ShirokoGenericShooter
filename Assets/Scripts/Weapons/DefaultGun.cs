@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using Nightmare;
+using Unity.VisualScripting;
 public class DefaultGun : PausibleObject
 {
     public int damage = 30;
@@ -20,6 +21,11 @@ public class DefaultGun : PausibleObject
     
     float timer;
 
+    GameObject weaponHolder;
+    GameObject defaultGun;
+
+    Animator anim;
+
 
     void Awake()
     {
@@ -28,6 +34,11 @@ public class DefaultGun : PausibleObject
         fireLine = GetComponent<LineRenderer>();
 
         shootableMask = LayerMask.GetMask("Shootable");
+
+        weaponHolder = transform.parent.gameObject;
+        defaultGun = weaponHolder.transform.parent.gameObject;
+
+        anim = defaultGun.GetComponent<Animator>();
     }
 
     void OnDestroy()
@@ -42,6 +53,10 @@ public class DefaultGun : PausibleObject
         if (Input.GetButton("Fire1") && timer >= timeBetweenFiring)
         {
             Shoot();
+        }
+        else
+        {
+            anim.SetTrigger("Idle");
         }
 #else
         // If there is input on the shoot direction stick and it's time to fire...
@@ -67,6 +82,8 @@ public class DefaultGun : PausibleObject
     void Shoot()
     {
         timer = 0f;
+
+        anim.SetTrigger("Fire");
 
         fireAudio.Play();
         fireLight.enabled = true;
