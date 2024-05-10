@@ -100,7 +100,7 @@ public class Shotgun : MonoBehaviour
 
             if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
             {
-                EnemyBaseHealth enemyHealth = fireHit.collider.GetComponent<EnemyBaseHealth>();
+                EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
                 EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
 
                 if (enemyHealth != null)
