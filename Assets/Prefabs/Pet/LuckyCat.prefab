@@ -4842,9 +4842,10 @@ GameObject:
   - component: {fileID: 1236292498962659671}
   - component: {fileID: 3953777412422251936}
   - component: {fileID: 2024208291572023523}
+  - component: {fileID: 3601371126154001634}
   m_Layer: 0
   m_Name: LuckyCat
-  m_TagString: Untagged
+  m_TagString: Pet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4931,6 +4932,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &3601371126154001634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070692012407039761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64274a159eb879a4fbef18ad8b7ee614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  sinkSpeed: 2.5
+  deathClip: {fileID: 0}
+  godMode: 0
 --- !u!1 &7200658779575517060
 GameObject:
   m_ObjectHideFlags: 0
