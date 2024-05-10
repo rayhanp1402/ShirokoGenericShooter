@@ -4,10 +4,12 @@ using UnityEngine;
 using Nightmare;
 public class Sword : MonoBehaviour
 {
-    public int damage = 50;
+    public float damage = 50f;
     public float range = 2f;
     public float timeBetweenFiring = .08f;
     public float effectsDisplayTime = .2f;
+
+    PlayerMovement playerMovement;
 
     AudioSource fireAudio;
     Light fireLight;
@@ -34,6 +36,8 @@ public class Sword : MonoBehaviour
 
         excalibur = transform.parent.gameObject;
         anim = excalibur.GetComponent<Animator>();
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
 
         timer = timeBetweenFiring;
     }
@@ -87,11 +91,11 @@ public class Sword : MonoBehaviour
             EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage, fireHit.point);
+                enemyHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
             if(enemyPetHealth != null)
             {
-                enemyPetHealth.TakeDamage(damage, fireHit.point);
+                enemyPetHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
             fireLine.SetPosition(1, fireHit.point);
         }
@@ -99,5 +103,10 @@ public class Sword : MonoBehaviour
         {
             fireLine.SetPosition(1, fireRay.origin + fireRay.direction * range);
         }
+    }
+
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
     }
 }
