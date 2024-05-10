@@ -10,7 +10,7 @@ namespace Nightmare
         
         public bool godMode = false;
 
-        float currentHealth;
+        public float currentHealth;
         Animator anim;
         AudioSource enemyAudio;
         // ParticleSystem hitParticles;
@@ -60,6 +60,22 @@ namespace Nightmare
             if (!IsDead())
             {
                 enemyAudio.Play();
+                currentHealth -= amount;
+
+                if (IsDead())
+                {
+                    Death();
+                }
+            }
+        }
+
+        public void TakeDamage(float amount)
+        {
+            if (godMode)
+                return;
+            if (!IsDead())
+            {
+                //enemyAudio.Play();
                 currentHealth -= amount;
 
                 if (IsDead())

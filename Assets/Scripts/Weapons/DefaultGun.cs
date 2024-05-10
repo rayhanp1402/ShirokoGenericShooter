@@ -94,7 +94,7 @@ public class DefaultGun : PausibleObject
         fireRay.origin = transform.position;
         fireRay.direction = transform.forward;
 
-        if(Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+        if(Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
         {
             EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
             EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
