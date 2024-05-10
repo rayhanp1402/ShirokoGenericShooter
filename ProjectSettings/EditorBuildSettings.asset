@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level03.unity
     guid: a253d5444316c9f40bc9178432f9af91
+  - enabled: 1
+    path: Assets/Scenes/ObjectiveTesting.unity
+    guid: bbe34bb859af5104fbcec0bc53c49f47
   m_configObjects: {}

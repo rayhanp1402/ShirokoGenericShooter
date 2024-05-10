@@ -20,6 +20,14 @@ public class Item : MonoBehaviour
             player = null;
         }
 
+        void OnEnable()
+        {
+            player = null;
+            isSucked = false;
+            suckTimer = 0.0f;
+            GetComponent<Collider>().enabled = true;
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -37,6 +45,7 @@ public class Item : MonoBehaviour
                 {
                     gameObject.SetActive(false);
                     CoinManager.coins += value;
+                    this.gameObject.SetActive(false);
                 }
             }
         }
