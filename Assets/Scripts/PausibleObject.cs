@@ -7,9 +7,12 @@ namespace Nightmare
     {
         public UnityAction<bool> pauseListener;
         internal bool isPaused = false;
+        private Animator animator;
 
         public void StartPausible()
         {
+            animator = GetComponent<Animator>();
+
             pauseListener = new UnityAction<bool>(Pause);
 
             EventManager.StartListening("Pause", Pause);
@@ -34,12 +37,16 @@ namespace Nightmare
 
         virtual public void OnPause()
         {
-
+            if (animator){
+                animator.speed = 0;
+            }
         }
 
         virtual public void OnUnPause()
         {
-
+            if (animator){
+                animator.speed = 1;
+            }
         }
     }
 }
