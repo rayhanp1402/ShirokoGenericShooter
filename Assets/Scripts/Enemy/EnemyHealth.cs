@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Nightmare
 {
@@ -16,21 +17,13 @@ namespace Nightmare
         protected ParticleSystem hitParticles;
         protected CapsuleCollider capsuleCollider;
         protected EnemyMovement enemyMovement;
+        public UnityAction OnDeath;
         private ObjectiveManager objectiveManager;
 
         protected void Start()
         {
             // Find the ObjectiveManagerScript in the scene
             objectiveManager = FindObjectOfType<ObjectiveManager>();
-        }
-
-        protected void DefeatEnemy()
-        {
-            // Call the EnemyDefeated method of the ObjectiveManagerScript
-            if (objectiveManager != null)
-            {
-                objectiveManager.EnemyDefeated();
-            }
         }
 
         protected virtual void Awake ()
@@ -97,7 +90,7 @@ namespace Nightmare
             enemyAudio.clip = deathClip;
             enemyAudio.Play ();
             StartSinking();
-            DefeatEnemy();
+            OnDeath?.Invoke();
         }
 
         public void StartSinking ()

@@ -7,8 +7,7 @@ public class EventManager : MonoBehaviour
     private Dictionary<string, UnityEvent<Vector3>> eventDictionaryVector;
     private Dictionary<string, UnityEvent<bool>> eventDictionaryBool;
     private Dictionary<string, UnityEvent> eventDictionaryNull;
-
-
+    private Dictionary<string, UnityEvent<int>> eventDictionaryInt;
     private static EventManager eventManager;
 
     public static EventManager instance
@@ -46,6 +45,9 @@ public class EventManager : MonoBehaviour
         if (eventDictionaryNull == null)
         {
             eventDictionaryNull = new Dictionary<string, UnityEvent>();
+        }
+        if (eventDictionaryInt == null){
+            eventDictionaryInt = new Dictionary<string, UnityEvent<int>>();
         }
     }
 
@@ -165,6 +167,48 @@ public class EventManager : MonoBehaviour
         if (instance.eventDictionaryNull.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.Invoke();
+        }
+    }
+    #endregion
+
+    #region EventInt
+    [System.Serializable]
+    public class IntEvent : UnityEvent<int>
+    {
+
+    }
+
+    public static void StartListening(string eventName, UnityAction<int> listener)
+    {
+        UnityEvent<int> thisEvent = null;
+        if (instance.eventDictionaryInt.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.AddListener(listener);
+        }
+        else
+        {
+            thisEvent = new IntEvent();
+            thisEvent.AddListener(listener);
+            instance.eventDictionaryInt.Add(eventName, thisEvent);
+        }
+    }
+
+    public static void StopListening(string eventName, UnityAction<int> listener)
+    {
+        if (eventManager == null) return;
+        UnityEvent<int> thisEvent = null;
+        if (instance.eventDictionaryInt.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.RemoveListener(listener);
+        }
+    }
+
+    public static void TriggerEvent(string eventName, int value)
+    {
+        UnityEvent<int> thisEvent = null;
+        if (instance.eventDictionaryInt.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.Invoke(value);
         }
     }
     #endregion
