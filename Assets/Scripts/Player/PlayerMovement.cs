@@ -142,6 +142,12 @@ namespace Nightmare
             speed = baseSpeed;
         }
 
+        public void DoubleSpeed()
+        {
+            // Double the speed
+            speed = 2 * baseSpeed;
+        }
+
         public void Reduce(float speedAmount, float attackAmount)
         {
             this.speed = speedAmount;

@@ -50,6 +50,17 @@ public class DefaultGun : PausibleObject
         StopPausible();
     }
 
+    public void OneHitKill()
+        {
+            damage = 9999;
+            // GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            // foreach (GameObject enemy in enemies)
+            // {
+            //     EnemyBaseHealth enemyHealth = enemy.GetComponent<EnemyBaseHealth>();
+            //     enemyHealth.TakeDamage(enemyHealth.getCurrentHealth(), enemy.transform.position);
+            // }
+        }
+
     void Update()
     {
         timer += Time.deltaTime;

@@ -7,9 +7,8 @@ public class Statistic : MonoBehaviour
 {
     public PlayerMovement playerMovement;
     public DefaultGun defaultGun;
-        public TMP_Text PlayTime; 
+    public TMP_Text PlayTime; 
     public TMP_Text Distance;
-    public TMP_Text Score;
     public TMP_Text Accuracy;
     public TMP_Text Kill;
     public TMP_Text Death;
@@ -68,6 +67,18 @@ public class Statistic : MonoBehaviour
     public void IncrementKill()
     {
         killCount++; // Menambah jumlah kill saat musuh mati
+    }
+
+
+
+
+    public void saveStats()
+    {
+        PlayerPrefs.SetFloat("PlayTime", playTime);
+        PlayerPrefs.SetFloat("Distance", playerMovement.totalDistanceTraveled);
+        PlayerPrefs.SetInt("Kill", killCount);
+        PlayerPrefs.SetFloat("Accuracy", (float)defaultGun.shotsHit / defaultGun.shotsFired * 100);
+        PlayerPrefs.Save();
     }
     
 }

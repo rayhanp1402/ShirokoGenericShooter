@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public GameObject settingsMenu;
-    public GameObject backButton;
+    public GameObject backButtonOptions;
+
+    public GameObject backButtonStats;
 
     public GameObject statsMenu;
 
@@ -17,13 +19,17 @@ public class MainMenu : MonoBehaviour
         {
             settingsMenu.SetActive(false);
         }
-        if (backButton != null)
+        if (backButtonOptions != null)
         {
-            backButton.SetActive(false);
+            backButtonOptions.SetActive(false);
         }
         if (statsMenu != null)
         {
             statsMenu.SetActive(false);
+        }
+        if (backButtonStats != null)
+        {
+            backButtonStats.SetActive(false);
         }
     }
 
@@ -55,9 +61,9 @@ public class MainMenu : MonoBehaviour
             bool isSettingsMenuActive = !settingsMenu.activeSelf;
             settingsMenu.SetActive(isSettingsMenuActive);
             // Toggle visibility of the back button based on the settings menu's visibility
-            if (backButton != null)
+            if (backButtonOptions != null)
             {
-                backButton.SetActive(isSettingsMenuActive);
+                backButtonOptions.SetActive(isSettingsMenuActive);
             }
         }
     }
@@ -69,9 +75,9 @@ public class MainMenu : MonoBehaviour
             bool isStatsMenuActive = !statsMenu.activeSelf;
             statsMenu.SetActive(isStatsMenuActive);
             // Toggle visibility of the back button based on the settings menu's visibility
-            if (backButton != null)
+            if (backButtonStats != null)
             {
-                backButton.SetActive(isStatsMenuActive);
+                backButtonStats.SetActive(isStatsMenuActive);
             }
         }
     }

@@ -45,6 +45,11 @@ namespace Nightmare
             anim.SetBool("IsDead", false);
         }
 
+        public void SetGodMode(bool godMode)
+        {
+            this.godMode = godMode;
+        }
+
 
         void Update()
         {

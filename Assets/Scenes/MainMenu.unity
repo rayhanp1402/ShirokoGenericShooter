@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -851,7 +851,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
+        m_CallState: 1
       - m_Target: {fileID: 587187190}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -874,7 +874,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1509381741}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -886,7 +886,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &204049245
 MonoBehaviour:
@@ -2044,7 +2044,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 1707813051}
-  backButton: {fileID: 1417929247}
+  backButtonOptions: {fileID: 1417929247}
+  backButtonStats: {fileID: 204049242}
   statsMenu: {fileID: 1269604641}
 --- !u!1 &599606456
 GameObject:
@@ -3671,8 +3672,8 @@ GameObject:
   - component: {fileID: 1269604645}
   - component: {fileID: 1269604644}
   - component: {fileID: 1269604643}
-  - component: {fileID: 1269604646}
   - component: {fileID: 1269604647}
+  - component: {fileID: 1269604648}
   m_Layer: 5
   m_Name: StatsMenu
   m_TagString: Untagged
@@ -3770,25 +3771,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1269604646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269604641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36cc939cf4d5ea45b94da803b1d9715, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayTime: {fileID: 1964779003}
-  Distance: {fileID: 870403612}
-  Score: {fileID: 992075561}
-  Accuracy: {fileID: 1471966999}
-  Kill: {fileID: 54535842}
-  Death: {fileID: 850051692}
-  isPaused: 0
 --- !u!114 &1269604647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3802,8 +3784,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 0}
-  backButton: {fileID: 0}
+  backButtonOptions: {fileID: 0}
+  backButtonStats: {fileID: 0}
   statsMenu: {fileID: 0}
+--- !u!114 &1269604648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269604641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3024a212c5e065d498f069ebbeb6e73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayTime: {fileID: 1964779003}
+  Distance: {fileID: 870403612}
+  Accuracy: {fileID: 1471966999}
+  Kill: {fileID: 54535842}
 --- !u!1 &1271445265
 GameObject:
   m_ObjectHideFlags: 0
@@ -5136,7 +5135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 0}
-  backButton: {fileID: 0}
+  backButtonOptions: {fileID: 0}
+  backButtonStats: {fileID: 0}
   statsMenu: {fileID: 0}
 --- !u!1 &1812975675
 GameObject:
