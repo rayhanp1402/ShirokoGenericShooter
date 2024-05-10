@@ -10422,6 +10422,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6499133567160717056}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8806471140568630533}
   m_SourcePrefab: {fileID: 100100000, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}
 --- !u!1 &6921705652197032964 stripped
 GameObject:
@@ -10564,7 +10567,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 0.5
   effectsDisplayTime: 0.2
-  damage: 50
   range: 2
   distanceToPlayer: 0
 --- !u!82 &6499133567160717056
@@ -10663,6 +10665,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &8806471140568630533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6921705652197032964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b3067ac78a6c5439e0ec5982e229fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bonusAttackPercent: 0
+  baseAttack: 10
+  currentAttack: 0
 --- !u!4 &7729591150317985470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c649485a9ecb95848926f8ef504f47e4, type: 3}

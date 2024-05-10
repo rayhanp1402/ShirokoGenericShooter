@@ -7,7 +7,7 @@ public class Statistic : MonoBehaviour
 {
     public PlayerMovement playerMovement;
     public DefaultGun defaultGun;
-    public TMP_Text PlayTime; 
+        public TMP_Text PlayTime; 
     public TMP_Text Distance;
     public TMP_Text Score;
     public TMP_Text Accuracy;
