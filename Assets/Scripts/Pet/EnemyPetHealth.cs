@@ -73,7 +73,6 @@ namespace Nightmare
 
         public virtual void Death ()
         {
-            Debug.Log("EnemyPetHealth Death");
             EventManager.TriggerEvent("Sound", this.transform.position);
             anim.SetTrigger ("Dead");
             currentHealth = 0;
