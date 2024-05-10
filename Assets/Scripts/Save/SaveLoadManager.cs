@@ -114,17 +114,38 @@ public class SaveLoadManager : MonoBehaviour
 
     public void PlaceEmptySaveBox(SaveBoxFilled saveBoxFilled, SaveLoadManager saveLoadManager)
     {
-        // Instantiate an empty save box in the same position as the filled save box
-        GameObject emptySaveBox = Instantiate(saveBoxEmptyPrefab, saveBoxFilled.transform.position, saveBoxFilled.transform.rotation, saveMenuCanvas);
 
-        SaveBoxEmpty emptyBoxScript = emptySaveBox.AddComponent<SaveBoxEmpty>();
-
-        if (emptyBoxScript != null)
+        if (saveBoxFilled.transform.parent == saveMenuCanvas) // Check if it's the save menu
         {
-            emptyBoxScript.saveLoadManager = saveLoadManager;
-            emptyBoxScript.saveBoxFilledPrefab = saveBoxFilledPrefab;
+            // Instantiate an empty save box in the same position as the filled save box
+            GameObject emptySaveBox = Instantiate(saveBoxEmptyPrefab, saveBoxFilled.transform.position, saveBoxFilled.transform.rotation, saveMenuCanvas);
+
+            SaveBoxEmpty emptyBoxScript = emptySaveBox.AddComponent<SaveBoxEmpty>();
+
+            if (emptyBoxScript != null)
+            {
+                emptyBoxScript.saveLoadManager = saveLoadManager;
+                emptyBoxScript.saveBoxFilledPrefab = saveBoxFilledPrefab;
+            }
+            // Destroy the filled save box
+            Destroy(saveBoxFilled.gameObject);
         }
-        // Destroy the filled save box
-        Destroy(saveBoxFilled.gameObject);
+        else if (saveBoxFilled.transform.parent == loadMenuCanvas) // Check if it's the load menu
+        {
+            // Instantiate an empty save box in the same position as the filled save box
+            GameObject emptySaveBox = Instantiate(saveBoxEmptyPrefab, saveBoxFilled.transform.position, saveBoxFilled.transform.rotation, loadMenuCanvas);
+
+            SaveBoxEmpty emptyBoxScript = emptySaveBox.AddComponent<SaveBoxEmpty>();
+
+            if (emptyBoxScript != null)
+            {
+                emptyBoxScript.saveLoadManager = saveLoadManager;
+                emptyBoxScript.saveBoxFilledPrefab = saveBoxFilledPrefab;
+            }
+            // Destroy the filled save box
+            Destroy(saveBoxFilled.gameObject);
+        }
+
+        
     }
 }
