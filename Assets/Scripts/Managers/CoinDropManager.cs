@@ -10,23 +10,23 @@ public class CoinDropManager : MonoBehaviour
 
     // Start is called before the first frame update
 
-    private static CoinDropManager poolManager;
+    private static CoinDropManager coinDropManager;
 
     public static CoinDropManager instance
     {
         get
         {
-            if (!poolManager)
+            if (!coinDropManager)
             {
-                poolManager = FindObjectOfType(typeof(CoinDropManager)) as CoinDropManager;
+                coinDropManager = FindObjectOfType(typeof(CoinDropManager)) as CoinDropManager;
 
-                if (!poolManager)
+                if (!coinDropManager)
                 {
                     Debug.LogError("There needs to be one active CoinDropManager script on a GameObject in your scene.");
                 }
             }
 
-            return poolManager;
+            return coinDropManager;
         }
     }
 
@@ -62,9 +62,9 @@ public class CoinDropManager : MonoBehaviour
     {
         pos.y += 1;
         GameObject c = PoolManager.Pull(objname, pos, Quaternion.identity);
-        Vector3 force = new Vector3(Random.Range(-1.0f, 1.0f), 1, Random.Range(-1.0f, 1.0f));
+        Vector3 force = new Vector3(Random.Range(-0.5f, 0.5f), 1, Random.Range(-1.0f, 1.0f));
         force.Normalize();
-        force *= 3;
+        force *= 3.0f;
         c.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
     }
 }

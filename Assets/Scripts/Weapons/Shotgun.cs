@@ -25,6 +25,8 @@ public class Shotgun : MonoBehaviour
     GameObject shotgunRenderer;
     GameObject shotgun;
 
+    PlayerMovement playerMovement;
+
     Animator anim;
 
     float timer;
@@ -40,6 +42,8 @@ public class Shotgun : MonoBehaviour
 
         shotgunRenderer = transform.parent.gameObject;
         shotgun = shotgunRenderer.transform.parent.gameObject;
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
 
         anim = shotgun.GetComponent<Animator>();
     }
@@ -118,7 +122,7 @@ public class Shotgun : MonoBehaviour
                 if (enemyHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
-                    int adjustedDamage = Mathf.RoundToInt(damage * (1 - distanceToEnemy / range));
+                    int adjustedDamage = Mathf.RoundToInt(calculateDamage() * (1 - distanceToEnemy / range));
 
                     adjustedDamage = Mathf.Max(0, adjustedDamage);
 
@@ -128,7 +132,7 @@ public class Shotgun : MonoBehaviour
                 if(enemyPetHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
-                    int adjustedDamage = Mathf.RoundToInt(damage * (1 - distanceToEnemy / range));
+                    int adjustedDamage = Mathf.RoundToInt(calculateDamage() * (1 - distanceToEnemy / range));
 
                     adjustedDamage = Mathf.Max(0, adjustedDamage);
 
@@ -153,5 +157,8 @@ public class Shotgun : MonoBehaviour
             }
         }
     }
-
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
+    }
 }

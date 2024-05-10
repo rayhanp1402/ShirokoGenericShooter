@@ -39,7 +39,7 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    void Start ()
+    void Awake ()
     {
         if (pools != null)
         {
@@ -48,6 +48,7 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < pools.Length; i++)
             {
                 Pool tempPool = pools[i];
+                Debug.Log(tempPool);
                 cache[tempPool.key] = new Pool(tempPool.key, tempPool.poolObject, tempPool.size, tempPool.parentingGroup, tempPool.expandable);
             }
         }
