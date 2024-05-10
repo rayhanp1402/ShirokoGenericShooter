@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
-public class JenderalHealth : EnemyBaseHealth
+public class JenderalHealth : EnemyHealth
 {
+    JenderalAttack jenderalAttack;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        jenderalAttack = GetComponent<JenderalAttack>();
+    }
+
     protected override void Death()
     {
         base.Death();
-        DestroyImmediate(gameObject);
+        jenderalAttack.enabled = false;
+        // DestroyImmediate(gameObject);
     }
 }
