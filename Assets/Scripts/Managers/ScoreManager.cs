@@ -24,17 +24,6 @@ namespace Nightmare
         void Update ()
         {
             sText.text = "Score: " + score;
-            if (score >= levelThreshhold)
-            {
-                AdvanceLevel();
-            }
-        }
-
-        private void AdvanceLevel()
-        {
-            levelThreshhold = score + LEVEL_INCREASE;
-            LevelManager lm = FindObjectOfType<LevelManager>();
-            lm.AdvanceLevel();
         }
     }
 }

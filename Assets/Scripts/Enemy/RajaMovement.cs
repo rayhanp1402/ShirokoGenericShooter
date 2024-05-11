@@ -21,6 +21,8 @@ public class RajaMovement : MonoBehaviour
     public float spawnDistance = 2f;
     public float timeBetweenKerocoSpawn = 15f;
 
+    Animator anim;
+
     float timer;
 
     void Awake()
@@ -32,6 +34,8 @@ public class RajaMovement : MonoBehaviour
         shirokoHealth = player.GetComponent<PlayerHealth>();
 
         rajaAttack = GetComponent<RajaAttack>();
+
+        anim = GetComponent<Animator>();
 
         timer = timeBetweenKerocoSpawn;
     }
@@ -46,7 +50,7 @@ public class RajaMovement : MonoBehaviour
             SpawnKeroco();
         }
 
-        if (distanceToPlayer <= rajaAttack.range || shirokoHealth.currentHealth <= 0)
+        if (distanceToPlayer <= rajaAttack.currentRange || shirokoHealth.currentHealth <= 0)
         {
             // Debug.Log("Raja is stopping");
             nav.isStopped = true;
