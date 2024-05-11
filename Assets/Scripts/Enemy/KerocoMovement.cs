@@ -18,6 +18,8 @@ public class KerocoMovement : MonoBehaviour
 
     public float rotationSpeed = 0.1f;
 
+    Animator anim;
+
     void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -25,6 +27,8 @@ public class KerocoMovement : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         shirokoHealth = player.GetComponent<PlayerHealth>();
+
+        anim = GetComponent<Animator>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -49,22 +53,26 @@ public class KerocoMovement : MonoBehaviour
     {
         if (shirokoHealth.currentHealth <= 0)
         {
+            anim.SetBool("IsWalking", false);
             nav.isStopped = true;
+            Debug.Log("Keroco stopped");
         }
         else
         {
+            anim.SetBool("IsWalking", true);
             if (petsInRange.Count > 0)
             {
                 closestPet = GetClosestPet();
                 if (closestPet != null)
                 {
                     nav.SetDestination(closestPet.transform.position);
+                    Debug.Log("Keroco is moving towards pet");
                 }
             }
             else
             {
-                nav.isStopped = false;
                 nav.SetDestination(playerTransform.position);
+                Debug.Log("Keroco is moving towards player");
             }
         }
         FaceTarget(playerTransform.position);
