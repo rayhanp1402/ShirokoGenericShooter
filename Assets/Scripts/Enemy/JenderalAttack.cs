@@ -7,7 +7,6 @@ public class JenderalAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.8f;
     public float effectsDisplayTime = .2f;
-    public int damage = 50;
     public float range = 2f;
 
     public float timeBetweenAreaDamage = 2f;
@@ -17,6 +16,13 @@ public class JenderalAttack : MonoBehaviour
     Transform sword;
     Transform swordEnd;
     EnemySword swordScript;
+    EnemyStat enemyStat;
+
+    Transform petDetector;
+    PetDetector petDetectorScript;
+
+    PetHealth petHealth;
+    GameObject closestPet;
 
     bool playerInRange;
     public float distanceToPlayer;
@@ -26,10 +32,13 @@ public class JenderalAttack : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         shirokoHealth = player.GetComponent<PlayerHealth>();
-        sword = transform.GetChild(5);
+        sword = transform.GetChild(6);
         swordEnd = sword.transform.GetChild(0);
         swordScript = swordEnd.GetComponent<EnemySword>();
+        petDetector = transform.GetChild(0);
+        petDetectorScript = petDetector.GetComponent<PetDetector>();
         timer = timeBetweenAttacks;
+        enemyStat = GetComponent<EnemyStat>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -54,9 +63,17 @@ public class JenderalAttack : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
+        closestPet = petDetectorScript.GetClosestPet();
+
         if (distanceToPlayer <= range && timer >= timeBetweenAttacks)
         {
            WeaponAttack();
+        }
+
+        if (closestPet != null && timer >= timeBetweenAttacks)
+        {
+            Debug.Log("Attack pet");
+            AttackPet();
         }
 
         if (timer >= timeBetweenAttacks * effectsDisplayTime)
@@ -77,7 +94,7 @@ public class JenderalAttack : MonoBehaviour
         if (shirokoHealth.currentHealth > 0)
         {
             swordScript.Shoot(range);
-            shirokoHealth.TakeDamage(damage);
+            shirokoHealth.TakeDamage(enemyStat.currentAttack);
         }
     }
 
@@ -88,6 +105,19 @@ public class JenderalAttack : MonoBehaviour
         if (shirokoHealth.currentHealth > 0)
         {
             shirokoHealth.TakeDamage(10);
+        }
+    }
+
+    void AttackPet()
+    {
+        timer = 0f;
+
+        petHealth = closestPet.GetComponent<PetHealth>();
+
+        if (petHealth.CurrentHealth() > 0)
+        {
+            swordScript.Shoot(range);
+            petHealth.TakeDamage(enemyStat.currentAttack);
         }
     }
 }

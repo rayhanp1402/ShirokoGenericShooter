@@ -7,6 +7,8 @@ namespace Nightmare
         private PlayerHealth playerHealth;
         public GameObject enemy;
         public float spawnTime = 3f;
+        public int objectiveNum;
+        public int maxSpawned;
         public Transform[] spawnPoints;
 
         private float timer;
@@ -34,10 +36,11 @@ namespace Nightmare
                 return;
 
             timer -= Time.deltaTime;
-            if (timer <= 0f)
+            if (timer <= 0f && spawned < maxSpawned)
             {
                 Spawn();
                 timer = spawnTime;
+                spawned++;
             }
         }
 
@@ -55,7 +58,8 @@ namespace Nightmare
 
             // Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
             
-            Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+            GameObject go = Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+            go.AddComponent<ObjectiveTarget>().index = objectiveNum;
         }
     }
 }

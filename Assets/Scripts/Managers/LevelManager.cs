@@ -39,6 +39,11 @@ namespace Nightmare
             LoadLevel(InitialLevel.getLevel() == -1 ? 0 : InitialLevel.getLevel());
         }
 
+        public int GetCurrentLevel()
+        {
+            return currentLevel;
+        }
+
         private void LoadLevel(int level)
         {
             currentLevel = level;

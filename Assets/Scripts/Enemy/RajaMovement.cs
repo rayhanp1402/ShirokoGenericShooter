@@ -48,12 +48,12 @@ public class RajaMovement : MonoBehaviour
 
         if (distanceToPlayer <= rajaAttack.range || shirokoHealth.currentHealth <= 0)
         {
-            Debug.Log("Raja is stopping");
+            // Debug.Log("Raja is stopping");
             nav.isStopped = true;
         }
         else
         {
-            Debug.Log("Raja is moving");
+            // Debug.Log("Raja is moving");
             nav.isStopped = false;
             nav.SetDestination(playerTransform.position);
         }

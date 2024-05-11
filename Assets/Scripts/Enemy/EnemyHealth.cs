@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Nightmare
 {
@@ -7,6 +8,7 @@ namespace Nightmare
         public int startingHealth = 100;
         public float sinkSpeed = 2.5f;
         public int scoreValue = 10;
+        public int coinValue = 40;
         public AudioClip deathClip;
 
         protected float currentHealth;
@@ -15,6 +17,14 @@ namespace Nightmare
         protected ParticleSystem hitParticles;
         protected CapsuleCollider capsuleCollider;
         protected EnemyMovement enemyMovement;
+        public UnityAction OnDeath;
+        private ObjectiveManager objectiveManager;
+
+        protected void Start()
+        {
+            // Find the ObjectiveManagerScript in the scene
+            objectiveManager = FindObjectOfType<ObjectiveManager>();
+        }
 
         protected virtual void Awake ()
         {
@@ -72,6 +82,7 @@ namespace Nightmare
 
         protected virtual void Death ()
         {
+            CoinDropManager.DropMoney(transform.position, coinValue);
             EventManager.TriggerEvent("Sound", this.transform.position);
             if (anim)
                 anim.SetTrigger ("Dead");
@@ -79,6 +90,7 @@ namespace Nightmare
             enemyAudio.clip = deathClip;
             enemyAudio.Play ();
             StartSinking();
+            OnDeath?.Invoke();
         }
 
         public void StartSinking ()
@@ -87,6 +99,7 @@ namespace Nightmare
             SetKinematics(true);
 
             ScoreManager.score += scoreValue;
+            
         }
 
         public float CurrentHealth()

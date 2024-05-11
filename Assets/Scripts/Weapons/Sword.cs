@@ -4,10 +4,12 @@ using UnityEngine;
 using Nightmare;
 public class Sword : MonoBehaviour
 {
-    public int damage = 50;
+    public float damage = 50f;
     public float range = 2f;
     public float timeBetweenFiring = .08f;
     public float effectsDisplayTime = .2f;
+
+    PlayerMovement playerMovement;
 
     AudioSource fireAudio;
     Light fireLight;
@@ -16,6 +18,10 @@ public class Sword : MonoBehaviour
     Ray fireRay;
     RaycastHit fireHit;
     int shootableMask;
+
+    GameObject excalibur;
+
+    Animator anim;
 
     float timer;
 
@@ -27,6 +33,11 @@ public class Sword : MonoBehaviour
         fireLine = GetComponent<LineRenderer>();
 
         shootableMask = LayerMask.GetMask("Shootable");
+
+        excalibur = transform.parent.gameObject;
+        anim = excalibur.GetComponent<Animator>();
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
 
         timer = timeBetweenFiring;
     }
@@ -63,6 +74,8 @@ public class Sword : MonoBehaviour
     {
         timer = 0f;
 
+        anim.SetTrigger("Fire");
+
         fireAudio.Play();
         fireLight.enabled = true;
 
@@ -72,17 +85,17 @@ public class Sword : MonoBehaviour
         fireRay.origin = transform.position;
         fireRay.direction = transform.forward;
 
-        if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+        if (Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
         {
             EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
             EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage, fireHit.point);
+                enemyHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
             if(enemyPetHealth != null)
             {
-                enemyPetHealth.TakeDamage(damage, fireHit.point);
+                enemyPetHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
             fireLine.SetPosition(1, fireHit.point);
         }
@@ -90,5 +103,10 @@ public class Sword : MonoBehaviour
         {
             fireLine.SetPosition(1, fireRay.origin + fireRay.direction * range);
         }
+    }
+
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
     }
 }

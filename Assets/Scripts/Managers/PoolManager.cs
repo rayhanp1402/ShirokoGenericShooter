@@ -39,7 +39,7 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    void Start ()
+    void Awake ()
     {
         if (pools != null)
         {
@@ -48,6 +48,7 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < pools.Length; i++)
             {
                 Pool tempPool = pools[i];
+                Debug.Log(tempPool);
                 cache[tempPool.key] = new Pool(tempPool.key, tempPool.poolObject, tempPool.size, tempPool.parentingGroup, tempPool.expandable);
             }
         }
@@ -61,6 +62,10 @@ public class PoolManager : MonoBehaviour
     public static GameObject Pull(string key)
     {
         return (cache[key].Pull());
+    }
+
+    public static GameObject GetRef(string key){
+        return (cache[key].GetRef());
     }
 
     public static GameObject Pull(string key, Vector3 position, Quaternion rotation)
@@ -120,6 +125,11 @@ public class Pool
             Debug.LogWarning("No available item from pool with key: " + key);
             return null;
         }
+    }
+
+    public GameObject GetRef(){
+        if (pool.Count < 1) return null;
+        return pool[0];
     }
 
     private GameObject AddItem(bool keepActive = false)

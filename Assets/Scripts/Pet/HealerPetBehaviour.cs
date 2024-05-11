@@ -13,6 +13,7 @@ namespace Nightmare
         NavMeshAgent nav;
 
         ParticleSystem healEffect;
+        bool isHealing = true;
 
         public float timer = 0f;
         public int healingRate = 10;
@@ -45,6 +46,12 @@ namespace Nightmare
         {
             if (!isPaused)
             {
+                if (playerHealth.currentHealth <= 0)
+                {
+                    StopHeal();
+                    nav.ResetPath();
+                    return;
+                }
                 SetDestination(player.position);
                 if (nav.remainingDistance <= nav.stoppingDistance){
                     Vector3 lookPos = new Vector3(player.position.x, transform.position.y, player.position.z);
@@ -55,7 +62,7 @@ namespace Nightmare
                 if (timer >= healingInterval)
                 {
                     timer -= healingInterval;
-                    if (playerHealth.currentHealth < playerHealth.startingHealth){
+                    if (playerHealth.currentHealth < playerHealth.startingHealth && isHealing){
                         healEffect.Play();
                         playerHealth.Heal(healingRate);
                     }
@@ -81,6 +88,12 @@ namespace Nightmare
                 nav.isStopped = false;
         }
         
+        public void StopHeal()
+        {
+            healEffect.Stop();
+            isHealing = false;
+        }
+
         private void SetDestination(Vector3 position)
         {
             if (nav.isOnNavMesh)

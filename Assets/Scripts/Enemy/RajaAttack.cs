@@ -7,7 +7,6 @@ public class RajaAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.8f;
     public float effectsDisplayTime = .2f;
-    public int damage = 100;
     public float range = 100f;
 
     GameObject player;
@@ -17,6 +16,7 @@ public class RajaAttack : MonoBehaviour
     Transform shotgunRender;
     Transform barrelEnd;
     EnemyShotgun shotgunScript;
+    EnemyStat enemyStat;
 
     public float distanceToPlayer;
     float timer;
@@ -34,6 +34,7 @@ public class RajaAttack : MonoBehaviour
         shotgunRender = shotgun.transform.GetChild(0);
         barrelEnd = shotgunRender.transform.GetChild(0);
         shotgunScript = barrelEnd.GetComponent<EnemyShotgun>();
+        enemyStat = GetComponent<EnemyStat>();
         timer = timeBetweenAttacks;
     }
 
@@ -81,7 +82,7 @@ public class RajaAttack : MonoBehaviour
 
         if (shirokoHealth.currentHealth > 0)
         {
-            shotgunScript.Shoot(range, damage);
+            shotgunScript.Shoot(range, enemyStat.currentAttack);
         }
     }
 

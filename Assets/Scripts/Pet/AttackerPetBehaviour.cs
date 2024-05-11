@@ -53,6 +53,13 @@ namespace Nightmare
         {
             if (!isPaused)
             {
+
+                if (playerHealth.currentHealth <= 0)
+                {
+                    nav.ResetPath();
+                    return;
+                }
+
                 List<GameObject> enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
                 
                 List<GameObject> enemiesInRange = new List<GameObject>();

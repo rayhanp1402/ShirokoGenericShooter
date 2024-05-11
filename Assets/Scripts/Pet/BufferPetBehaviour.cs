@@ -10,19 +10,21 @@ namespace Nightmare
 
         public Transform owner;
         public float alertDistance = 5f;
-        public float defStopDistance = 3f;
+        public float defaultStopDistance = 3f;
+        public float atkBuffValue = 0.2f;
 
         Transform player;
         EnemyHealth ownerHealth;
+        EnemyStat enemyStat;
         EnemyPetHealth health;
         NavMeshAgent nav;
         Animator anim;
+        Transform buffEffect;
 
         bool IsFleeing = false;
+        bool IsOwnerAlive = true;
 
         public float deathTimer = 0f;
-        public int healingRate = 10;
-        public float healingInterval = 2f;
 
         
 
@@ -33,8 +35,15 @@ namespace Nightmare
             health = GetComponent<EnemyPetHealth>();
             anim = GetComponent<Animator>();
             player = GameObject.FindGameObjectWithTag("Player").transform;
-
+            enemyStat = owner.GetComponent<EnemyStat>();
+            buffEffect = transform.Find("BuffEffect");
+            buffEffect.GetComponent<ParticleSystem>().Play();
             StartPausible();
+        }
+
+        void Start()
+        {
+            enemyStat.AddBonusAttackPercent(atkBuffValue);
         }
 
         void OnEnable()
@@ -61,44 +70,48 @@ namespace Nightmare
                     nav.stoppingDistance = 0f;
                 } else {
                     IsFleeing = false;
-                    nav.stoppingDistance = defStopDistance;
+                    nav.stoppingDistance = defaultStopDistance;
                 }
 
-
-                if (!IsFleeing) {
-                    Debug.Log("Following");
-                    SetDestination(owner.position);
-                    if (nav.remainingDistance <= nav.stoppingDistance){
-                        Vector3 lookPos = new Vector3(owner.position.x, transform.position.y, owner.position.z);
-                        transform.LookAt(lookPos);
+                if (IsOwnerAlive){
+                    if (!IsFleeing) {
+                        // Debug.Log("Following");
+                        SetDestination(owner.position);
+                        if (nav.remainingDistance <= nav.stoppingDistance){
+                            Vector3 lookPos = new Vector3(owner.position.x, transform.position.y, owner.position.z);
+                            transform.LookAt(lookPos);
+                        }
+                    } else {
+                        // Debug.Log("Fleeing");
+                        Vector3 dirToPlayer = transform.position - player.position;
+                        dirToPlayer.Normalize();
+                        Vector3 newPos = transform.position + dirToPlayer;
+                        transform.LookAt(newPos);
+                        SetDestination(newPos);
                     }
-                } else {
-                    Debug.Log("Fleeing");
-                    Vector3 dirToPlayer = transform.position - player.position;
-                    dirToPlayer.Normalize();
-                    Vector3 newPos = transform.position + dirToPlayer;
-                    transform.LookAt(newPos);
-                    SetDestination(newPos);
                 }
-
+                buffEffect.position = owner.position;
+                if (ownerHealth.IsDead() && IsOwnerAlive){
+                    IsOwnerAlive = false;
+                    StopBuff();
+                }
                 if (ownerHealth.IsDead() && !health.IsDead()){
                     deathTimer += Time.deltaTime;
                     if (deathTimer >= 0.2f)
                     {
-                        health.Death();
+                        Dead();
                     }
                 }
-
-                // timer += Time.deltaTime;
-                // healEffect.transform.position = player.position;
-                // if (timer >= healingInterval)
-                // {
-                //     timer -= healingInterval;
-                //     if (playerHealth.currentHealth < playerHealth.startingHealth){
-                //         playerHealth.Heal(healingRate);
-                //     }
-                // }
             }
+        }
+
+        public void StopBuff(){
+            enemyStat.SubstractBonusAttackPercent(atkBuffValue);
+            buffEffect.GetComponent<ParticleSystem>().Stop();
+        }
+
+        void Dead(){
+            health.Death();
         }
 
         void OnDestroy()

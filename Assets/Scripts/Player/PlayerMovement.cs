@@ -10,6 +10,8 @@ namespace Nightmare
 
         public float baseSpeed = 6f; 
         public float baseAttack = 5f;
+        public float initAttack = 5f;
+        public int orbCount = 0;
 
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
@@ -57,6 +59,10 @@ namespace Nightmare
             Animating (h, v);
         }
 
+        public void BoostShooting()
+        {
+            baseAttack += 0.1f * initAttack;
+        }
 
         void Move (float h, float v)
         {
