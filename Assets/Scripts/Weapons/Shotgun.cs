@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class Shotgun : MonoBehaviour
 {
@@ -21,6 +22,13 @@ public class Shotgun : MonoBehaviour
     RaycastHit fireHit;
     int shootableMask;
 
+    GameObject shotgunRenderer;
+    GameObject shotgun;
+
+    PlayerMovement playerMovement;
+
+    Animator anim;
+
     float timer;
 
 
@@ -31,17 +39,31 @@ public class Shotgun : MonoBehaviour
         shootableMask = LayerMask.GetMask("Shootable");
 
         timer = timeBetweenFiring;
+
+        shotgunRenderer = transform.parent.gameObject;
+        shotgun = shotgunRenderer.transform.parent.gameObject;
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
+
+        anim = shotgun.GetComponent<Animator>();
     }
 
     void Update()
     {
         timer += Time.deltaTime;
-
+#if !MOBILE_INPUT
         if (Input.GetButton("Fire1") && timer >= timeBetweenFiring)
         {
             Shoot();
         }
-
+#else
+        // If there is input on the shoot direction stick and it's time to fire...
+        if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
+        {
+            // ... shoot the gun
+            Shoot();
+        }
+#endif
         if (timer >= timeBetweenFiring * effectsDisplayTime)
         {
             DisableEffects();
@@ -59,6 +81,8 @@ public class Shotgun : MonoBehaviour
     void Shoot()
     {
         timer = 0f;
+
+        anim.SetTrigger("Fire");
 
         fireAudio.Play();
         fireLight.enabled = true;
@@ -90,18 +114,31 @@ public class Shotgun : MonoBehaviour
             fireRay.origin = transform.position;
             fireRay.direction = directions[i];
 
-            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
             {
-                EnemyBaseHealth enemyHealth = fireHit.collider.GetComponent<EnemyBaseHealth>();
+                EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
+                EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
+
                 if (enemyHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
-                    int adjustedDamage = Mathf.RoundToInt(damage * (1 - distanceToEnemy / range));
+                    int adjustedDamage = Mathf.RoundToInt(calculateDamage() * (1 - distanceToEnemy / range));
 
                     adjustedDamage = Mathf.Max(0, adjustedDamage);
 
                     enemyHealth.TakeDamage(adjustedDamage, fireHit.point);
                 }
+
+                if(enemyPetHealth != null)
+                {
+                    float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
+                    int adjustedDamage = Mathf.RoundToInt(calculateDamage() * (1 - distanceToEnemy / range));
+
+                    adjustedDamage = Mathf.Max(0, adjustedDamage);
+
+                    enemyPetHealth.TakeDamage(adjustedDamage, fireHit.point);
+                }
+
                 if (i == 0)
                     fireLine1.SetPosition(1, fireHit.point);
                 else if (i == 1)
@@ -120,5 +157,8 @@ public class Shotgun : MonoBehaviour
             }
         }
     }
-
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
+    }
 }

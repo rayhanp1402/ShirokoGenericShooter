@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nightmare;
 
 public class EnemyShotgun : MonoBehaviour
 {
@@ -16,12 +17,16 @@ public class EnemyShotgun : MonoBehaviour
     RaycastHit fireHit;
     int shootableMask;
 
+    GameObject player;
+
 
     void Awake()
     {
         fireLight = GetComponent<Light>();
 
         shootableMask = LayerMask.GetMask("Shootable");
+
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void DisableEffects()
@@ -32,7 +37,7 @@ public class EnemyShotgun : MonoBehaviour
         fireLight.enabled = false;
     }
 
-    public void Shoot(float range, int damage)
+    public void Shoot(float range, float damage)
     {
         fireAudio.Play();
         fireLight.enabled = true;
@@ -64,9 +69,9 @@ public class EnemyShotgun : MonoBehaviour
             fireRay.origin = transform.position;
             fireRay.direction = directions[i];
 
-            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
             {
-                ShirokoHealth shirokoHealth = fireHit.collider.GetComponent<ShirokoHealth>();
+                PlayerHealth shirokoHealth = fireHit.collider.GetComponent<PlayerHealth>();
                 if (shirokoHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
@@ -76,22 +81,13 @@ public class EnemyShotgun : MonoBehaviour
 
                     shirokoHealth.TakeDamageFromShot(adjustedDamage, fireHit.point);
                 }
-                if (i == 0)
-                    fireLine1.SetPosition(1, fireHit.point);
-                else if (i == 1)
-                    fireLine2.SetPosition(1, fireHit.point);
-                else if (i == 2)
-                    fireLine3.SetPosition(1, fireHit.point);
             }
-            else
-            {
-                if (i == 0)
-                    fireLine1.SetPosition(1, fireRay.origin + fireRay.direction * range);
-                else if (i == 1)
-                    fireLine2.SetPosition(1, fireRay.origin + fireRay.direction * range);
-                else if (i == 2)
-                    fireLine3.SetPosition(1, fireRay.origin + fireRay.direction * range);
-            }
+            if (i == 0)
+                fireLine1.SetPosition(1, fireRay.origin + fireRay.direction * range);
+            else if (i == 1)
+                fireLine2.SetPosition(1, fireRay.origin + fireRay.direction * range);
+            else if (i == 2)
+                fireLine3.SetPosition(1, fireRay.origin + fireRay.direction * range);
         }
     }
 }

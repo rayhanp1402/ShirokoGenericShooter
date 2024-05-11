@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PoolManager : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    void Start ()
+    void Awake ()
     {
         if (pools != null)
         {
@@ -48,6 +49,7 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < pools.Length; i++)
             {
                 Pool tempPool = pools[i];
+                Debug.Log(tempPool);
                 cache[tempPool.key] = new Pool(tempPool.key, tempPool.poolObject, tempPool.size, tempPool.parentingGroup, tempPool.expandable);
             }
         }
@@ -61,6 +63,10 @@ public class PoolManager : MonoBehaviour
     public static GameObject Pull(string key)
     {
         return (cache[key].Pull());
+    }
+
+    public static GameObject GetRef(string key){
+        return (cache[key].GetRef());
     }
 
     public static GameObject Pull(string key, Vector3 position, Quaternion rotation)
@@ -122,10 +128,17 @@ public class Pool
         }
     }
 
+    public GameObject GetRef(){
+        if (pool.Count < 1) return null;
+        return pool[0];
+    }
+
     private GameObject AddItem(bool keepActive = false)
     {
         int index = pool.Count;
-        pool.Add(UnityEngine.Object.Instantiate(poolObject));
+        GameObject obj = UnityEngine.Object.Instantiate(poolObject);
+        SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName("Main"));
+        pool.Add(obj);
         pool[index].name = poolObject.name + "_" + index.ToString().PadLeft(4, '0');
         pool[index].SetActive(keepActive);
         if (parentingGroup != null)

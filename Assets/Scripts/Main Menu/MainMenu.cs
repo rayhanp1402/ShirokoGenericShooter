@@ -1,50 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
+using Nightmare;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class MainMenu : MonoBehaviour
 {
+    public GameObject settingsMenu;
+    public GameObject backButtonOptions;
+
+    public GameObject backButtonStats;
+
+    public GameObject statsMenu;
 
     void Start()
     {
-        // Find the SettingsMenu GameObject
-        GameObject settingsMenu = GameObject.Find("SettingsMenu");
-
-        // Check if the SettingsMenu is found
+        // Ensure the settings menu and back button are initially hidden
         if (settingsMenu != null)
         {
-            // Find the button inside the SettingsMenu
-            Button buttonToHide = settingsMenu.GetComponentInChildren<Button>();
-
-            // Check if the button is found
-            if (buttonToHide != null)
-            {
-                // Hide the button
-                buttonToHide.gameObject.SetActive(false);
-            }
-            else
-            {
-                Debug.LogWarning("Button not found in SettingsMenu!");
-            }
+            settingsMenu.SetActive(false);
         }
-        else
+        if (backButtonOptions != null)
         {
-            Debug.LogWarning("SettingsMenu not found!");
+            backButtonOptions.SetActive(false);
+        }
+        if (statsMenu != null)
+        {
+            statsMenu.SetActive(false);
+        }
+        if (backButtonStats != null)
+        {
+            backButtonStats.SetActive(false);
         }
     }
 
     public void PlayGame()
     {
         // Load the next scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        InitialLevel.setLevel(0);
+        SceneManager.LoadScene("Main");
+        Debug.Log("Loading next scene...");
+    }
+
+    public void LoadGame()
+    {
+        // TODO: Implement loading saved game functionality
+        // Load a specific level
+        InitialLevel.setLevel(1);
+        SceneManager.LoadScene("Main");
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ToggleSettingsMenu()
+    {
+        if (settingsMenu != null)
+        {
+            bool isSettingsMenuActive = !settingsMenu.activeSelf;
+            settingsMenu.SetActive(isSettingsMenuActive);
+            // Toggle visibility of the back button based on the settings menu's visibility
+            if (backButtonOptions != null)
+            {
+                backButtonOptions.SetActive(isSettingsMenuActive);
+            }
+        }
+    }
+
+    public void ToggleStatsMenu()
+    {
+        if (statsMenu != null)
+        {
+            bool isStatsMenuActive = !statsMenu.activeSelf;
+            statsMenu.SetActive(isStatsMenuActive);
+            // Toggle visibility of the back button based on the settings menu's visibility
+            if (backButtonStats != null)
+            {
+                backButtonStats.SetActive(isStatsMenuActive);
+            }
+        }
     }
 
 }

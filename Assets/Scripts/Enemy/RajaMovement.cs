@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
+using Nightmare;
 
 public class RajaMovement : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class RajaMovement : MonoBehaviour
     NavMeshAgent nav;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
     RajaAttack rajaAttack;
 
 
@@ -20,6 +21,8 @@ public class RajaMovement : MonoBehaviour
     public float spawnDistance = 2f;
     public float timeBetweenKerocoSpawn = 15f;
 
+    Animator anim;
+
     float timer;
 
     void Awake()
@@ -28,9 +31,11 @@ public class RajaMovement : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
 
         rajaAttack = GetComponent<RajaAttack>();
+
+        anim = GetComponent<Animator>();
 
         timer = timeBetweenKerocoSpawn;
     }
@@ -45,12 +50,14 @@ public class RajaMovement : MonoBehaviour
             SpawnKeroco();
         }
 
-        if (distanceToPlayer <= rajaAttack.range || shirokoHealth.currentHealth <= 0)
+        if (distanceToPlayer <= rajaAttack.currentRange || shirokoHealth.currentHealth <= 0)
         {
+            // Debug.Log("Raja is stopping");
             nav.isStopped = true;
         }
         else
         {
+            // Debug.Log("Raja is moving");
             nav.isStopped = false;
             nav.SetDestination(playerTransform.position);
         }

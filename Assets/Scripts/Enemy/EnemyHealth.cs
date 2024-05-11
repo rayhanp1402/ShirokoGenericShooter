@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Nightmare
 {
@@ -7,37 +8,45 @@ namespace Nightmare
         public int startingHealth = 100;
         public float sinkSpeed = 2.5f;
         public int scoreValue = 10;
+        public int coinValue = 40;
         public AudioClip deathClip;
 
-        int currentHealth;
-        Animator anim;
-        AudioSource enemyAudio;
-        ParticleSystem hitParticles;
-        CapsuleCollider capsuleCollider;
-        EnemyMovement enemyMovement;
+        protected float currentHealth;
+        protected Animator anim;
+        protected AudioSource enemyAudio;
+        protected ParticleSystem hitParticles;
+        protected CapsuleCollider capsuleCollider;
+        protected EnemyMovement enemyMovement;
+        public UnityAction OnDeath;
+        private ObjectiveManager objectiveManager;
 
-        void Awake ()
+        protected void Start()
+        {
+            // Find the ObjectiveManagerScript in the scene
+            objectiveManager = FindObjectOfType<ObjectiveManager>();
+        }
+
+        protected virtual void Awake ()
         {
             anim = GetComponent <Animator> ();
             enemyAudio = GetComponent <AudioSource> ();
             hitParticles = GetComponentInChildren <ParticleSystem> ();
             capsuleCollider = GetComponent <CapsuleCollider> ();
-            enemyMovement = this.GetComponent<EnemyMovement>();
         }
 
-        void OnEnable()
+        protected void OnEnable()
         {
             currentHealth = startingHealth;
             SetKinematics(false);
         }
 
-        private void SetKinematics(bool isKinematic)
+        protected void SetKinematics(bool isKinematic)
         {
             capsuleCollider.isTrigger = isKinematic;
             capsuleCollider.attachedRigidbody.isKinematic = isKinematic;
         }
 
-        void Update ()
+       protected  void Update ()
         {
             if (IsDead())
             {
@@ -54,7 +63,7 @@ namespace Nightmare
             return (currentHealth <= 0f);
         }
 
-        public void TakeDamage (int amount, Vector3 hitPoint)
+        public void TakeDamage (float amount, Vector3 hitPoint)
         {
             if (!IsDead())
             {
@@ -65,23 +74,23 @@ namespace Nightmare
                 {
                     Death();
                 }
-                else
-                {
-                    enemyMovement.GoToPlayer();
-                }
             }
                 
             hitParticles.transform.position = hitPoint;
             hitParticles.Play();
         }
 
-        void Death ()
+        protected virtual void Death ()
         {
+            CoinDropManager.DropMoney(transform.position, coinValue);
             EventManager.TriggerEvent("Sound", this.transform.position);
-            anim.SetTrigger ("Dead");
+            if (anim)
+                anim.SetTrigger ("Dead");
 
             enemyAudio.clip = deathClip;
             enemyAudio.Play ();
+            StartSinking();
+            OnDeath?.Invoke();
         }
 
         public void StartSinking ()
@@ -90,9 +99,10 @@ namespace Nightmare
             SetKinematics(true);
 
             ScoreManager.score += scoreValue;
+            
         }
 
-        public int CurrentHealth()
+        public float CurrentHealth()
         {
             return currentHealth;
         }

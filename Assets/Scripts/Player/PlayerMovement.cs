@@ -8,6 +8,11 @@ namespace Nightmare
     {
         public float speed = 6f;            // The speed that the player will move at.
 
+        public float baseSpeed = 6f; 
+        public float baseAttack = 5f;
+        public float totalDistanceTraveled = 0f;
+        public float initAttack = 5f;
+        public int orbCount = 0;
 
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
@@ -55,6 +60,10 @@ namespace Nightmare
             Animating (h, v);
         }
 
+        public void BoostShooting()
+        {
+            baseAttack += 0.1f * initAttack;
+        }
 
         void Move (float h, float v)
         {
@@ -63,6 +72,8 @@ namespace Nightmare
             
             // Normalise the movement vector and make it proportional to the speed per second.
             movement = movement.normalized * speed * Time.deltaTime;
+
+            totalDistanceTraveled += movement.magnitude;
 
             // Move the player to it's current position plus the movement.
             playerRigidbody.MovePosition (transform.position + movement);
@@ -118,6 +129,30 @@ namespace Nightmare
 #endif
         }
 
+        public void SpeedBoost(float duration)
+        {
+            StartCoroutine(SpeedBoostCoroutine(duration));
+        }
+
+        private System.Collections.IEnumerator SpeedBoostCoroutine(float duration)
+        {
+            float maxSpeed = 1.2f * baseSpeed;
+            speed = maxSpeed;
+            yield return new WaitForSeconds(duration);
+            speed = baseSpeed;
+        }
+
+        public void DoubleSpeed()
+        {
+            // Double the speed
+            speed = 2 * baseSpeed;
+        }
+
+        public void Reduce(float speedAmount, float attackAmount)
+        {
+            this.speed = speedAmount;
+            this.baseAttack = attackAmount;
+        }
 
         void Animating (float h, float v)
         {

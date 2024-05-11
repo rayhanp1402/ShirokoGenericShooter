@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Nightmare;
 public class Sword : MonoBehaviour
 {
-    public int damage = 50;
+    public float damage = 50f;
     public float range = 2f;
     public float timeBetweenFiring = .08f;
     public float effectsDisplayTime = .2f;
+
+    PlayerMovement playerMovement;
 
     AudioSource fireAudio;
     Light fireLight;
@@ -16,6 +18,10 @@ public class Sword : MonoBehaviour
     Ray fireRay;
     RaycastHit fireHit;
     int shootableMask;
+
+    GameObject excalibur;
+
+    Animator anim;
 
     float timer;
 
@@ -28,18 +34,30 @@ public class Sword : MonoBehaviour
 
         shootableMask = LayerMask.GetMask("Shootable");
 
+        excalibur = transform.parent.gameObject;
+        anim = excalibur.GetComponent<Animator>();
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
+
         timer = timeBetweenFiring;
     }
 
     void Update()
     {
         timer += Time.deltaTime;
-
+#if !MOBILE_INPUT
         if (Input.GetButton("Fire1") && timer >= timeBetweenFiring)
         {
             Shoot();
         }
-
+#else
+        // If there is input on the shoot direction stick and it's time to fire...
+        if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
+        {
+            // ... shoot the gun
+            Shoot();
+        }
+#endif
         if (timer >= timeBetweenFiring * effectsDisplayTime)
         {
             DisableEffects();
@@ -56,6 +74,8 @@ public class Sword : MonoBehaviour
     {
         timer = 0f;
 
+        anim.SetTrigger("Fire");
+
         fireAudio.Play();
         fireLight.enabled = true;
 
@@ -65,12 +85,17 @@ public class Sword : MonoBehaviour
         fireRay.origin = transform.position;
         fireRay.direction = transform.forward;
 
-        if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+        if (Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
         {
-            EnemyBaseHealth enemyHealth = fireHit.collider.GetComponent<EnemyBaseHealth>();
+            EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
+            EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage, fireHit.point);
+                enemyHealth.TakeDamage(calculateDamage(), fireHit.point);
+            }
+            if(enemyPetHealth != null)
+            {
+                enemyPetHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
             fireLine.SetPosition(1, fireHit.point);
         }
@@ -78,5 +103,10 @@ public class Sword : MonoBehaviour
         {
             fireLine.SetPosition(1, fireRay.origin + fireRay.direction * range);
         }
+    }
+
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
     }
 }

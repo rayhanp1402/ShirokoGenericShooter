@@ -7,8 +7,8 @@ namespace Nightmare
 {
     public class PlayerHealth : MonoBehaviour
     {
-        public int startingHealth = 100;
-        public int currentHealth;
+        public float startingHealth = 100f;
+        public float currentHealth;
         public Slider healthSlider;
         public Image damageImage;
         public AudioClip deathClip;
@@ -19,9 +19,10 @@ namespace Nightmare
         Animator anim;
         AudioSource playerAudio;
         PlayerMovement playerMovement;
-        PlayerShooting playerShooting;
+        GameObject weaponHolder;
         bool isDead;
         bool damaged;
+        GameObject gameOverScene;
 
         void Awake()
         {
@@ -29,7 +30,9 @@ namespace Nightmare
             anim = GetComponent<Animator>();
             playerAudio = GetComponent<AudioSource>();
             playerMovement = GetComponent<PlayerMovement>();
-            playerShooting = GetComponentInChildren<PlayerShooting>();
+            weaponHolder = GameObject.Find("WeaponHolder");
+            gameOverScene = GameObject.Find("GameOverCanvas");
+            gameOverScene.SetActive(false);
 
             ResetPlayer();
         }
@@ -40,11 +43,20 @@ namespace Nightmare
             currentHealth = startingHealth;
 
             playerMovement.enabled = true;
-            playerShooting.enabled = true;
+            weaponHolder.SetActive(true);
 
             anim.SetBool("IsDead", false);
         }
 
+        public void SetGodMode(bool godMode)
+        {
+            this.godMode = godMode;
+        }
+
+        public float getPlayerHealth()
+        {
+            return currentHealth;
+        }
 
         void Update()
         {
@@ -65,8 +77,16 @@ namespace Nightmare
             damaged = false;
         }
 
+        public void HealOrb()
+        {
+            currentHealth += startingHealth * 0.2f;
+            if (currentHealth > startingHealth){
+                currentHealth = startingHealth;
+            }
+        }
 
-        public void TakeDamage(int amount)
+
+        public void TakeDamage(float amount)
         {
             if (godMode)
                 return;
@@ -81,7 +101,7 @@ namespace Nightmare
             healthSlider.value = currentHealth;
 
             // Play the hurt sound effect.
-            playerAudio.Play();
+            //playerAudio.Play();
 
             // If the player has lost all it's health and the death flag hasn't been set yet...
             if (currentHealth <= 0 && !isDead)
@@ -91,24 +111,44 @@ namespace Nightmare
             }
         }
 
+        public void TakeDamageFromShot(float amount, Vector3 hitPoint)
+        {
+            currentHealth -= amount;
+            healthSlider.value = currentHealth;
+
+            if (currentHealth <= 0 && !isDead)
+            {
+                Death();
+            }
+        }
+
+        public void Heal(int amount)
+        {
+            currentHealth += amount;
+            if (currentHealth > startingHealth)
+                currentHealth = startingHealth;
+            healthSlider.value = currentHealth;
+        }
+
         void Death()
         {
             // Set the death flag so this function won't be called again.
             isDead = true;
 
             // Turn off any remaining shooting effects.
-            playerShooting.DisableEffects();
+            // weaponHolder.DisableEffects();
 
             // Tell the animator that the player is dead.
             anim.SetBool("IsDead", true);
 
             // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
-            playerAudio.clip = deathClip;
-            playerAudio.Play();
+            //playerAudio.clip = deathClip;
+            //playerAudio.Play();
 
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
-            playerShooting.enabled = false;
+            weaponHolder.SetActive(false);
+            gameOverScene.SetActive(true);
         }
 
         public void RestartLevel()

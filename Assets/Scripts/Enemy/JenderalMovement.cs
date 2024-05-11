@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Nightmare;
 
 public class JenderalMovement : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class JenderalMovement : MonoBehaviour
     NavMeshAgent nav;
 
     GameObject player;
-    ShirokoHealth shirokoHealth;
+    PlayerHealth shirokoHealth;
+
+    Transform petDetector;
+    PetDetector petDetectorScript;
+    GameObject closestPet;
 
     void Awake()
     {
@@ -17,7 +22,10 @@ public class JenderalMovement : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        shirokoHealth = player.GetComponent<ShirokoHealth>();
+        shirokoHealth = player.GetComponent<PlayerHealth>();
+
+        petDetector = transform.GetChild(0);
+        petDetectorScript = petDetector.GetComponent<PetDetector>();
     }
 
     void Update()
@@ -29,8 +37,19 @@ public class JenderalMovement : MonoBehaviour
         }
         else
         {
-            nav.isStopped = false;
-            nav.SetDestination(playerTransform.position);
+            if (petDetectorScript.petsInRange.Count > 0)
+            {
+                closestPet = petDetectorScript.GetClosestPet();
+                if (closestPet != null)
+                {
+                    nav.SetDestination(closestPet.transform.position);
+                }
+            }
+            else
+            {
+                nav.isStopped = false;
+                nav.SetDestination(playerTransform.position);
+            }
         }
     }
 }
