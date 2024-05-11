@@ -45,7 +45,7 @@ public class MainMenu : MonoBehaviour
     {
         // TODO: Implement loading saved game functionality
         // Load a specific level
-        InitialLevel.setLevel(2);
+        InitialLevel.setLevel(1);
         SceneManager.LoadScene("Main");
     }
 
