@@ -8,6 +8,7 @@ TagManager:
   - Target
   - Shop
   - Pet
+  - Stats
   layers:
   - Default
   - TransparentFX

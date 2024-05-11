@@ -82,5 +82,4 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    // Additional methods for setting player name, volume, and difficulty can be added here
 }

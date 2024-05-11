@@ -2,11 +2,13 @@ using Nightmare;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Statistic : MonoBehaviour
-{
-    public PlayerMovement playerMovement;
-    public DefaultGun defaultGun;
+{ 
+    private PlayerMovement playerMovement;
+    private GameObject player;
+    private DefaultGun defaultGun;
     public TMP_Text PlayTime; 
     public TMP_Text Distance;
     public TMP_Text Accuracy;
@@ -16,9 +18,15 @@ public class Statistic : MonoBehaviour
     public bool isPaused = false; 
     private int killCount;
 
+    public static Dictionary<string, string> levelStatistics = new Dictionary<string, string>();
+
      void Start()
     {
         killCount = 0;
+        player = GameObject.FindGameObjectWithTag("Player");
+        defaultGun = player.GetComponentInChildren<DefaultGun>();
+        
+        playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -43,10 +51,8 @@ public class Statistic : MonoBehaviour
 
     void UpdateDistance()
     {
-        // Format jarak menjadi dua desimal
         float distanceInKilometers = playerMovement.totalDistanceTraveled / 1000f;
 
-        // Format jarak menjadi dua desimal
         Distance.text = "Distance: " + distanceInKilometers.ToString("F2") + " km"; 
     }
 
@@ -54,6 +60,7 @@ public class Statistic : MonoBehaviour
     {
         if (defaultGun.shotsFired > 0)
         {
+
             float accuracy = (float)defaultGun.shotsHit / defaultGun.shotsFired * 100;
             Accuracy.text = "Accuracy: " + accuracy.ToString("F2") + "%" + " (" + defaultGun.shotsHit + "/" + defaultGun.shotsFired + ")";
         }
@@ -61,24 +68,20 @@ public class Statistic : MonoBehaviour
 
     void UpdateKill()
     {
-        Kill.text = "Kill: " + killCount.ToString(); // Memperbarui teks pada UI dengan jumlah kill saat ini
+        Kill.text = "Kill: " + killCount.ToString();
     }
 
     public void IncrementKill()
     {
-        killCount++; // Menambah jumlah kill saat musuh mati
-    }
+        killCount++;
+    }   
 
-
-
-
-    public void saveStats()
+    public void SaveStatistics()
     {
-        PlayerPrefs.SetFloat("PlayTime", playTime);
-        PlayerPrefs.SetFloat("Distance", playerMovement.totalDistanceTraveled);
-        PlayerPrefs.SetInt("Kill", killCount);
-        PlayerPrefs.SetFloat("Accuracy", (float)defaultGun.shotsHit / defaultGun.shotsFired * 100);
-        PlayerPrefs.Save();
+        levelStatistics.Clear();
+        levelStatistics.Add("PlayTime", PlayTime.text);
+        levelStatistics.Add("Distance", Distance.text);
+        levelStatistics.Add("Accuracy", Accuracy.text);
+        levelStatistics.Add("Kill", Kill.text);
     }
-    
 }

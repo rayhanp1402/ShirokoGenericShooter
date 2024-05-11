@@ -2,41 +2,25 @@ using UnityEngine;
 using TMPro;
 
 public class StatsManager : MonoBehaviour{
-    public TMP_Text PlayTime; 
-    public TMP_Text Distance;
-    public TMP_Text Accuracy;
-    public TMP_Text Kill;
+    public static StatsManager instance;
 
-    private void start(){
-        DisplayStats();
-    }
+    public float playTime;
+    public float distance;
+    public float accuracy;
+    public int kill;
 
-    void DisplayStats(){
-        if (PlayerPrefs.HasKey("PlayTime"))
+    void Awake()
+    {
+        // Singleton pattern implementation
+        if (instance == null)
         {
-            float playTime = PlayerPrefs.GetFloat("PlayTime");
-            int hours = Mathf.FloorToInt(playTime / 3600);
-            int minutes = Mathf.FloorToInt((playTime % 3600) / 60);
-            int seconds = Mathf.FloorToInt(playTime % 60);
-            PlayTime.text = "Play Time: " + hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-
-        if (PlayerPrefs.HasKey("Distance"))
+        else
         {
-            float distance = PlayerPrefs.GetFloat("Distance");
-            Distance.text = "Distance: " + distance.ToString("F2") + " km";
-        }
-
-        if (PlayerPrefs.HasKey("Accuracy"))
-        {
-            float accuracy = PlayerPrefs.GetFloat("Accuracy");
-            Accuracy.text = "Accuracy: " + accuracy.ToString("F2") + "%";
-        }
-
-        if (PlayerPrefs.HasKey("Kill"))
-        {
-            int kill = PlayerPrefs.GetInt("Kill");
-            Kill.text = "Kill: " + kill.ToString();
+            Destroy(gameObject);
         }
     }
+
 }
