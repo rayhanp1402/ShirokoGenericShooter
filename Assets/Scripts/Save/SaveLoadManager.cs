@@ -4,9 +4,11 @@ using System.IO;
 using TMPro;
 using UnityEngine.UI;
 using Nightmare;
+using System.Collections.Generic;
 
 public class SaveLoadManager : MonoBehaviour
 {
+    public GameObject playerPrefab;
     public GameObject saveBoxEmptyPrefab;
     public GameObject saveBoxFilledPrefab;
     public Transform saveMenuCanvas;
@@ -23,22 +25,41 @@ public class SaveLoadManager : MonoBehaviour
     [System.Serializable]
     public class SaveData
     {
+        public Vector3 position;
+        public float health;
+        public List<PetData> pets;
         public int level;
         public string score;
         public string coin;
-        public string name; // New field for name
-        public string time; // New field for time
+        public string name; 
+        public string time; 
+
+        public SaveData()
+        {
+            pets = new List<PetData>();
+        }
+    }
+
+    [Serializable]
+    public class PetData
+    {
+        public string type;
     }
 
 
     private void Start()
     {
-        // Find the BackButton child of saveMenuCanvas
-        Button backButton = saveMenuCanvas.Find("BackButton").GetComponent<Button>();
-
-        // Add an onClick listener to the BackButton
-        backButton.onClick.AddListener(HideSaveMenu);
-
+        if (this.transform.parent == saveMenuCanvas) // Check if it's the save menu
+        {
+            Button backButton = saveMenuCanvas.Find("BackButton").GetComponent<Button>();
+            backButton.onClick.AddListener(HideSaveMenu);
+        }
+        else if (this.transform.parent == loadMenuCanvas) // Check if it's the load menu
+        {
+            Button backButton = loadMenuCanvas.Find("BackButton").GetComponent<Button>();
+            backButton.onClick.AddListener(HideSaveMenu);
+        }
+        
         // Define the directory where save files will be stored
         saveDirectory = Application.persistentDataPath + "/SaveData/";
         if (!Directory.Exists(saveDirectory))
@@ -54,7 +75,7 @@ public class SaveLoadManager : MonoBehaviour
 
         Debug.Log("Number of save files found: " + saveCount);
 
-        Vector3 canvasCenter = saveMenuCanvas.transform.position; // Get the center position of the canvas
+        Vector3 canvasCenter = this.transform.parent.transform.position; // Get the center position of the canvas
         float totalHeight = 0f; // Keep track of the total height occupied by existing save boxes
 
         // Instantiate save boxes based on the count
@@ -71,7 +92,7 @@ public class SaveLoadManager : MonoBehaviour
 
             // Instantiate SaveBoxFilled for each save file
             GameObject saveBoxPrefab = saveBoxFilledPrefab;
-            GameObject saveBox = Instantiate(saveBoxPrefab, saveMenuCanvas);
+            GameObject saveBox = Instantiate(saveBoxPrefab, this.transform.parent);
 
             // Calculate the position based on the total height
             float yPosition = canvasCenter.y - totalHeight + 38;
@@ -99,7 +120,7 @@ public class SaveLoadManager : MonoBehaviour
 
         for (int i = 0; i < emptySlots; i++)
         {
-            GameObject emptyBox = Instantiate(saveBoxEmptyPrefab, saveMenuCanvas);
+            GameObject emptyBox = Instantiate(saveBoxEmptyPrefab, this.transform.parent);
 
             // Calculate the position based on the total height
             float yPosition = canvasCenter.y - totalHeight + 38;
@@ -243,12 +264,73 @@ public class SaveLoadManager : MonoBehaviour
             }
         }
 
+        float playerHealthValue = 100f;
+        Vector3 playerPosition = Vector3.zero;
+
+        GameObject playerPrefab = GameObject.FindWithTag("Player");
+        if (playerPrefab != null)
+        {
+            // Retrieve the player's position
+            playerPosition = playerPrefab.transform.position;
+            Debug.Log("Player position: " + playerPosition);
+
+            // Get the PlayerHealth component attached to the player prefab
+            PlayerHealth playerHealth = playerPrefab.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+
+                // Retrieve the player's health
+                playerHealthValue = playerHealth.getPlayerHealth();
+                Debug.Log("Player health: " + playerHealthValue);
+            }
+            else
+            {
+                Debug.LogWarning("PlayerHealth component not found on the player prefab.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Player prefab not found.");
+        }
+
         SaveData saveData = new SaveData();
+        saveData.position = playerPosition;
+        saveData.health = playerHealthValue;
         saveData.level = currlevel;
         saveData.score = GetScoreValue();
         saveData.coin = GetCoinValue();
         saveData.name = saveNameText.text;
         saveData.time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+        // Retrieve game objects with the "Pet" tag
+        GameObject[] pets = GameObject.FindGameObjectsWithTag("Pet");
+        foreach (GameObject pet in pets)
+        {
+            // Check for specific pet behaviour scripts
+            AttackerPetBehaviour attackerPet = pet.GetComponent<AttackerPetBehaviour>();
+            BufferPetBehaviour bufferPet = pet.GetComponent<BufferPetBehaviour>();
+            HealerPetBehaviour healerPet = pet.GetComponent<HealerPetBehaviour>();
+
+            // Determine the pet's type based on the presence of specific script components
+            string petType = "Unknown";
+            if (attackerPet != null)
+            {
+                petType = "Attacker";
+            }
+            else if (bufferPet != null)
+            {
+                petType = "Buffer";
+            }
+            else if (healerPet != null)
+            {
+                petType = "Healer";
+            }
+
+            // Add the pet's data to the SaveData object
+            saveData.pets.Add(new PetData { type = petType });
+        }
+        Debug.Log("pets count :" + saveData.pets.Count);
+
         string jsonData = JsonUtility.ToJson(saveData);
 
         File.WriteAllText(saveFilePath, jsonData);
@@ -270,9 +352,14 @@ public class SaveLoadManager : MonoBehaviour
             SaveData saveData = JsonUtility.FromJson<SaveData>(jsonData);
 
             Debug.Log("Player data loaded for save box " + saveFileName + ":");
+            Debug.Log("Position: " + saveData.position);
+            Debug.Log("Health: " + saveData.health);
             Debug.Log("Level: " + saveData.level);
+            Debug.Log("Pets: " + saveData.pets);
             Debug.Log("Score: " + saveData.score);
             Debug.Log("Coin: " + saveData.coin);
+            Debug.Log("Name: " + saveData.name);
+            Debug.Log("Time: " + saveData.time);
         }
         else
         {
@@ -289,14 +376,6 @@ public class SaveLoadManager : MonoBehaviour
 
         if (File.Exists(saveFilePath))
         {
-            string jsonData = File.ReadAllText(saveFilePath);
-
-            // Deserialize the data (for example, using JSON)
-            SaveData saveData = JsonUtility.FromJson<SaveData>(jsonData);
-
-            Debug.Log("Level: " + saveData.level);
-            Debug.Log("Score: " + saveData.score);
-            Debug.Log("Coin: " + saveData.coin);
             // Delete the file
             File.Delete(saveFilePath);
 
@@ -311,6 +390,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
     {
+        Debug.Log("SaveBoxEmpty clicked.");
         // Check if it's the save menu canvas
         if (saveBoxEmpty.transform.parent == saveMenuCanvas)
         {
@@ -326,6 +406,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void OnSaveBoxFilledClicked(SaveBoxFilled saveBoxFilled)
     {
+        Debug.Log("SaveBoxFilled clicked.");
         if (saveBoxFilled.transform.parent == saveMenuCanvas) // Check if it's the save menu
         {
             SavePlayerData(saveBoxFilled);
@@ -429,7 +510,7 @@ public class SaveLoadManager : MonoBehaviour
     void HideSaveMenu()
     {
         // Hide the save menu canvas
-        saveMenuCanvas.gameObject.SetActive(false);
+        this.transform.parent.gameObject.SetActive(false);
     }
 
 
