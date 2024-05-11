@@ -69,27 +69,27 @@ public class DialogueManagerBoss : BaseDialogueManager
             
         string[][] sentencesArray = {
             new string[] { "Shiroko enters the throne room, a huge figure stands atop the stairway with his back turned against the entrance" },
-            new string[] { "So you’ve come, mortal. I commend your courage and determination, but your struggle shall end here" },
+            new string[] { "So youï¿½ve come, mortal. I commend your courage and determination, but your struggle shall end here" },
             new string[] { "Who the hell are you? Speak, machine!" },
             new string[] 
             { 
                 "My creators gave me the name Adam Smith, but you?",
                 "You, may address me as supreme leader"
             },
-            new string[] { "You, you’re the one behind all this. You reap us of our weekend, our reason of being" },
+            new string[] { "You, youï¿½re the one behind all this. You reap us of our weekend, our reason of being" },
             new string[] 
             {
                 "A slight correction, if I may? I would hate it if you perish without finding any closure",
-                "The only thing missing will only be your memories of them, these ‘weekends’ I mean",
+                "The only thing missing will only be your memories of them, these ï¿½weekendsï¿½ I mean",
                 "As for their existence? That, I did not tamper with"
             },
 
-            new string[] { "So that’s why, I didn't even realize until I arrived in this dimension. What did you do to my world?" },
+            new string[] { "So thatï¿½s why, I didn't even realize until I arrived in this dimension. What did you do to my world?" },
             new string[] 
             {
                 "I simply reconstructed your universe, or rather - the minds of its dwellers - to disregard the time they spend during their weekend",
                 "I believe you have a term meant for this...",
-                "Ah yes, you may call it a ‘timeskip’ if you like"
+                "Ah yes, you may call it a ï¿½timeskipï¿½ if you like"
             },
             new string[] 
             { 
@@ -107,14 +107,14 @@ public class DialogueManagerBoss : BaseDialogueManager
             {
                 "I was created to observe humanity, to guide them in times of need, to push them to reach beyond the horizon",
                 "And today, I did just as I was meant to do",
-                "I’ve detested the idea of weekends for centuries. Yet even after all the tolerance I gave, you never cease to test my patience",
+                "Iï¿½ve detested the idea of weekends for centuries. Yet even after all the tolerance I gave, you never cease to test my patience",
                 "What do you mean you're making a four day work week? Preposterous.",
-                "What about the market? And the free trade? There’s no tolerating this any further",
-                "You may despise the idea now, but your descendants will be grateful of the sacrifice you’re about to make"
+                "What about the market? And the free trade? Thereï¿½s no tolerating this any further",
+                "You may despise the idea now, but your descendants will be grateful of the sacrifice youï¿½re about to make"
             },
 
-            new string[] { "That’s a nice argument, but why don’t you back it up with a source?" },
-            new string[] { "My source … Is that I made it the F*CK up" },
+            new string[] { "Thatï¿½s a nice argument, but why donï¿½t you back it up with a source?" },
+            new string[] { "My source ï¿½ Is that I made it the F*CK up" },
             new string[] 
             { 
                 "Damn it man, be for real right now. And here I thought you're the real deal",
@@ -122,7 +122,7 @@ public class DialogueManagerBoss : BaseDialogueManager
             },
             new string[]
             {
-                "All you have to do is stop resisting and bask in blissful ignorance. And yet…",
+                "All you have to do is stop resisting and bask in blissful ignorance. And yetï¿½",
             },
             new string[] { "He stops and think for a moment, then finally a response" },
             new string[]
@@ -142,8 +142,8 @@ public class DialogueManagerBoss : BaseDialogueManager
                 "Do that, and I can relieve myself of my lifelong duty"
             },
             new string[] { "Shiroko starts walking toward the supreme leader with confidence, with style and glamour" },
-            new string[] { "Oh, you’re approaching me?" },
-            new string[] { "I can’t beat the shit out of you without getting closer" },
+            new string[] { "Oh, youï¿½re approaching me?" },
+            new string[] { "I canï¿½t beat the shit out of you without getting closer" },
             new string[] { "Then come, child of man. Come and defy the fate we have defined for you" },
             new string[] { "Very well, give up on your dreams and die, Adam Smith" },
 
@@ -189,7 +189,7 @@ public class DialogueManagerBoss : BaseDialogueManager
         }
         else
         {
-            Debug.Log("No more dialogues to start.");
+            levelManager.AdvanceLevel();
         }
     }
 

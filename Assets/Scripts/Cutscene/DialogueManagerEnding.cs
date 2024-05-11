@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Nightmare;
+using UnityEngine.SceneManagement;
 
 public class DialogueManagerEnding : BaseDialogueManager
 {
@@ -76,7 +78,7 @@ public class DialogueManagerEnding : BaseDialogueManager
                 "The sound of the alarm echoes in the room, a familiar occurence. It feels like we've been here before",
                 "Shiroko wakes up and silences her alarm"
             },
-            new string[] { "It’s my room, and my bed too. And today is.. Saturday?" },
+            new string[] { "Itï¿½s my room, and my bed too. And today is.. Saturday?" },
             new string[] 
             { 
                 "Shiroko lets out a sigh of relief, something goes right in this world for once",
@@ -156,7 +158,7 @@ public class DialogueManagerEnding : BaseDialogueManager
         }
         else
         {
-            Debug.Log("No more dialogues to start.");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

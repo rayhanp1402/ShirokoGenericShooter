@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace Nightmare
@@ -8,6 +9,7 @@ namespace Nightmare
     public class LevelManager : MonoBehaviour
     {
         public levelInfo[] levels;
+        private GameObject[] pets;
         private int currentLevel;
         private Scene currentScene;
         private PlayerMovement playerMove;
@@ -88,6 +90,12 @@ namespace Nightmare
             if (mode != LoadSceneMode.Additive)
                 return;
 
+            pets = GameObject.FindGameObjectsWithTag("Pet");
+            for (int i = 0; i < pets.Length; i++)
+            {
+                NavMeshAgent nav = pets[i].GetComponent<NavMeshAgent>();
+                nav.Warp(playerRespawn);
+            }
             playerMove.transform.position = playerRespawn;
             Debug.Log(playerHUD.GameObject().name);
             playerHUD.enabled = true;

@@ -3,18 +3,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Level2ObjectiveManager : ObjectiveManager{
-    private new LevelManager levelManager;
-
-    private GameObject statsMenu;
-    private Statistic stats;
-
+    GameObject finish;
+    protected override void Start()
+    {
+        base.Start();
+        finish = FindObjectOfType<Finish>().gameObject;
+        finish.SetActive(false);
+    }
     protected override void OnSuccess()
     {
-        // levelManager.AdvanceLevel();
-        statsMenu = GameObject.FindGameObjectWithTag("Stats");
-        stats = statsMenu.GetComponent<Statistic>();
-        stats.SaveStatistics();
-
-        SceneManager.LoadScene("MainMenu");
+        finish.SetActive(true);
+        CoinDropManager.DropMoney(GameObject.FindGameObjectWithTag("Player").transform.position, 400);
     }
 }
