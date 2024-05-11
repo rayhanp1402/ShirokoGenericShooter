@@ -17,106 +17,21 @@ public class SaveLoadManager : MonoBehaviour
     private static int currentIndex = 1;
 
     // Save player data to PlayerPrefs
-    public void SavePlayerData()
+    public void SavePlayerData(SaveBoxEmpty saveBoxEmpty)
     {
-        // Sample player data
-        // PlayerPrefs.SetFloat("PlayerHealth", 100f);
-        // PlayerPrefs.SetInt("PlayerLevel", 1);
-        // PlayerPrefs.SetString("PlayerPosition", "x:0, y:0, z:0");
-        FindScoreAndCoinText();
-
-        GameObject managersObject = GameObject.Find("Managers");
-
-        if (managersObject != null)
-        {
-            // Get the LevelManager component attached to the Managers GameObject
-            levelManager = managersObject.GetComponent<LevelManager>();
-
-            if (levelManager != null)
-            {
-                // Access methods or variables from the LevelManager component
-                int currlevel = levelManager.GetCurrentLevel();
-                Debug.Log("Current Level: " + currlevel);
-            }
-            else
-            {
-                Debug.LogWarning("LevelManager script component not found on Managers GameObject.");
-            }
-        }
-
+        UpdateSaveUI(saveBoxEmpty);
+        SavePreferences();
         Debug.Log("Player data saved.");
     }
 
-    // Load player data from PlayerPrefs
-    public void LoadPlayerData()
+    public void SavePlayerData(SaveBoxFilled saveBoxFilled)
     {
-        // Retrieve player data from PlayerPrefs
-        float health = PlayerPrefs.GetFloat("PlayerHealth");
-        int level = PlayerPrefs.GetInt("PlayerLevel");
-        string position = PlayerPrefs.GetString("PlayerPosition");
-
-        Debug.Log("Player data loaded:");
-        Debug.Log("Health: " + health);
-        Debug.Log("Level: " + level);
-        Debug.Log("Position: " + position);
+        UpdateSaveUI(saveBoxFilled);
+        SavePreferences();
+        Debug.Log("Player data saved.");
     }
 
-    // Overwrite the current save data with the new save data
-    public void OverwriteSaveData(SaveBoxFilled saveBoxFilled)
-    {
-        // Update the save time text to the current time
-        TextMeshProUGUI saveTimeText = saveBoxFilled.transform.Find("SaveTime").GetComponent<TextMeshProUGUI>();
-        if (saveTimeText != null)
-        {
-            saveTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            // Sample overwrite data
-            PlayerPrefs.SetFloat("PlayerHealth", 80f);
-
-            Debug.Log("Save data overwritten.");
-        }
-        else
-        {
-            Debug.LogWarning("SaveTime TextMeshProUGUI component not found in SaveBoxFilled prefab.");
-        }
-    }
-
-    // Delete the current save data
-    public void DeleteSaveData()
-    {
-        PlayerPrefs.DeleteAll();
-
-        Debug.Log("Save data deleted.");
-    }
-
-    public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
-    {
-        // Check if it's the save menu canvas
-        if (saveBoxEmpty.transform.parent == saveMenuCanvas)
-        {
-            PlaceFilledSaveBox(saveBoxEmpty);
-            SavePlayerData();
-        }
-        // If it's the load menu canvas, do nothing
-        else if (saveBoxEmpty.transform.parent == loadMenuCanvas)
-        {
-            Debug.Log("This is the load menu canvas. No action needed.");
-        }
-    }
-
-
-    public void OnSaveBoxFilledClicked(SaveBoxFilled saveBoxFilled)
-    {
-        if (saveBoxFilled.transform.parent == saveMenuCanvas) // Check if it's the save menu
-        {
-            OverwriteSaveData(saveBoxFilled);
-        }
-        else if (saveBoxFilled.transform.parent == loadMenuCanvas) // Check if it's the load menu
-        {
-            LoadPlayerData();
-        }
-    }
-
-    private void PlaceFilledSaveBox(SaveBoxEmpty saveBoxEmpty)
+    public void UpdateSaveUI(SaveBoxEmpty saveBoxEmpty)
     {
         // Instantiate the SaveBoxFilled prefab as a child of the SaveMenuCanvas
         GameObject filledSaveBox = Instantiate(saveBoxFilledPrefab, saveMenuCanvas);
@@ -128,34 +43,57 @@ public class SaveLoadManager : MonoBehaviour
         SaveBoxFilled saveBoxFilledScript = filledSaveBox.AddComponent<SaveBoxFilled>();
         saveBoxFilledScript.saveLoadManager = this;
 
-        // Set the save name text based on the current index
-        TextMeshProUGUI saveNameText = filledSaveBox.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
-        if (saveNameText != null)
-        {
-            saveNameText.text = "Save " + currentIndex; // Set the save name based on the current index
-            currentIndex++; // Increment the index for the next SaveBoxFilled
-        }
-        else
-        {
-            Debug.LogWarning("SaveName TextMeshProUGUI component not found in SaveBoxFilled prefab.");
-        }
-
-        // Set the save time text to the current time
+        // Update the save time text to the current time
         TextMeshProUGUI saveTimeText = filledSaveBox.transform.Find("SaveTime").GetComponent<TextMeshProUGUI>();
         if (saveTimeText != null)
         {
             saveTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            // Sample overwrite data
+            PlayerPrefs.SetFloat("PlayerHealth", 80f);
+
+            Debug.Log("Save data Saved.");
         }
         else
         {
             Debug.LogWarning("SaveTime TextMeshProUGUI component not found in SaveBoxFilled prefab.");
         }
 
+        // Set the save name text based on the current index
+        TextMeshProUGUI saveNameText = filledSaveBox.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
+        if (saveNameText != null)
+        {
+            saveNameText.text = "Save " + currentIndex; 
+            currentIndex++;
+        }
+        else
+        {
+            Debug.LogWarning("SaveName TextMeshProUGUI component not found in SaveBoxFilled prefab.");
+        }
+
         // Destroy the empty save box
         Destroy(saveBoxEmpty.gameObject);
     }
 
-    public void PlaceEmptySaveBox(SaveBoxFilled saveBoxFilled, SaveLoadManager saveLoadManager)
+    // update save ui for save box filled
+    public void UpdateSaveUI(SaveBoxFilled saveBoxFilled)
+    {
+        // Update the save time text to the current time
+        TextMeshProUGUI saveTimeText = saveBoxFilled.transform.Find("SaveTime").GetComponent<TextMeshProUGUI>();
+        if (saveTimeText != null)
+        {
+            saveTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            // Sample overwrite data
+            PlayerPrefs.SetFloat("PlayerHealth", 80f);
+
+            Debug.Log("Save data Saved.");
+        }
+        else
+        {
+            Debug.LogWarning("SaveTime TextMeshProUGUI component not found in SaveBoxFilled prefab.");
+        }
+    }
+
+    public void DeleteSaveUI(SaveBoxFilled saveBoxFilled, SaveLoadManager saveLoadManager)
     {
 
         if (saveBoxFilled.transform.parent == saveMenuCanvas) // Check if it's the save menu
@@ -192,9 +130,78 @@ public class SaveLoadManager : MonoBehaviour
         
     }
 
-    private void FindScoreAndCoinText()
+    public void LoadPlayerData()
     {
+        // Retrieve player data from PlayerPrefs
+        float health = PlayerPrefs.GetFloat("PlayerHealth");
+        int level = PlayerPrefs.GetInt("PlayerLevel");
+        string position = PlayerPrefs.GetString("PlayerPosition");
 
+        Debug.Log("Player data loaded:");
+        Debug.Log("Health: " + health);
+        Debug.Log("Level: " + level);
+        Debug.Log("Position: " + position);
+    }
+
+    // Delete the current save data
+    public void DeleteSaveData()
+    {
+        PlayerPrefs.DeleteAll();
+
+        Debug.Log("Save data deleted.");
+    }
+
+    public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
+    {
+        // Check if it's the save menu canvas
+        if (saveBoxEmpty.transform.parent == saveMenuCanvas)
+        {
+            SavePlayerData(saveBoxEmpty);
+        }
+        // If it's the load menu canvas, do nothing
+        else if (saveBoxEmpty.transform.parent == loadMenuCanvas)
+        {
+            Debug.Log("This is the load menu canvas. No action needed.");
+        }
+    }
+
+
+    public void OnSaveBoxFilledClicked(SaveBoxFilled saveBoxFilled)
+    {
+        if (saveBoxFilled.transform.parent == saveMenuCanvas) // Check if it's the save menu
+        {
+            SavePlayerData(saveBoxFilled);
+        }
+        else if (saveBoxFilled.transform.parent == loadMenuCanvas) // Check if it's the load menu
+        {
+            LoadPlayerData();
+        }
+    }
+
+
+    public void SavePreferences()
+    {
+        // Save level
+        GameObject managersObject = GameObject.Find("Managers");
+
+        if (managersObject != null)
+        {
+            // Get the LevelManager component attached to the Managers GameObject
+            levelManager = managersObject.GetComponent<LevelManager>();
+
+            if (levelManager != null)
+            {
+                // Access methods or variables from the LevelManager component
+                int currlevel = levelManager.GetCurrentLevel();
+                Debug.Log("Current Level: " + currlevel);
+            }
+            else
+            {
+                Debug.LogWarning("LevelManager script component not found on Managers GameObject.");
+            }
+        }
+
+        // Find and display score and coin text
         if (hudCanvas != null)
         {
             // Now that you have found the HUDCanvas, you can find scoreText and coinText within it
@@ -240,5 +247,6 @@ public class SaveLoadManager : MonoBehaviour
             Debug.LogWarning("HUDCanvas not found among siblings of parent canvas.");
         }
     }
+
 
 }
