@@ -50,6 +50,10 @@ namespace Nightmare
             this.godMode = godMode;
         }
 
+        public float getPlayerHealth()
+        {
+            return currentHealth;
+        }
 
         void Update()
         {

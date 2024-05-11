@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &22402522 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6070930625327707694, guid: b93728c70c66b9945b3e57e2b287f8ab, type: 3}
+  m_PrefabInstance: {fileID: 1543342023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &22402529 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6848734309654916244, guid: b93728c70c66b9945b3e57e2b287f8ab, type: 3}
+  m_PrefabInstance: {fileID: 1543342023}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &124066263
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,17 +373,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fc7a660a7238314ea548ba8e02da858, type: 3}
---- !u!114 &212307127 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5786216853516544702, guid: 7fc7a660a7238314ea548ba8e02da858, type: 3}
-  m_PrefabInstance: {fileID: 212307126}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &249754366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,7 +1697,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1543342025}
+  m_Father: {fileID: 22402529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1023058175
 SphereCollider:
@@ -2325,6 +2324,10 @@ PrefabInstance:
       propertyPath: hudCanvas
       value: 
       objectReference: {fileID: 335148902}
+    - target: {fileID: 8364777138293240468, guid: 093487fd4c36fb04e96a230ccf89a9a0, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 22402522}
     - target: {fileID: 8695338549892750622, guid: 093487fd4c36fb04e96a230ccf89a9a0, type: 3}
       propertyPath: m_Name
       value: SaveMenuCanvas
