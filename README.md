@@ -7,6 +7,7 @@ K2 - Kelompok BOS
 - 13521152 Muhammad Naufal Nalendra
 - 13521159 Sulthan Dzaky Alfaro
 - 13521169 Muhammad Habibi Husni
+- 10023562 Puspa Nilasari
 
 ## Deskripsi aplikasi
 
@@ -24,12 +25,12 @@ Aplikasi ini merupakan sebuah game shooter dengan jenis third person shooter. Ga
 
 | NIM       | Nama                          | Pekerjaan           |
 |-----------|-------------------------------|---------------------|
-| 13521068  | Ilham Akbar | |
-| 13521112  | Rayhan Hanif Maulana Pradana        |  |
-| 13521152  | Muhammad Naufal Nalendra | |
+| 13521068  | Ilham Akbar | Statistik, Cheat, Level 2|
+| 13521112  | Rayhan Hanif Maulana Pradana | Weapons, Mobs, Animasi, Level 4 |
+| 13521152  | Muhammad Naufal Nalendra | Carry UI,Save Load, Carry Cutscene, Game Over, Backsound |
 | 13521159  | Sulthan Dzaky Alfaro  | Orb, Level 1, Level 4, Sound Effect |
-| 13521169  | Muhammad Habibi Husni  | |
-
+| 13521169  | Muhammad Habibi Husni  | Shop, Pet, Level 3, Setup, Level Management, Objective Management|
+| 10023562  | Puspa Nilasari  | |
 ## Jumlah jam persiapan dan pengerjaan untuk masing-masing anggota
 
 - 13521068 Ilham Akbar
@@ -47,3 +48,7 @@ Aplikasi ini merupakan sebuah game shooter dengan jenis third person shooter. Ga
 - 13521169 Muhammad Habibi Husni
     - Persiapan     : 25 Jam
     - Pengerjaan    : 45 Jam
+- 10023562 Puspa Nilasari
+    - Persiapan     : 3 jam
+    - Pengerjaan    : 0 jam    
+
