@@ -17,12 +17,16 @@ public class EnemyShotgun : MonoBehaviour
     RaycastHit fireHit;
     int shootableMask;
 
+    GameObject player;
+
 
     void Awake()
     {
         fireLight = GetComponent<Light>();
 
         shootableMask = LayerMask.GetMask("Shootable");
+
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void DisableEffects()
@@ -77,22 +81,13 @@ public class EnemyShotgun : MonoBehaviour
 
                     shirokoHealth.TakeDamageFromShot(adjustedDamage, fireHit.point);
                 }
-                if (i == 0)
-                    fireLine1.SetPosition(1, fireHit.point);
-                else if (i == 1)
-                    fireLine2.SetPosition(1, fireHit.point);
-                else if (i == 2)
-                    fireLine3.SetPosition(1, fireHit.point);
             }
-            else
-            {
-                if (i == 0)
-                    fireLine1.SetPosition(1, fireRay.origin + fireRay.direction * range);
-                else if (i == 1)
-                    fireLine2.SetPosition(1, fireRay.origin + fireRay.direction * range);
-                else if (i == 2)
-                    fireLine3.SetPosition(1, fireRay.origin + fireRay.direction * range);
-            }
+            if (i == 0)
+                fireLine1.SetPosition(1, fireRay.origin + fireRay.direction * range);
+            else if (i == 1)
+                fireLine2.SetPosition(1, fireRay.origin + fireRay.direction * range);
+            else if (i == 2)
+                fireLine3.SetPosition(1, fireRay.origin + fireRay.direction * range);
         }
     }
 }

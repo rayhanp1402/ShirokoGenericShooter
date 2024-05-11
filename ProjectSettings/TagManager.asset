@@ -8,6 +8,7 @@ TagManager:
   - Target
   - Shop
   - Pet
+  - Stats
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - Shootable
   - ItemDrop
-  - Player
+  - CoinSuckTrigger
   - 
   - 
   - 

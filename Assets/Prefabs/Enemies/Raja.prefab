@@ -10835,6 +10835,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5dc3e0f4614a53441958a3cd584fca76, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1094686172355520154, guid: 5dc3e0f4614a53441958a3cd584fca76, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -10972,7 +10976,7 @@ Rigidbody:
   m_GameObject: {fileID: 5711946744852355062}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: Infinity
+  m_Drag: 1
   m_AngularDrag: Infinity
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -10988,7 +10992,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &1488880645177449111
 CapsuleCollider:
@@ -11087,6 +11091,7 @@ MonoBehaviour:
   startingHealth: 90
   sinkSpeed: 2.5
   scoreValue: 10
+  coinValue: 40
   deathClip: {fileID: 8300000, guid: 37ea431cbf84001458ee303c70098bb9, type: 3}
 --- !u!114 &8593775613648152942
 MonoBehaviour:
@@ -11102,7 +11107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 0.8
   effectsDisplayTime: 0.2
-  damage: 100
   range: 100
   distanceToPlayer: 0
   timeBetweenAreaDamage: 2

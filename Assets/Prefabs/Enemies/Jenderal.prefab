@@ -10453,6 +10453,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 02c0ccd78564e3748ab929c582c42444, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1042072312107367729, guid: 02c0ccd78564e3748ab929c582c42444, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -10623,7 +10627,7 @@ Rigidbody:
   m_GameObject: {fileID: 5104158692314621571}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: Infinity
+  m_Drag: 1
   m_AngularDrag: Infinity
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -10639,7 +10643,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &2376557961010985597
 CapsuleCollider:

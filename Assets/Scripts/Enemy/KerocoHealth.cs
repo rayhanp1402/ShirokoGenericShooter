@@ -18,6 +18,9 @@ public class KerocoHealth : EnemyHealth
     {
         base.Death();
         kerocoAttack.enabled = false;
+        anim.SetTrigger("Die");
+
+        Debug.Log("Keroco is dead");
         // DestroyImmediate(gameObject);
     }
 }

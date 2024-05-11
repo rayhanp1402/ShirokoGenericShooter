@@ -8,6 +8,7 @@ public class RajaAttack : MonoBehaviour
     public float timeBetweenAttacks = 0.8f;
     public float effectsDisplayTime = .2f;
     public float range = 100f;
+    public float currentRange;
 
     GameObject player;
     PlayerHealth shirokoHealth;
@@ -17,6 +18,10 @@ public class RajaAttack : MonoBehaviour
     Transform barrelEnd;
     EnemyShotgun shotgunScript;
     EnemyStat enemyStat;
+
+    Ray sightRay;
+    RaycastHit sightHit;
+    int shootableMask;
 
     public float distanceToPlayer;
     float timer;
@@ -35,7 +40,10 @@ public class RajaAttack : MonoBehaviour
         barrelEnd = shotgunRender.transform.GetChild(0);
         shotgunScript = barrelEnd.GetComponent<EnemyShotgun>();
         enemyStat = GetComponent<EnemyStat>();
+        currentRange = range;
         timer = timeBetweenAttacks;
+
+        shootableMask = LayerMask.GetMask("Shootable");
     }
 
     void OnTriggerEnter(Collider other)
@@ -58,9 +66,11 @@ public class RajaAttack : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+        SightingPlayer();
+
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-        if (distanceToPlayer <= range && timer >= timeBetweenAttacks)
+        if (distanceToPlayer <= currentRange && timer >= timeBetweenAttacks)
         {
             WeaponAttack();
         }
@@ -94,6 +104,33 @@ public class RajaAttack : MonoBehaviour
         {
             shirokoHealth.TakeDamage(10);
             shirokoMovement.Reduce(2, 2);
+        }
+    }
+
+    private void SightingPlayer()
+    {
+        sightRay.origin = transform.position;
+        sightRay.direction = player.transform.position;
+        Debug.Log("SightingPlayer() called");
+
+        if (Physics.Raycast(sightRay, out sightHit, range, shootableMask))
+        {
+            if (sightHit.collider.name == player.name)
+            {
+                Debug.Log("Player sighted!");
+                currentRange = range;
+            }
+            else
+            {
+                Debug.Log("Player gone!");
+                currentRange = 0f;
+            }
+
+        }
+        else
+        {
+            Debug.Log("Player gone!");
+            currentRange = 0f;
         }
     }
 }

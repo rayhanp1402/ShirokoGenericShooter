@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public abstract class EnemyBaseHealth : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public abstract class EnemyBaseHealth : MonoBehaviour
     protected Animator anim;
     protected CapsuleCollider capsuleCollider;
     protected bool isDead;
+    public static event Action OnEnemyDeath;
 
     protected void Awake()
     {
@@ -41,6 +43,12 @@ public abstract class EnemyBaseHealth : MonoBehaviour
         // TODO: Add any common death behavior here
 
         GetComponent<NavMeshAgent>().enabled = false;
+
+        Statistic statistic = FindObjectOfType<Statistic>();
+        if (statistic != null)
+        {
+            statistic.IncrementKill(); // Memanggil method IncrementKill() dari kelas Statistic
+        }
     }
 
     public int getCurrentHealth()
