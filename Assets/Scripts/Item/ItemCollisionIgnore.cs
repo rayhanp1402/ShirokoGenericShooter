@@ -10,5 +10,7 @@ public class ItemCollisionIgnore : MonoBehaviour
         Physics.IgnoreLayerCollision(0, 7);
         Physics.IgnoreLayerCollision(6, 7);
         Physics.IgnoreLayerCollision(7, 7);
+        Physics.IgnoreLayerCollision(0, 8);
+        Physics.IgnoreLayerCollision(6, 8);
     }
 }

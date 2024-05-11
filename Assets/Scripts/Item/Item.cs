@@ -51,7 +51,7 @@ public class Item : MonoBehaviour
         }
 
         void OnTriggerEnter(Collider other){
-            if (other.gameObject.tag == "Player" && player == null)
+            if (other.gameObject.CompareTag("Player") && player == null)
             {
                 player = other.gameObject.transform;
             }
@@ -59,7 +59,7 @@ public class Item : MonoBehaviour
 
         void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.tag == "Player")
+            if (other.gameObject.CompareTag("Player"))
             {
                 player = null;
             }

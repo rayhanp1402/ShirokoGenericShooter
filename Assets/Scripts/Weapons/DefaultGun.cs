@@ -23,6 +23,10 @@ public class DefaultGun : PausibleObject
     
     float timer;
 
+    public int shotsFired = 0;
+    public int shotsHit = 0;
+
+
     GameObject weaponHolder;
     GameObject defaultGun;
 
@@ -51,6 +55,17 @@ public class DefaultGun : PausibleObject
     {
         StopPausible();
     }
+
+    public void OneHitKill()
+        {
+            damage = 9999;
+            // GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            // foreach (GameObject enemy in enemies)
+            // {
+            //     EnemyBaseHealth enemyHealth = enemy.GetComponent<EnemyBaseHealth>();
+            //     enemyHealth.TakeDamage(enemyHealth.getCurrentHealth(), enemy.transform.position);
+            // }
+        }
 
     void Update()
     {
@@ -88,6 +103,7 @@ public class DefaultGun : PausibleObject
     void Shoot()
     {
         timer = 0f;
+        shotsFired++;  
 
         anim.SetTrigger("Fire");
 
@@ -108,6 +124,7 @@ public class DefaultGun : PausibleObject
             if (enemyHealth != null )
             {
                 enemyHealth.TakeDamage(calculateDamage(), fireHit.point);
+                shotsHit++;
             }
 
             if(enemyPetHealth != null)

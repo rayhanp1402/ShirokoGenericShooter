@@ -143,6 +143,8 @@ namespace Nightmare
                 // If the EnemyHealth component exist...
                 if(enemyHealth != null)
                 {
+                    bool hit = enemyHealth != null;
+
                     enemyHealth.TakeDamage (damagePerShot, shootHit.point);
                 }
 
