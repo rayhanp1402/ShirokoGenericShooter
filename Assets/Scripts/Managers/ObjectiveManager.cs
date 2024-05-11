@@ -20,6 +20,7 @@ public abstract class ObjectiveManager : MonoBehaviour
     private float countdownTimer;
     private bool isComplete;
     protected LevelManager levelManager;
+
     protected virtual void Start()
     {
         RectTransform Panel = GameObject.Find("Panel").GetComponent<RectTransform>();
@@ -55,7 +56,7 @@ public abstract class ObjectiveManager : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    virtual protected void OnEnable()
     {
         EventManager.StartListening("AddObjective", AddObjectiveProgress);
     }
@@ -69,7 +70,7 @@ public abstract class ObjectiveManager : MonoBehaviour
         }
     }
 
-    void OnDisable()
+    virtual protected void OnDisable()
     {
         EventManager.StopListening("AddObjective", AddObjectiveProgress);
     }
