@@ -26,7 +26,10 @@ public class SaveLoadManager : MonoBehaviour
         public int level;
         public string score;
         public string coin;
+        public string name; // New field for name
+        public string time; // New field for time
     }
+
 
     private void Start()
     {
@@ -36,7 +39,82 @@ public class SaveLoadManager : MonoBehaviour
         {
             Directory.CreateDirectory(saveDirectory);
         }
+
+        // List all the files in the directory
+        string[] saveFiles = Directory.GetFiles(saveDirectory);
+
+        // Determine how many save files exist
+        int saveCount = saveFiles.Length;
+
+        Debug.Log("Number of save files found: " + saveCount);
+
+        Vector3 canvasCenter = saveMenuCanvas.transform.position; // Get the center position of the canvas
+        float totalHeight = 0f; // Keep track of the total height occupied by existing save boxes
+
+        // Instantiate save boxes based on the count
+        for (int i = 0; i < saveCount; i++)
+        {
+            // Determine the file name (excluding the directory path)
+            string fileName = Path.GetFileName(saveFiles[i]);
+
+            // Read the contents of the JSON file
+            string jsonData = File.ReadAllText(saveFiles[i]);
+
+            // Deserialize the JSON data into SaveData object
+            SaveData saveData = JsonUtility.FromJson<SaveData>(jsonData);
+
+            // Instantiate SaveBoxFilled for each save file
+            GameObject saveBoxPrefab = saveBoxFilledPrefab;
+            GameObject saveBox = Instantiate(saveBoxPrefab, saveMenuCanvas);
+
+            // Calculate the position based on the total height
+            float yPosition = canvasCenter.y - totalHeight + 38;
+
+            saveBox.transform.position = new Vector3(canvasCenter.x, yPosition, canvasCenter.z);
+            saveBox.transform.rotation = Quaternion.identity;
+
+            SaveBoxFilled saveBoxFilledScript = saveBox.AddComponent<SaveBoxFilled>();
+            saveBoxFilledScript.saveLoadManager = this;
+
+            // Set the save name text
+            TextMeshProUGUI saveNameText = saveBox.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
+            saveNameText.text = saveData.name;
+
+            // Set the save time text
+            TextMeshProUGUI saveTimeText = saveBox.transform.Find("SaveTime").GetComponent<TextMeshProUGUI>();
+            saveTimeText.text = saveData.time;
+
+            // Update the total height
+            totalHeight += 160f; // Assuming each save box has a height of 160 units
+        }
+
+        // Instantiate SaveBoxEmpty for the rest of the slots if max count is 3
+        int emptySlots = Mathf.Max(0, 3 - saveCount);
+
+        for (int i = 0; i < emptySlots; i++)
+        {
+            GameObject emptyBox = Instantiate(saveBoxEmptyPrefab, saveMenuCanvas);
+
+            // Calculate the position based on the total height
+            float yPosition = canvasCenter.y - totalHeight + 38;
+
+            emptyBox.transform.position = new Vector3(canvasCenter.x, yPosition, canvasCenter.z);
+            emptyBox.transform.rotation = Quaternion.identity;
+
+            SaveBoxEmpty emptyBoxScript = emptyBox.AddComponent<SaveBoxEmpty>();
+
+            if (emptyBoxScript != null)
+            {
+                emptyBoxScript.saveLoadManager = this;
+                emptyBoxScript.saveBoxFilledPrefab = saveBoxFilledPrefab;
+            }
+
+            // Update the total height
+            totalHeight += 160f; // Assuming each save box has a height of 160 units
+        }
+
     }
+
 
 
     public void SavePlayerData(SaveBoxEmpty saveBoxEmpty)
@@ -163,6 +241,8 @@ public class SaveLoadManager : MonoBehaviour
         saveData.level = currlevel;
         saveData.score = GetScoreValue();
         saveData.coin = GetCoinValue();
+        saveData.name = saveNameText.text;
+        saveData.time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string jsonData = JsonUtility.ToJson(saveData);
 
         File.WriteAllText(saveFilePath, jsonData);
