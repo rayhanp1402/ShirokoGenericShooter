@@ -49,11 +49,17 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
-        // Find the BackButton child of saveMenuCanvas
-        Button backButton = saveMenuCanvas.Find("BackButton").GetComponent<Button>();
-
-        backButton.onClick.AddListener(HideSaveMenu);
-
+        if (this.transform.parent == saveMenuCanvas) // Check if it's the save menu
+        {
+            Button backButton = saveMenuCanvas.Find("BackButton").GetComponent<Button>();
+            backButton.onClick.AddListener(HideSaveMenu);
+        }
+        else if (this.transform.parent == loadMenuCanvas) // Check if it's the load menu
+        {
+            Button backButton = loadMenuCanvas.Find("BackButton").GetComponent<Button>();
+            backButton.onClick.AddListener(HideSaveMenu);
+        }
+        
         // Define the directory where save files will be stored
         saveDirectory = Application.persistentDataPath + "/SaveData/";
         if (!Directory.Exists(saveDirectory))
@@ -69,7 +75,7 @@ public class SaveLoadManager : MonoBehaviour
 
         Debug.Log("Number of save files found: " + saveCount);
 
-        Vector3 canvasCenter = saveMenuCanvas.transform.position; // Get the center position of the canvas
+        Vector3 canvasCenter = this.transform.parent.transform.position; // Get the center position of the canvas
         float totalHeight = 0f; // Keep track of the total height occupied by existing save boxes
 
         // Instantiate save boxes based on the count
@@ -86,7 +92,7 @@ public class SaveLoadManager : MonoBehaviour
 
             // Instantiate SaveBoxFilled for each save file
             GameObject saveBoxPrefab = saveBoxFilledPrefab;
-            GameObject saveBox = Instantiate(saveBoxPrefab, saveMenuCanvas);
+            GameObject saveBox = Instantiate(saveBoxPrefab, this.transform.parent);
 
             // Calculate the position based on the total height
             float yPosition = canvasCenter.y - totalHeight + 38;
@@ -114,7 +120,7 @@ public class SaveLoadManager : MonoBehaviour
 
         for (int i = 0; i < emptySlots; i++)
         {
-            GameObject emptyBox = Instantiate(saveBoxEmptyPrefab, saveMenuCanvas);
+            GameObject emptyBox = Instantiate(saveBoxEmptyPrefab, this.transform.parent);
 
             // Calculate the position based on the total height
             float yPosition = canvasCenter.y - totalHeight + 38;
@@ -384,6 +390,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
     {
+        Debug.Log("SaveBoxEmpty clicked.");
         // Check if it's the save menu canvas
         if (saveBoxEmpty.transform.parent == saveMenuCanvas)
         {
@@ -399,6 +406,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void OnSaveBoxFilledClicked(SaveBoxFilled saveBoxFilled)
     {
+        Debug.Log("SaveBoxFilled clicked.");
         if (saveBoxFilled.transform.parent == saveMenuCanvas) // Check if it's the save menu
         {
             SavePlayerData(saveBoxFilled);
@@ -502,7 +510,7 @@ public class SaveLoadManager : MonoBehaviour
     void HideSaveMenu()
     {
         // Hide the save menu canvas
-        saveMenuCanvas.gameObject.SetActive(false);
+        this.transform.parent.gameObject.SetActive(false);
     }
 
 
