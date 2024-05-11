@@ -47,50 +47,6 @@ public class SaveLoadManager : MonoBehaviour
         Debug.Log("Player data saved.");
     }
 
-    // public void UpdateSaveUI(SaveBoxEmpty saveBoxEmpty)
-    // {
-    //     // Instantiate the SaveBoxFilled prefab as a child of the SaveMenuCanvas
-    //     GameObject filledSaveBox = Instantiate(saveBoxFilledPrefab, saveMenuCanvas);
-
-    //     // Set the position and rotation of the filled save box to match the empty save box
-    //     filledSaveBox.transform.position = saveBoxEmpty.transform.position;
-    //     filledSaveBox.transform.rotation = saveBoxEmpty.transform.rotation;
-
-    //     SaveBoxFilled saveBoxFilledScript = filledSaveBox.AddComponent<SaveBoxFilled>();
-    //     saveBoxFilledScript.saveLoadManager = this;
-
-    //     // Update the save time text to the current time
-    //     TextMeshProUGUI saveTimeText = filledSaveBox.transform.Find("SaveTime").GetComponent<TextMeshProUGUI>();
-    //     if (saveTimeText != null)
-    //     {
-    //         saveTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-    //         // Sample overwrite data
-    //         PlayerPrefs.SetFloat("PlayerHealth", 80f);
-
-    //         Debug.Log("Save data Saved.");
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("SaveTime TextMeshProUGUI component not found in SaveBoxFilled prefab.");
-    //     }
-
-    //     // Set the save name text based on the current index
-    //     TextMeshProUGUI saveNameText = filledSaveBox.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
-    //     if (saveNameText != null)
-    //     {
-    //         saveNameText.text = "Save " + currentIndex; 
-    //         currentIndex++;
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("SaveName TextMeshProUGUI component not found in SaveBoxFilled prefab.");
-    //     }
-        
-    //     // Destroy the empty save box
-    //     Destroy(saveBoxEmpty.gameObject);
-    // }
-
-    // update save ui for save box filled
     public void UpdateSaveUI(SaveBoxFilled saveBoxFilled)
     {
         // Update the save time text to the current time
@@ -98,10 +54,6 @@ public class SaveLoadManager : MonoBehaviour
         if (saveTimeText != null)
         {
             saveTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            // Sample overwrite data
-            PlayerPrefs.SetFloat("PlayerHealth", 80f);
-
-            Debug.Log("Save data Saved.");
         }
         else
         {
@@ -158,25 +110,38 @@ public class SaveLoadManager : MonoBehaviour
         
     }
 
-    public void LoadPlayerData()
+    public void LoadPlayerData(SaveBoxFilled saveBoxFilled)
     {
-        // Retrieve player data from PlayerPrefs
-        float health = PlayerPrefs.GetFloat("PlayerHealth");
-        int level = PlayerPrefs.GetInt("PlayerLevel");
-        string position = PlayerPrefs.GetString("PlayerPosition");
+        // Determine the unique identifier for the save box
+        TextMeshProUGUI saveNameText = saveBoxFilled.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
+        string saveBoxIdentifier = saveNameText.text;
 
-        Debug.Log("Player data loaded:");
-        Debug.Log("Health: " + health);
+        int level = PlayerPrefs.GetInt(saveBoxIdentifier + "_PlayerLevel");
+        string score = PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerScore");
+        string coin = PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerCoin");
+
+        Debug.Log("Player data loaded for save box " + saveBoxIdentifier + ":");
         Debug.Log("Level: " + level);
-        Debug.Log("Position: " + position);
+        Debug.Log("Score: " + score);
+        Debug.Log("Coin: " + coin);
     }
 
-    // Delete the current save data
-    public void DeleteSaveData()
+    public void DeleteSaveData(SaveBoxFilled saveBoxFilled)
     {
-        PlayerPrefs.DeleteAll();
+        TextMeshProUGUI saveNameText = saveBoxFilled.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
+        string saveBoxIdentifier = saveNameText.text;
 
-        Debug.Log("Save data deleted.");
+        Debug.Log("Player Level: " + PlayerPrefs.GetInt(saveBoxIdentifier + "_PlayerLevel"));
+        Debug.Log("Player Score: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerScore"));
+        Debug.Log("Player Coin: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerCoin"));
+
+        string[] allKeys = PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerLevel", "").Split(';');
+        foreach (string key in allKeys)
+        {
+            PlayerPrefs.DeleteKey(key);
+        }
+
+        Debug.Log("Save data deleted for " + saveBoxIdentifier);
     }
 
     public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
@@ -202,7 +167,7 @@ public class SaveLoadManager : MonoBehaviour
         }
         else if (saveBoxFilled.transform.parent == loadMenuCanvas) // Check if it's the load menu
         {
-            LoadPlayerData();
+            LoadPlayerData(saveBoxFilled);
         }
     }
 
@@ -210,7 +175,8 @@ public class SaveLoadManager : MonoBehaviour
     public void SavePreferences(SaveBoxFilled saveBoxFilled)
     {
         // Determine a unique identifier for the save box, such as its name or index
-        string saveBoxIdentifier = saveBoxFilled.GetInstanceID().ToString();
+        TextMeshProUGUI saveNameText = saveBoxFilled.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
+        string saveBoxIdentifier = saveNameText.text;
         int currlevel = 0;
 
         GameObject managersObject = GameObject.Find("Managers");
@@ -241,6 +207,7 @@ public class SaveLoadManager : MonoBehaviour
         Debug.Log("Player Level: " + PlayerPrefs.GetInt(saveBoxIdentifier + "_PlayerLevel"));
         Debug.Log("Player Score: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerScore"));
         Debug.Log("Player Coin: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerCoin"));
+
     }
 
     // Example method to get the score value from HUDCanvas
@@ -254,7 +221,8 @@ public class SaveLoadManager : MonoBehaviour
                 Text scoreText = scoreTextTransform.GetComponent<Text>();
                 if (scoreText != null)
                 {
-                    return scoreText.text;
+                    // Return only the score value without any additional text
+                    return ExtractNumber(scoreText.text);
                 }
                 else
                 {
@@ -272,6 +240,7 @@ public class SaveLoadManager : MonoBehaviour
         }
         return "";
     }
+
 
     // Example method to get the coin value from HUDCanvas
     private string GetCoinValue()
@@ -302,6 +271,26 @@ public class SaveLoadManager : MonoBehaviour
         }
         return "";
     }
+
+    private string ExtractNumber(string text)
+    {
+        // Split the text based on the delimiter ":"
+        string[] parts = text.Split(':');
+
+        // Assuming the number is always in the second part after splitting
+        if (parts.Length > 1)
+        {
+            // Extract the numeric part from the second part
+            string numericPart = parts[1].Trim(); // Trim to remove leading/trailing whitespaces
+            return numericPart;
+        }
+        else
+        {
+            // If the format is unexpected, return an empty string or handle it as needed
+            return "";
+        }
+    }
+
 
 
 
