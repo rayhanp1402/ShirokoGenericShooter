@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Nightmare
@@ -67,16 +68,22 @@ namespace Nightmare
 
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log("Player entered shop");
             if (other.gameObject.tag == "Player")
             {
+                Debug.Log("Set entered shop");
+                Debug.Log(playerCustomer);
                 playerCustomer.setNearShop(true);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
+            Debug.Log("Player exited shop");
             if (other.gameObject.tag == "Player")
             {
+                Debug.Log("Set exited shop");
+                Debug.Log(playerCustomer);
                 playerCustomer.setNearShop(false);
                 HideShop();
             }
@@ -132,7 +139,9 @@ namespace Nightmare
             {
                 CoinManager.coins -= price;
                 Vector3 pos = transform.forward * 2 + transform.position;
-                Instantiate(obj, pos, Quaternion.identity);
+                GameObject pet = Instantiate(obj, pos, Quaternion.identity);
+                Scene main = SceneManager.GetSceneByName("Main");
+                SceneManager.MoveGameObjectToScene(pet, main);
                 UpdateButton();
             }
         }

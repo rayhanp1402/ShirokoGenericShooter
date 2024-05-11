@@ -6478,7 +6478,7 @@ MonoBehaviour:
   objectives:
   - objectiveName: 
     objectiveType: 1
-    objectiveValue: 90
+    objectiveValue: 60
     currentProgress: 0
     isComplete: 0
 --- !u!1 &993325023
@@ -8108,8 +8108,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1203818946}
   - component: {fileID: 1203818945}
-  - component: {fileID: 1203818944}
-  - component: {fileID: 1203818943}
   - component: {fileID: 1203818942}
   m_Layer: 0
   m_Name: StartTrigger
@@ -8130,48 +8128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221b846e959dcdc44a676d809cfc23c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1203818943
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1203818941}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 4.7}
-  m_Center: {x: 2.94, y: 0, z: -3.19}
---- !u!65 &1203818944
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1203818941}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 4.7}
-  m_Center: {x: -3.04, y: 0, z: -3.19}
 --- !u!65 &1203818945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8191,7 +8147,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7, y: 1, z: 7}
+  m_Size: {x: 27.8, y: 1, z: 7}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1203818946
 Transform:
@@ -8202,7 +8158,7 @@ Transform:
   m_GameObject: {fileID: 1203818941}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 16.94, y: 0, z: 17.2}
+  m_LocalPosition: {x: 22.55, y: 0, z: 22.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

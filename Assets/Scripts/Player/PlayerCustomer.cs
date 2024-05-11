@@ -8,12 +8,6 @@ namespace Nightmare
     {
         bool isNearShop = false;
         ShopHandler shopHandler;
-
-        private void Awake()
-        {
-            shopHandler = FindObjectOfType<ShopHandler>();
-        }
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -31,6 +25,7 @@ namespace Nightmare
         public void setNearShop(bool value)
         {
             isNearShop = value;
+            shopHandler = FindObjectOfType<ShopHandler>();
         }
     }
 }
