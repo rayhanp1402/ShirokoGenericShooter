@@ -53,6 +53,12 @@ namespace Nightmare
             return currentHealth <= 0f;
         }
 
+        public void SetGodModePet(bool godMode)
+        {
+            this.godMode = godMode;
+            currentHealth = startingHealth;
+        }
+
         public void TakeDamage (float amount, Vector3 hitPoint)
         {
             if (godMode) 
