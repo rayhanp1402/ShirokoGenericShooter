@@ -4842,7 +4842,7 @@ GameObject:
   - component: {fileID: 1236292498962659671}
   - component: {fileID: 3953777412422251936}
   - component: {fileID: 2024208291572023523}
-  - component: {fileID: 3601371126154001634}
+  - component: {fileID: 4397499489376791681}
   m_Layer: 0
   m_Name: LuckyCat
   m_TagString: Pet
@@ -4914,7 +4914,7 @@ Rigidbody:
   m_GameObject: {fileID: 7070692012407039761}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: Infinity
+  m_Drag: 1
   m_AngularDrag: Infinity
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -4930,9 +4930,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &3601371126154001634
+--- !u!114 &4397499489376791681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4941,12 +4941,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7070692012407039761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64274a159eb879a4fbef18ad8b7ee614, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ba74e78cfc97ed4b884b7eb76b8d880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
   sinkSpeed: 2.5
-  deathClip: {fileID: 0}
+  deathClip: {fileID: 8300000, guid: 35370983b2713ab478eacf2a0e36a332, type: 3}
   godMode: 0
 --- !u!1 &7200658779575517060
 GameObject:

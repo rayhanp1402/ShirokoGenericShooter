@@ -10,14 +10,14 @@ namespace Nightmare
         
         public bool godMode = false;
 
-        float currentHealth;
-        Animator anim;
-        AudioSource enemyAudio;
+        protected float currentHealth;
+        protected Animator anim;
+        protected AudioSource enemyAudio;
         // ParticleSystem hitParticles;
-        CapsuleCollider capsuleCollider;
+        protected CapsuleCollider capsuleCollider;
         // EnemyMovement enemyMovement;
 
-        void Awake ()
+        protected virtual void Awake ()
         {
             anim = GetComponent <Animator> ();
             enemyAudio = GetComponent <AudioSource> ();
@@ -69,7 +69,23 @@ namespace Nightmare
             }
         }
 
-        public void Death ()
+        public void TakeDamage(float amount)
+        {
+            if (godMode)
+                return;
+            if (!IsDead())
+            {
+                //enemyAudio.Play();
+                currentHealth -= amount;
+
+                if (IsDead())
+                {
+                    Death();
+                }
+            }
+        }
+
+        virtual public void Death ()
         {
             EventManager.TriggerEvent("Sound", this.transform.position);
             anim.SetTrigger ("Dead");

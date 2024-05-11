@@ -22,6 +22,13 @@ public class Shotgun : MonoBehaviour
     RaycastHit fireHit;
     int shootableMask;
 
+    GameObject shotgunRenderer;
+    GameObject shotgun;
+
+    PlayerMovement playerMovement;
+
+    Animator anim;
+
     float timer;
 
 
@@ -32,6 +39,13 @@ public class Shotgun : MonoBehaviour
         shootableMask = LayerMask.GetMask("Shootable");
 
         timer = timeBetweenFiring;
+
+        shotgunRenderer = transform.parent.gameObject;
+        shotgun = shotgunRenderer.transform.parent.gameObject;
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
+
+        anim = shotgun.GetComponent<Animator>();
     }
 
     void Update()
@@ -68,6 +82,8 @@ public class Shotgun : MonoBehaviour
     {
         timer = 0f;
 
+        anim.SetTrigger("Fire");
+
         fireAudio.Play();
         fireLight.enabled = true;
 
@@ -98,7 +114,7 @@ public class Shotgun : MonoBehaviour
             fireRay.origin = transform.position;
             fireRay.direction = directions[i];
 
-            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
             {
                 EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
                 EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
@@ -106,7 +122,7 @@ public class Shotgun : MonoBehaviour
                 if (enemyHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
-                    int adjustedDamage = Mathf.RoundToInt(damage * (1 - distanceToEnemy / range));
+                    int adjustedDamage = Mathf.RoundToInt(calculateDamage() * (1 - distanceToEnemy / range));
 
                     adjustedDamage = Mathf.Max(0, adjustedDamage);
 
@@ -116,7 +132,7 @@ public class Shotgun : MonoBehaviour
                 if(enemyPetHealth != null)
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, fireHit.point);
-                    int adjustedDamage = Mathf.RoundToInt(damage * (1 - distanceToEnemy / range));
+                    int adjustedDamage = Mathf.RoundToInt(calculateDamage() * (1 - distanceToEnemy / range));
 
                     adjustedDamage = Mathf.Max(0, adjustedDamage);
 
@@ -141,5 +157,8 @@ public class Shotgun : MonoBehaviour
             }
         }
     }
-
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
+    }
 }

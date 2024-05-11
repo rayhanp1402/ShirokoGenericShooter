@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using Nightmare;
+using Unity.VisualScripting;
 public class DefaultGun : PausibleObject
 {
     public int damage = 30;
@@ -13,12 +14,19 @@ public class DefaultGun : PausibleObject
     AudioSource fireAudio;
     Light fireLight;
     LineRenderer fireLine;
+    GameObject player;
+    PlayerMovement playerMovement;
 
     Ray fireRay;
     RaycastHit fireHit;
     int shootableMask;
     
     float timer;
+
+    GameObject weaponHolder;
+    GameObject defaultGun;
+
+    Animator anim;
 
 
     void Awake()
@@ -28,6 +36,15 @@ public class DefaultGun : PausibleObject
         fireLine = GetComponent<LineRenderer>();
 
         shootableMask = LayerMask.GetMask("Shootable");
+
+        weaponHolder = transform.parent.gameObject;
+        defaultGun = weaponHolder.transform.parent.gameObject;
+
+        playerMovement = transform.root.GetComponent<PlayerMovement>();
+        Debug.Log(playerMovement);
+        Debug.Log(transform.root.name);
+
+        anim = defaultGun.GetComponent<Animator>();
     }
 
     void OnDestroy()
@@ -42,6 +59,10 @@ public class DefaultGun : PausibleObject
         if (Input.GetButton("Fire1") && timer >= timeBetweenFiring)
         {
             Shoot();
+        }
+        else
+        {
+            anim.SetTrigger("Idle");
         }
 #else
         // If there is input on the shoot direction stick and it's time to fire...
@@ -68,6 +89,8 @@ public class DefaultGun : PausibleObject
     {
         timer = 0f;
 
+        anim.SetTrigger("Fire");
+
         fireAudio.Play();
         fireLight.enabled = true;
 
@@ -77,19 +100,19 @@ public class DefaultGun : PausibleObject
         fireRay.origin = transform.position;
         fireRay.direction = transform.forward;
 
-        if(Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+        if(Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
         {
             EnemyHealth enemyHealth = fireHit.collider.GetComponent<EnemyHealth>();
             EnemyPetHealth enemyPetHealth = fireHit.collider.GetComponent <EnemyPetHealth> ();
             
             if (enemyHealth != null )
             {
-                enemyHealth.TakeDamage(damage, fireHit.point);
+                enemyHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
 
             if(enemyPetHealth != null)
             {
-                enemyPetHealth.TakeDamage(damage, fireHit.point);
+                enemyPetHealth.TakeDamage(calculateDamage(), fireHit.point);
             }
 
             fireLine.SetPosition(1, fireHit.point);
@@ -98,5 +121,10 @@ public class DefaultGun : PausibleObject
         {
             fireLine.SetPosition(1, fireRay.origin +  fireRay.direction * range);
         }
+    }
+
+    private float calculateDamage()
+    {
+        return damage + playerMovement.baseAttack;
     }
 }

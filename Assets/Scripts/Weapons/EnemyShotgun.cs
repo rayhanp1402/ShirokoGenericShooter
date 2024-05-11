@@ -33,7 +33,7 @@ public class EnemyShotgun : MonoBehaviour
         fireLight.enabled = false;
     }
 
-    public void Shoot(float range, int damage)
+    public void Shoot(float range, float damage)
     {
         fireAudio.Play();
         fireLight.enabled = true;
@@ -65,7 +65,7 @@ public class EnemyShotgun : MonoBehaviour
             fireRay.origin = transform.position;
             fireRay.direction = directions[i];
 
-            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask))
+            if (Physics.Raycast(fireRay, out fireHit, range, shootableMask, QueryTriggerInteraction.Ignore))
             {
                 PlayerHealth shirokoHealth = fireHit.collider.GetComponent<PlayerHealth>();
                 if (shirokoHealth != null)

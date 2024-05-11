@@ -7,7 +7,6 @@ public class KerocoAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.8f;
     public float effectsDisplayTime = .2f;
-    public int damage = 50;
     public float range = 2f;
 
     GameObject player;
@@ -16,8 +15,14 @@ public class KerocoAttack : MonoBehaviour
     Transform swordEnd;
     EnemySword swordScript;
 
+    KerocoMovement kerocoMovement;
+    PetHealth petHealth;
+    EnemyStat enemyStat;
+
     public float distanceToPlayer;
     float timer;
+
+    Animator anim;
 
     void Awake()
     {
@@ -26,6 +31,9 @@ public class KerocoAttack : MonoBehaviour
         sword = transform.GetChild(2);
         swordEnd = sword.transform.GetChild(0);
         swordScript = swordEnd.GetComponent<EnemySword>();
+        kerocoMovement = GetComponent<KerocoMovement>();
+        enemyStat = GetComponent<EnemyStat>();
+        anim = GetComponent<Animator>();
         timer = timeBetweenAttacks;
     }
 
@@ -37,7 +45,12 @@ public class KerocoAttack : MonoBehaviour
 
         if (distanceToPlayer <= range && timer >= timeBetweenAttacks)
         {
-            Attack();
+            AttackPlayer();
+        }
+
+        if (kerocoMovement.closestPet != null && timer >= timeBetweenAttacks)
+        {
+            AttackPet();
         }
 
         if (timer >= timeBetweenAttacks * effectsDisplayTime)
@@ -46,14 +59,33 @@ public class KerocoAttack : MonoBehaviour
         }
     }
 
-    void Attack()
+    void AttackPlayer()
     {
         timer = 0f;
 
         if (shirokoHealth.currentHealth > 0)
         {
+            anim.SetTrigger("Fire");
             swordScript.Shoot(range);
-            shirokoHealth.TakeDamage(damage);
+            shirokoHealth.TakeDamage(enemyStat.currentAttack);
+
+            Debug.Log("Keroco attacks player");
+        }
+    }
+
+    void AttackPet()
+    {
+        timer = 0f;
+
+        petHealth = kerocoMovement.closestPet.GetComponent<PetHealth>();
+
+        if (petHealth.CurrentHealth() > 0)
+        {
+            anim.SetTrigger("Fire");
+            swordScript.Shoot(range);
+            petHealth.TakeDamage(enemyStat.currentAttack);
+
+            Debug.Log("Keroco attacks pet");
         }
     }
 }
