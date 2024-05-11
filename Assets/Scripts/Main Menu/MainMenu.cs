@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
     {
         // TODO: Implement loading saved game functionality
         // Load a specific level
-        InitialLevel.setLevel(7);
+        InitialLevel.setLevel(5);
         SceneManager.LoadScene("Main");
     }
 
