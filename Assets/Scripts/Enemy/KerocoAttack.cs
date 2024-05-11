@@ -22,6 +22,8 @@ public class KerocoAttack : MonoBehaviour
     public float distanceToPlayer;
     float timer;
 
+    Animator anim;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -31,6 +33,7 @@ public class KerocoAttack : MonoBehaviour
         swordScript = swordEnd.GetComponent<EnemySword>();
         kerocoMovement = GetComponent<KerocoMovement>();
         enemyStat = GetComponent<EnemyStat>();
+        anim = GetComponent<Animator>();
         timer = timeBetweenAttacks;
     }
 
@@ -62,8 +65,11 @@ public class KerocoAttack : MonoBehaviour
 
         if (shirokoHealth.currentHealth > 0)
         {
+            anim.SetTrigger("Fire");
             swordScript.Shoot(range);
             shirokoHealth.TakeDamage(enemyStat.currentAttack);
+
+            Debug.Log("Keroco attacks player");
         }
     }
 
@@ -75,8 +81,11 @@ public class KerocoAttack : MonoBehaviour
 
         if (petHealth.CurrentHealth() > 0)
         {
+            anim.SetTrigger("Fire");
             swordScript.Shoot(range);
             petHealth.TakeDamage(enemyStat.currentAttack);
+
+            Debug.Log("Keroco attacks pet");
         }
     }
 }

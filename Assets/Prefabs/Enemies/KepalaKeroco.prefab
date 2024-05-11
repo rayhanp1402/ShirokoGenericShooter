@@ -11021,7 +11021,7 @@ Rigidbody:
   m_GameObject: {fileID: 629053583277253442}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: Infinity
+  m_Drag: 1
   m_AngularDrag: Infinity
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -11037,7 +11037,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &5011338372494158505
 CapsuleCollider:
@@ -11115,6 +11115,7 @@ MonoBehaviour:
   startingHealth: 90
   sinkSpeed: 2.5
   scoreValue: 10
+  coinValue: 40
   deathClip: {fileID: 8300000, guid: 37ea431cbf84001458ee303c70098bb9, type: 3}
 --- !u!114 &4177078590668056902
 MonoBehaviour:
@@ -11130,7 +11131,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 0.8
   effectsDisplayTime: 0.2
-  damage: 100
   range: 100
   distanceToPlayer: 0
 --- !u!95 &3149937086985189983
