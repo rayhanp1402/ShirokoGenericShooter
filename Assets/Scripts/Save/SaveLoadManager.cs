@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.IO;
 using TMPro;
 using UnityEngine.UI;
 using Nightmare;
@@ -14,9 +15,30 @@ public class SaveLoadManager : MonoBehaviour
 
     private LevelManager levelManager;
 
+    private string saveDirectory;
+    private string saveFileExtension = ".txt";
+
     private static int currentIndex = 1;
 
-    // Save player data to PlayerPrefs
+    [System.Serializable]
+    public class SaveData
+    {
+        public int level;
+        public string score;
+        public string coin;
+    }
+
+    private void Start()
+    {
+        // Define the directory where save files will be stored
+        saveDirectory = Application.persistentDataPath + "/SaveData/";
+        if (!Directory.Exists(saveDirectory))
+        {
+            Directory.CreateDirectory(saveDirectory);
+        }
+    }
+
+
     public void SavePlayerData(SaveBoxEmpty saveBoxEmpty)
     {
         // UpdateSaveUI(saveBoxEmpty);
@@ -110,38 +132,95 @@ public class SaveLoadManager : MonoBehaviour
         
     }
 
+    public void SavePreferences(SaveBoxFilled saveBoxFilled)
+    {
+        // Determine a unique identifier for the save box, such as its name or index
+        TextMeshProUGUI saveNameText = saveBoxFilled.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
+        int currlevel = 0;
+
+        string saveFileName = saveNameText.text + saveFileExtension;
+        string saveFilePath = Path.Combine(saveDirectory, saveFileName);
+
+        GameObject managersObject = GameObject.Find("Managers");
+
+        if (managersObject != null)
+        {
+            // Get the LevelManager component attached to the Managers GameObject
+            levelManager = managersObject.GetComponent<LevelManager>();
+
+            if (levelManager != null)
+            {
+                // Access methods or variables from the LevelManager component
+                currlevel = levelManager.GetCurrentLevel();
+            }
+            else
+            {
+                Debug.LogWarning("LevelManager script component not found on Managers GameObject.");
+            }
+        }
+
+        SaveData saveData = new SaveData();
+        saveData.level = currlevel;
+        saveData.score = GetScoreValue();
+        saveData.coin = GetCoinValue();
+        string jsonData = JsonUtility.ToJson(saveData);
+
+        File.WriteAllText(saveFilePath, jsonData);
+    }
+
     public void LoadPlayerData(SaveBoxFilled saveBoxFilled)
     {
         // Determine the unique identifier for the save box
         TextMeshProUGUI saveNameText = saveBoxFilled.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
-        string saveBoxIdentifier = saveNameText.text;
+        string saveFileName = saveNameText.text + saveFileExtension;
+        string saveFilePath = Path.Combine(saveDirectory, saveFileName);
 
-        int level = PlayerPrefs.GetInt(saveBoxIdentifier + "_PlayerLevel");
-        string score = PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerScore");
-        string coin = PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerCoin");
+        if (File.Exists(saveFilePath))
+        {
+            // Read the data from the file
+            string jsonData = File.ReadAllText(saveFilePath);
 
-        Debug.Log("Player data loaded for save box " + saveBoxIdentifier + ":");
-        Debug.Log("Level: " + level);
-        Debug.Log("Score: " + score);
-        Debug.Log("Coin: " + coin);
+            // Deserialize the data (for example, using JSON)
+            SaveData saveData = JsonUtility.FromJson<SaveData>(jsonData);
+
+            Debug.Log("Player data loaded for save box " + saveFileName + ":");
+            Debug.Log("Level: " + saveData.level);
+            Debug.Log("Score: " + saveData.score);
+            Debug.Log("Coin: " + saveData.coin);
+        }
+        else
+        {
+            Debug.LogWarning("No saved data found for " + saveFileName);
+        }
     }
 
     public void DeleteSaveData(SaveBoxFilled saveBoxFilled)
     {
         TextMeshProUGUI saveNameText = saveBoxFilled.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
-        string saveBoxIdentifier = saveNameText.text;
+        // string saveBoxIdentifier = saveNameText.text;
+        string saveFileName = saveNameText.text + saveFileExtension;
+        string saveFilePath = Path.Combine(saveDirectory, saveFileName);
 
-        Debug.Log("Player Level: " + PlayerPrefs.GetInt(saveBoxIdentifier + "_PlayerLevel"));
-        Debug.Log("Player Score: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerScore"));
-        Debug.Log("Player Coin: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerCoin"));
-
-        string[] allKeys = PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerLevel", "").Split(';');
-        foreach (string key in allKeys)
+        if (File.Exists(saveFilePath))
         {
-            PlayerPrefs.DeleteKey(key);
+            string jsonData = File.ReadAllText(saveFilePath);
+
+            // Deserialize the data (for example, using JSON)
+            SaveData saveData = JsonUtility.FromJson<SaveData>(jsonData);
+
+            Debug.Log("Level: " + saveData.level);
+            Debug.Log("Score: " + saveData.score);
+            Debug.Log("Coin: " + saveData.coin);
+            // Delete the file
+            File.Delete(saveFilePath);
+
+            Debug.Log("Save data deleted for " + saveFileName);
+        }
+        else
+        {
+            Debug.LogWarning("No save data found for " + saveFileName);
         }
 
-        Debug.Log("Save data deleted for " + saveBoxIdentifier);
     }
 
     public void OnSaveBoxEmptyClicked(SaveBoxEmpty saveBoxEmpty)
@@ -169,45 +248,6 @@ public class SaveLoadManager : MonoBehaviour
         {
             LoadPlayerData(saveBoxFilled);
         }
-    }
-
-
-    public void SavePreferences(SaveBoxFilled saveBoxFilled)
-    {
-        // Determine a unique identifier for the save box, such as its name or index
-        TextMeshProUGUI saveNameText = saveBoxFilled.transform.Find("SaveName").GetComponent<TextMeshProUGUI>();
-        string saveBoxIdentifier = saveNameText.text;
-        int currlevel = 0;
-
-        GameObject managersObject = GameObject.Find("Managers");
-
-        if (managersObject != null)
-        {
-            // Get the LevelManager component attached to the Managers GameObject
-            levelManager = managersObject.GetComponent<LevelManager>();
-
-            if (levelManager != null)
-            {
-                // Access methods or variables from the LevelManager component
-                currlevel = levelManager.GetCurrentLevel();
-            }
-            else
-            {
-                Debug.LogWarning("LevelManager script component not found on Managers GameObject.");
-            }
-        }
-        PlayerPrefs.SetInt(saveBoxIdentifier + "_PlayerLevel", currlevel);
-        PlayerPrefs.SetString(saveBoxIdentifier + "_PlayerScore", GetScoreValue());
-        PlayerPrefs.SetString(saveBoxIdentifier + "_PlayerCoin", GetCoinValue());
-
-        // Save the PlayerPrefs data
-        PlayerPrefs.Save();
-
-        Debug.Log("Player preferences saved for " + saveBoxIdentifier);
-        Debug.Log("Player Level: " + PlayerPrefs.GetInt(saveBoxIdentifier + "_PlayerLevel"));
-        Debug.Log("Player Score: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerScore"));
-        Debug.Log("Player Coin: " + PlayerPrefs.GetString(saveBoxIdentifier + "_PlayerCoin"));
-
     }
 
     // Example method to get the score value from HUDCanvas
@@ -286,9 +326,18 @@ public class SaveLoadManager : MonoBehaviour
         }
         else
         {
-            // If the format is unexpected, return an empty string or handle it as needed
             return "";
         }
+    }
+
+    private int GetSaveCount()
+    {
+        int count = 0;
+        while (PlayerPrefs.HasKey("Save " + count + " _PlayerLevel"))
+        {
+            count++;
+        }
+        return count;
     }
 
 
