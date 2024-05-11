@@ -7,6 +7,8 @@ public class ShirokoMovement : MonoBehaviour
     public float speed = 6f;
     public float baseAttack = 5f;
 
+    public float totalDistanceTraveled = 0f;
+    
     Vector3 movement;
     Animator anim;
     Rigidbody playerRigidBody;
@@ -36,6 +38,8 @@ public class ShirokoMovement : MonoBehaviour
     {
         movement.Set(h, 0f, v);
         movement = movement.normalized * speed * Time.deltaTime;
+
+        totalDistanceTraveled += movement.magnitude;
 
         playerRigidBody.MovePosition(transform.position + movement);
     }

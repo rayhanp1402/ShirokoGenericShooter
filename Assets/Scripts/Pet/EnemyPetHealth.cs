@@ -54,6 +54,12 @@ namespace Nightmare
             return currentHealth <= 0f;
         }
 
+        public void SetPetDead()
+        {
+            currentHealth = 0;
+            Death();
+        }
+
         public void TakeDamage (float amount, Vector3 hitPoint)
         {
             if (!IsDead())
