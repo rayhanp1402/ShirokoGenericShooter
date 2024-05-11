@@ -49,7 +49,7 @@ public class KepalaKerocoMovement : MonoBehaviour
             SpawnKeroco();
         }
 
-        if (distanceToPlayer <= kepalaKerocoAttack.range || shirokoHealth.currentHealth <= 0)
+        if (distanceToPlayer <= kepalaKerocoAttack.currentRange || shirokoHealth.currentHealth <= 0)
         {
             isWalking = false;
             nav.isStopped = true;
