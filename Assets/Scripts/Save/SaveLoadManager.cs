@@ -33,6 +33,12 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
+        // Find the BackButton child of saveMenuCanvas
+        Button backButton = saveMenuCanvas.Find("BackButton").GetComponent<Button>();
+
+        // Add an onClick listener to the BackButton
+        backButton.onClick.AddListener(HideSaveMenu);
+
         // Define the directory where save files will be stored
         saveDirectory = Application.persistentDataPath + "/SaveData/";
         if (!Directory.Exists(saveDirectory))
@@ -420,7 +426,11 @@ public class SaveLoadManager : MonoBehaviour
         return count;
     }
 
-
+    void HideSaveMenu()
+    {
+        // Hide the save menu canvas
+        saveMenuCanvas.gameObject.SetActive(false);
+    }
 
 
 }
