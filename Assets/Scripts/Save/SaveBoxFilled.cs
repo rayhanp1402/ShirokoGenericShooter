@@ -28,6 +28,7 @@ public class SaveBoxFilled : MonoBehaviour, IPointerClickHandler
 
     public void OnDeleteButtonClicked()
     {
-        saveLoadManager?.PlaceEmptySaveBox(this, saveLoadManager);
+        saveLoadManager?.DeleteSaveUI(this, saveLoadManager);
+        saveLoadManager?.DeleteSaveData(this);
     }
 }
