@@ -22,6 +22,7 @@ namespace Nightmare
         GameObject weaponHolder;
         bool isDead;
         bool damaged;
+        GameObject gameOverScene;
 
         void Awake()
         {
@@ -30,6 +31,8 @@ namespace Nightmare
             playerAudio = GetComponent<AudioSource>();
             playerMovement = GetComponent<PlayerMovement>();
             weaponHolder = GameObject.Find("WeaponHolder");
+            gameOverScene = GameObject.Find("GameOverCanvas");
+            gameOverScene.SetActive(false);
 
             ResetPlayer();
         }
@@ -145,6 +148,7 @@ namespace Nightmare
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
             weaponHolder.SetActive(false);
+            gameOverScene.SetActive(true);
         }
 
         public void RestartLevel()
