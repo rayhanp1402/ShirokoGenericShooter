@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PoolManager : MonoBehaviour
 {
@@ -135,7 +136,9 @@ public class Pool
     private GameObject AddItem(bool keepActive = false)
     {
         int index = pool.Count;
-        pool.Add(UnityEngine.Object.Instantiate(poolObject));
+        GameObject obj = UnityEngine.Object.Instantiate(poolObject);
+        SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName("Main"));
+        pool.Add(obj);
         pool[index].name = poolObject.name + "_" + index.ToString().PadLeft(4, '0');
         pool[index].SetActive(keepActive);
         if (parentingGroup != null)

@@ -1223,7 +1223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7bced140059b694e91f0e48210059c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1543342024}
+  target: {fileID: 22402529}
   smoothing: 5
 --- !u!124 &459437352
 Behaviour:
@@ -1702,7 +1702,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1543342024}
+  m_Father: {fileID: 22402529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1023058175
 SphereCollider:
@@ -2646,11 +2646,6 @@ PrefabInstance:
       addedObject: {fileID: 1023058174}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b93728c70c66b9945b3e57e2b287f8ab, type: 3}
---- !u!4 &1543342024 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6848734309654916244, guid: b93728c70c66b9945b3e57e2b287f8ab, type: 3}
-  m_PrefabInstance: {fileID: 1543342023}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1663709645
 PrefabInstance:
   m_ObjectHideFlags: 0

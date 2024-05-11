@@ -10735,7 +10735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c128e26ed59dc2d4091defb386a10173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 90
+  startingHealth: 200
   sinkSpeed: 2.5
   scoreValue: 10
   coinValue: 40

@@ -11112,7 +11112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42db412f47e5114583419777013849f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 90
+  startingHealth: 110
   sinkSpeed: 2.5
   scoreValue: 10
   coinValue: 40
@@ -11132,6 +11132,7 @@ MonoBehaviour:
   timeBetweenAttacks: 0.8
   effectsDisplayTime: 0.2
   range: 100
+  currentRange: 0
   distanceToPlayer: 0
 --- !u!95 &3149937086985189983
 Animator:
